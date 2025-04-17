@@ -31,3 +31,17 @@
 		<input {id} type="text" {placeholder} {required} bind:value class="text" />
 	{/if}
 </div>
+
+<style>
+	input {
+		background: #11092a;
+		color: white;
+		text-align: center;
+		border-color: white;
+		border-radius: 8px;
+	}
+
+	input::placeholder {
+		color: white;
+	}
+</style>
