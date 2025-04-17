@@ -90,6 +90,10 @@
 </div>
 
 <style>
+	a{
+		color: aqua;
+	}
+
 	h2,
 	p {
 		color: white;
