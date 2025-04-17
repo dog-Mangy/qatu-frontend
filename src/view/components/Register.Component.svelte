@@ -106,11 +106,25 @@
 		border-radius: 50px;
 		justify-items: center;
 		max-width: 300px;
-		padding: 1px;
+		padding: 2rem;
 		width: 100%;
 	}
 
 	form {
 		justify-items: center;
+	}
+
+	@media screen and (max-width: 720px) {
+		.form-box {
+			max-width: 270px;
+			padding: 1rem;
+		}
+	}
+
+	@media screen and (max-width: 360px) {
+		.form-box {
+			min-width: 70%;
+			padding: 0.5rem;
+		}
 	}
 </style>

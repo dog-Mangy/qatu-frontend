@@ -34,11 +34,28 @@
 
 <style>
 	input {
+		width: 100%;
+		padding: 1rem;
+		font-size: 1.2rem;
 		background: #11092a;
 		text-align: center;
 	}
 
 	input::placeholder {
 		color: white;
+	}
+
+	@media screen and (max-width: 720px) {
+		input {
+			padding: 0.75rem;
+			font-size: 1rem;
+		}
+	}
+
+	@media screen and (max-width: 360px) {
+		input {
+			padding: 0.5rem;
+			font-size: 0.9rem;
+		}
 	}
 </style>
