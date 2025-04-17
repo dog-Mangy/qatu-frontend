@@ -32,10 +32,10 @@
 		<h2>Register</h2>
 
 		{#if error}
-			<p>{error}</p>
+			<p class="error-message">{error}</p>
 		{/if}
 		{#if success}
-			<p>{success}</p>
+			<p class="success-message">{success}</p>
 		{/if}
 
 		<form on:submit={handleRegister}>
@@ -117,6 +117,24 @@
 
 	form {
 		justify-items: center;
+	}
+
+	.success-message {
+		background-color: #e8f5e9;
+		border-radius: 8px;
+		border: 1px solid #4caf50;
+		color: #4caf50;
+		margin-bottom: 1rem;
+		padding: 0.5rem;
+	}
+
+	.error-message {
+		background-color: #ffebee;
+		border-radius: 8px;
+		border: 1px solid #f44336;
+		color: #f44336;
+		margin-bottom: 1rem;
+		padding: 0.5rem;
 	}
 
 	@media screen and (max-width: 720px) {
