@@ -1,4 +1,6 @@
 <script>
+	import FormInput from './FormInput.Component.svelte';
+
 	let name = '';
 	let lastName = '';
 	let email = '';
@@ -26,28 +28,42 @@
 	{/if}
 
 	<form on:submit={handleRegister}>
-		<input placeholder="Name" bind:value={name} required />
-		<input placeholder="Last Name" bind:value={lastName} required />
-		<input type="email" placeholder="Email" bind:value={email} required />
-		<input
-			type="text"
+		<FormInput id="name" placeholder="Name" bind:value={name} required />
+		<FormInput
+			id="lastName"
+			placeholder="Last Name"
+			bind:value={lastName}
+			required
+		/>
+		<FormInput
+			id="email"
+			type="email"
+			placeholder="Email"
+			bind:value={email}
+			required
+		/>
+		<FormInput
+			id="identificationDocument"
 			placeholder="Identification Document"
 			bind:value={identificationDocument}
 			required
 		/>
-		<input
+		<FormInput
+			id="phoneNumber"
 			type="tel"
 			placeholder="Phone Number"
 			bind:value={phoneNumber}
 			required
 		/>
-		<input
+		<FormInput
+			id="password"
 			type="password"
 			placeholder="Password"
 			bind:value={password}
 			required
 		/>
-		<input
+		<FormInput
+			id="confirmPassword"
 			type="password"
 			placeholder="Confirm Password"
 			bind:value={confirmPassword}
