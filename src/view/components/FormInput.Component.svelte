@@ -35,10 +35,7 @@
 <style>
 	input {
 		background: #11092a;
-		color: white;
 		text-align: center;
-		border-color: white;
-		border-radius: 8px;
 	}
 
 	input::placeholder {
