@@ -1,5 +1,6 @@
 <script>
 	import FormInput from './FormInput.Component.svelte';
+	import { authViewModel } from '../../viewmodel/viewmodels/authViewModel.js';
 
 	let name = '';
 	let lastName = '';
@@ -14,6 +15,15 @@
 
 	async function handleRegister(event) {
 		event.preventDefault();
+		({ error, success } = await authViewModel.register({
+			name,
+			lastName,
+			email,
+			identificationDocument,
+			phoneNumber,
+			password,
+			confirmPassword,
+		}));
 	}
 </script>
 
