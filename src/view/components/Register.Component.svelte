@@ -86,3 +86,21 @@
 		Already have an account? <a href="/login">Login</a>
 	</p>
 </div>
+
+<style>
+	h2,
+	p {
+		color: white;
+	}
+	div {
+		background: #1a0c46;
+		border-radius: 50px;
+		justify-items: center;
+		max-width: 300px;
+		padding: 1px;
+	}
+
+	form {
+		justify-items: center;
+	}
+</style>
