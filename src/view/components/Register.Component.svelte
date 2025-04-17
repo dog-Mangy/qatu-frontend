@@ -106,8 +106,9 @@
 		border-radius: 50px;
 		justify-items: center;
 		max-width: 300px;
-		padding: 2rem;
+		padding: 0.5rem;
 		width: 100%;
+		margin: 1rem;
 	}
 
 	form {
@@ -117,14 +118,13 @@
 	@media screen and (max-width: 720px) {
 		.form-box {
 			max-width: 270px;
-			padding: 1rem;
 		}
 	}
-
+	
 	@media screen and (max-width: 360px) {
 		.form-box {
-			min-width: 70%;
-			padding: 0.5rem;
+			max-width: 250px;
+			min-width: 180px;
 		}
 	}
 </style>
