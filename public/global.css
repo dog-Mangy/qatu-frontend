@@ -30,6 +30,7 @@ label {
 }
 
 input, button, select, textarea {
+	color: white;
 	font-family: inherit;
 	font-size: inherit;
 	-webkit-padding: 0.4em 0;

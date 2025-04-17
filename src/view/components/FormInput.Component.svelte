@@ -6,39 +6,31 @@
 	export let required = false;
 </script>
 
-<div>
+<div class="input-wrapper">
 	{#if type === 'email'}
-		<input
-			{id}
-			type="email"
-			{placeholder}
-			{required}
-			bind:value
-			class="email"
-		/>
+		<input {id} type="email" {placeholder} {required} bind:value />
 	{:else if type === 'password'}
-		<input
-			{id}
-			type="password"
-			{placeholder}
-			{required}
-			bind:value
-			class="password"
-		/>
+		<input {id} type="password" {placeholder} {required} bind:value />
 	{:else if type === 'tel'}
-		<input {id} type="tel" {placeholder} {required} bind:value class="tel" />
+		<input {id} type="tel" {placeholder} {required} bind:value />
 	{:else}
-		<input {id} type="text" {placeholder} {required} bind:value class="text" />
+		<input {id} type="text" {placeholder} {required} bind:value />
 	{/if}
 </div>
 
 <style>
-	input {
+	.input-wrapper {
+		display: flex;
+		justify-content: center;
 		width: 100%;
-		padding: 1rem;
-		font-size: 1.2rem;
+	}
+
+	input {
 		background: #11092a;
+		font-size: 1.2rem;
+		padding: 1rem;
 		text-align: center;
+		width: 90%;
 	}
 
 	input::placeholder {
@@ -47,15 +39,15 @@
 
 	@media screen and (max-width: 720px) {
 		input {
-			padding: 0.75rem;
 			font-size: 1rem;
+			padding: 0.75rem;
 		}
 	}
 
 	@media screen and (max-width: 360px) {
 		input {
-			padding: 0.5rem;
 			font-size: 0.9rem;
+			padding: 0.5rem;
 		}
 	}
 </style>

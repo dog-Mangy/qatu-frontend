@@ -90,7 +90,7 @@
 </div>
 
 <style>
-	a{
+	a {
 		color: aqua;
 	}
 
@@ -100,19 +100,19 @@
 	}
 
 	.center-container {
-		min-height: 100vh;
-		justify-items: center;
 		align-content: center;
+		justify-items: center;
+		min-height: 100vh;
 	}
 
 	.form-box {
 		background: #1a0c46;
 		border-radius: 50px;
 		justify-items: center;
+		margin: 1rem;
 		max-width: 300px;
 		padding: 0.5rem;
 		width: 100%;
-		margin: 1rem;
 	}
 
 	form {
@@ -124,7 +124,7 @@
 			max-width: 270px;
 		}
 	}
-	
+
 	@media screen and (max-width: 360px) {
 		.form-box {
 			max-width: 250px;
