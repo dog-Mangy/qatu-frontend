@@ -1,1 +1,5 @@
-<h1>Registeeeeeeeeeeeer</h1>
+<script>
+	import Register from '../components/Register.Component.svelte';
+</script>
+
+<Register></Register>
