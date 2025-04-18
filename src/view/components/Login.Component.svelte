@@ -109,4 +109,17 @@
 		margin-bottom: 1rem;
 		padding: 0.5rem;
 	}
+
+    @media screen and (max-width: 720px) {
+		.form-box {
+			max-width: 270px;
+		}
+	}
+
+	@media screen and (max-width: 360px) {
+		.form-box {
+			max-width: 250px;
+			min-width: 180px;
+		}
+	}
 </style>
