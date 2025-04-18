@@ -104,6 +104,7 @@
 		color: #4caf50;
 		margin-bottom: 1rem;
 		padding: 0.5rem;
+        text-align: center;
 	}
 
     .error-message {
@@ -113,6 +114,7 @@
 		color: #f44336;
 		margin-bottom: 1rem;
 		padding: 0.5rem;
+        text-align: center;
 	}
 
     @media screen and (max-width: 720px) {
