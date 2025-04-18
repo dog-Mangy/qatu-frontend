@@ -68,6 +68,15 @@
         color: aqua
     }
 
+    .center-container {
+        display: flex;
+        justify-content: center;
+	    align-items: center;
+		align-content: center;
+		justify-items: center;
+		min-height: 100vh;
+	}
+
     .form-box {
 		background: #1a0c46;
 		border-radius: 50px;
