@@ -40,7 +40,7 @@ export const authViewModel = {
 			userData.password = '';
 
 			setTimeout(() => {
-				navigate('/', { replace: true });
+				navigate('/mainPage', { replace: true });
 			}, timeDelay);
 		} catch (err) {
 			error = err.message || 'Login failed';
