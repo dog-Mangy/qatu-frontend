@@ -68,6 +68,11 @@
         color: aqua
     }
 
+    h2,
+	p {
+		color: white;
+	}
+
     .center-container {
         display: flex;
         justify-content: center;
