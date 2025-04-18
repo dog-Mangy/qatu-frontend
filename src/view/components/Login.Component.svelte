@@ -68,10 +68,15 @@
         color: aqua
     }
 
-    h2,
-	p {
-		color: white;
-	}
+    h2 {
+	color: white;
+	text-align: center;
+    }
+
+    p {
+        color: white;
+        text-align: right;
+    }
 
     .center-container {
         display: flex;
