@@ -86,4 +86,22 @@
 		padding: 0.5rem;
 		width: 100%;
 	}
+
+    .success-message {
+		background-color: #e8f5e9;
+		border-radius: 8px;
+		border: 1px solid #4caf50;
+		color: #4caf50;
+		margin-bottom: 1rem;
+		padding: 0.5rem;
+	}
+
+    .error-message {
+		background-color: #ffebee;
+		border-radius: 8px;
+		border: 1px solid #f44336;
+		color: #f44336;
+		margin-bottom: 1rem;
+		padding: 0.5rem;
+	}
 </style>
