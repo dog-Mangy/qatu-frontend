@@ -62,3 +62,9 @@
 
 	</div>
 </div>
+
+<style>
+    a {
+        color: aqua
+    }
+</style>
