@@ -1,6 +1,7 @@
 <script>
     import FormInput from './FormInput.Component.svelte';
     import { authViewModel } from '../../viewmodel/viewmodels/authViewModel';
+    import { navigate } from 'svelte-routing';
 
 	let email = '';
 	let password = '';
@@ -15,6 +16,10 @@
 			password,
 		}));
     }
+
+    function goToRegister() {
+		navigate('/register');
+	}
 </script>
 
 <div class="center-container">
@@ -49,5 +54,11 @@
 		<p>
 			<a href="/forgotPassword">Forgot Password?</a>
 		</p>
+
+		<p>
+			Still don't have an account?
+			<button type="button" on:click={goToRegister}>Register</button>
+		</p>
+
 	</div>
 </div>
