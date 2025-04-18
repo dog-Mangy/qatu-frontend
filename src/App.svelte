@@ -1,4 +1,6 @@
 <script>
+  import './../public/global.css'
+
 	import { Router, Route } from 'svelte-routing';
 	import { routes } from './view/routes/Router.js';
 
