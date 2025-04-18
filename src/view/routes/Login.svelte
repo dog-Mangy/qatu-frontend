@@ -1,3 +1,5 @@
-<h1>Login</h1>
+<script>
+	import Login from '../components/Login.Component.svelte';
+</script>
 
-<a href="/register">Register</a>
+<Login></Login>

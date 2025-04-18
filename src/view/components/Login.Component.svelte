@@ -1,0 +1,48 @@
+<script>
+    import FormInput from './FormInput.Component.svelte';
+
+	let email = '';
+	let password = '';
+
+	let error = '';
+	let success = '';
+
+	async function handleLogin(event) {
+		event.preventDefault();
+    }
+</script>
+
+<div class="center-container">
+	<div class="form-box">
+		<h2>Log In</h2>
+
+		{#if error}
+			<p class="error-message">{error}</p>
+		{/if}
+		{#if success}
+			<p class="success-message">{success}</p>
+		{/if}
+
+		<form on:submit={handleLogin}>
+			<FormInput
+				id="email"
+				type="email"
+				placeholder="Email"
+				bind:value={email}
+				required
+			/>
+			<FormInput
+				id="password"
+				type="password"
+				placeholder="Password"
+				bind:value={password}
+				required
+			/>
+			<button type="submit">Log In</button>
+		</form>
+
+		<p>
+			<a href="/forgotPassword">Forgot Password?</a>
+		</p>
+	</div>
+</div>
