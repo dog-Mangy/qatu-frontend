@@ -67,4 +67,14 @@
     a {
         color: aqua
     }
+
+    .form-box {
+		background: #1a0c46;
+		border-radius: 50px;
+		justify-items: center;
+		margin: 1rem;
+		max-width: 300px;
+		padding: 0.5rem;
+		width: 100%;
+	}
 </style>
