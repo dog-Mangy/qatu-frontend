@@ -115,6 +115,10 @@
         text-align: center;
 	}
 
+	form {
+		justify-items: center;
+	}
+
     @media screen and (max-width: 720px) {
 		.form-box {
 			max-width: 270px;
