@@ -117,6 +117,9 @@
 
 	form {
 		justify-items: center;
+		align-items: center;
+		display: flex;
+		flex-direction: column;
 	}
 
     @media screen and (max-width: 720px) {
