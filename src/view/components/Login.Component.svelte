@@ -75,7 +75,7 @@
 
     p {
         color: white;
-        text-align: right;
+        text-align: center;
     }
 
     .center-container {
