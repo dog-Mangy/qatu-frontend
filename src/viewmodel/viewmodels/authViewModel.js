@@ -27,4 +27,25 @@ export const authViewModel = {
 
 		return { error, success };
 	},
+
+	login: async (userData) => {
+		let error = '';
+		let success = '';
+
+		try {
+			await authService.login(userData);
+			success = 'Login successful! Redirecting to Home Page';
+
+			userData.email = '';
+			userData.password = '';
+
+			setTimeout(() => {
+				navigate('/mainPage', { replace: true });
+			}, timeDelay);
+		} catch (err) {
+			error = err.message || 'Login failed';
+		}
+
+		return { error, success };
+	},
 };
