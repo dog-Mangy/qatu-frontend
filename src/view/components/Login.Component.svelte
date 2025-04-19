@@ -82,8 +82,6 @@
         display: flex;
         justify-content: center;
 	    align-items: center;
-		align-content: center;
-		justify-items: center;
 		min-height: 100vh;
 	}
 
