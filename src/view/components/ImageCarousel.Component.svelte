@@ -5,7 +5,21 @@
 
 	let currentIndex = 0;
 	let defaultImagesToShow = imagesToShow;
-	let visibleImagesToShow = defaultImagesToShow;
+	let visibleImagesToShow;
+
+	function getImagesToShow() {
+		const width = window.innerWidth;
+		if (width <= 360) return 1;
+		if (width <= 720) return 3;
+		return defaultImagesToShow;
+	}
+
+	function handleResize() {
+		visibleImagesToShow = getImagesToShow();
+	}
+
+	visibleImagesToShow = getImagesToShow();
+	window.addEventListener('resize', handleResize);
 
 	$: displayedImages = Array.from({ length: images.length }, (_, index) => {
 		const displayIndex = (currentIndex + index) % images.length;
