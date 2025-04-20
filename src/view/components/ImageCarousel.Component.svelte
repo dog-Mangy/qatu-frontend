@@ -31,4 +31,81 @@
 </div>
 
 <style>
+	.carousel-container {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		position: relative;
+		min-height: 500px;
+		width: 60%;
+		min-width: 280px;
+		margin: 0 auto;
+	}
+
+	.carousel-section {
+		display: flex;
+		height: 400px;
+		width: 80%;
+	}
+
+	.carousel-section img {
+		flex-grow: 1;
+		object-fit: cover;
+		opacity: 0.8;
+		transition: 0.5s ease;
+		width: 0px;
+	}
+
+	.carousel-section img:hover {
+		cursor: crosshair;
+		filter: contrast(120%);
+		opacity: 1;
+		transform: scale(1.3);
+		width: 20%;
+		z-index: 9999;
+	}
+
+	.carousel-section img.hidden {
+		display: none;
+	}
+
+	.carousel-btn {
+		background: rgba(0, 0, 0, 0.5);
+		border-radius: 5px;
+		border: none;
+		color: white;
+		cursor: pointer;
+		font-size: 18px;
+		position: absolute;
+	}
+
+	.carousel-btn.prev {
+		left: 10px;
+	}
+
+	.carousel-btn.next {
+		right: 10px;
+	}
+
+	.carousel-btn:hover {
+		background: rgba(0, 0, 0, 0.8);
+	}
+
+	@media (max-width: 720px) {
+		.carousel-container {
+			width: 90%;
+		}
+	}
+
+	@media (max-width: 360px) {
+		.carousel-container {
+			min-height: 350px;
+		}
+		.carousel-section {
+			height: 350px;
+		}
+		.carousel-section img:hover {
+			transform: scale(1);
+		}
+	}
 </style>
