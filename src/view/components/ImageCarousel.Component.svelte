@@ -7,6 +7,16 @@
 	let defaultImagesToShow = imagesToShow;
 	let visibleImagesToShow = defaultImagesToShow;
 
+	$: displayedImages = Array.from({ length: images.length }, (_, index) => {
+		const displayIndex = (currentIndex + index) % images.length;
+		return {
+			src: images[displayIndex],
+			alt: `Imagen ${displayIndex + 1}`,
+			isActive: index >= 0 && index < visibleImagesToShow,
+			isHidden: index < 0 || index >= visibleImagesToShow,
+		};
+	});
+
 	function moveSlide(direction) {
 		currentIndex = (currentIndex + direction + images.length) % images.length;
 	}
@@ -16,13 +26,13 @@
 	<div class="carousel-container">
 		<button class="carousel-btn prev" on:click={() => moveSlide(-1)}>❮</button>
 		<section class="carousel-section">
-			{#each images as src, index}
+			{#each displayedImages as image, index}
 				<img
-					{src}
-					alt="Imagen {index + 1}"
+					src={image.src}
+					alt={image.alt}
 					class="carousel-image"
-					class:active={index >= 0 && index < visibleImagesToShow}
-					class:hidden={index < 0 || index >= visibleImagesToShow}
+					class:active={image.isActive}
+					class:hidden={image.isHidden}
 				/>
 			{/each}
 		</section>
