@@ -1,22 +1,22 @@
 <script>
     export let value = 0;
     export let max = 100;
-    export let color = "#00C853";
+    export let barColour = "#00C853";
+    export let backgroundColour = "#e0e0e0";
     export let height = "20px";
     export let width = "100%";
-    export let backgroundColor = "#e0e0e0";
-
+    
     $: normalizedValue = Math.min(Math.max(value, 0), max);
     $: percentage = Math.round((normalizedValue / max) * 100);
 </script>
 
 <div
     class="progress-container"
-    style="background-color: {backgroundColor}; height: {height}; width: {width};"
+    style="background-color: {backgroundColour}; height: {height}; width: {width};"
 >
     <div
         class="progress-bar"
-        style="width: {percentage}%; background-color: {color}"
+        style="width: {percentage}%; background-color: {barColour};"
         role="progressbar"
         aria-valuenow={normalizedValue}
         aria-valuemin="0"
@@ -28,9 +28,9 @@
 
 <style>
     .progress-container {
-        width: 100%;
         overflow: hidden;
         position: relative;
+        border-radius: 6px;
     }
 
     .progress-bar {
@@ -39,6 +39,7 @@
         display: flex;
         align-items: center;
         justify-content: flex-end;
+        border-radius: 6px;
     }
 
     .progress-text {
