@@ -10,7 +10,7 @@
   <h2>Custom Styled Progress Bar</h2>
   <ProgressIndicator 
 	value={60} 
-	fillColour="#4285F4" 
+	barColour="blue" 
 	height="30px"
 	width="500px" 
 	backgroundColour="#e0e0e0"
