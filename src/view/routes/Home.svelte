@@ -1,9 +1,17 @@
 <script>
-	export let name;
+	import ProgressIndicator from '../components/ProgressIndicator.Component.svelte';
 </script>
-
-<h1>Hello {name}!</h1>
-<p>
-	Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how
-	to build Svelte apps.
-</p>
+  
+  <h1>Progress Indicator Examples</h1>
+  
+  <h2>Basic Progress Bar</h2>
+  <ProgressIndicator value={65} />
+  
+  <h2>Custom Styled Progress Bar</h2>
+  <ProgressIndicator 
+	value={60} 
+	barColour="blue" 
+	height="30px"
+	width="500px" 
+	backgroundColour="#e0e0e0"
+  />
