@@ -1,7 +1,7 @@
 <script>
     export let value = 0;
     export let max = 100;
-    export let color = "#4285F4";
+    export let color = "#00C853";
     export let height = "20px";
     export let width = "100%";
     export let backgroundColor = "#e0e0e0";
@@ -25,3 +25,26 @@
         <span class="progress-text">{percentage}%</span>
     </div>
 </div>
+
+<style>
+    .progress-container {
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .progress-bar {
+        height: 100%;
+        transition: width 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    .progress-text {
+        color: white;
+        font-size: 12px;
+        padding: 0 8px;
+        text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+    }
+</style>
