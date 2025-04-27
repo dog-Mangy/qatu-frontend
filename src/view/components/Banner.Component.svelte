@@ -36,7 +36,11 @@
 	});
 </script>
 
-<div id={containerId}>
+<div
+	id={containerId}
+	on:mouseenter={stopAutoSlide}
+	on:mouseleave={startAutoSlide}
+>
 	<div class="banner-container">
 		<button class="banner-btn prev" on:click={() => moveSlide(-1)}>❮</button>
 		<img
