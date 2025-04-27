@@ -17,6 +17,10 @@
 		currentIndex = (currentIndex + direction + images.length) % images.length;
 	}
 
+	function goToSlide(index) {
+		currentIndex = index;
+	}
+
 	function startAutoSlide() {
 		stopAutoSlide();
 		autoSlideInterval = setInterval(() => {
@@ -49,6 +53,15 @@
 			class="banner-image"
 		/>
 		<button class="banner-btn next" on:click={() => moveSlide(1)}>❯</button>
+		<div class="dots-container">
+			{#each images as _, index}
+				<span
+					class="dot"
+					class:active={index === currentIndex}
+					on:click={() => goToSlide(index)}
+				></span>
+			{/each}
+		</div>
 	</div>
 </div>
 
@@ -89,6 +102,27 @@
 
 	.banner-btn:hover {
 		background: rgba(0, 0, 0, 0.8);
+	}
+
+	.dots-container {
+		position: absolute;
+		bottom: 10px;
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		gap: 8px;
+	}
+
+	.dot {
+		width: 10px;
+		height: 10px;
+		background: rgba(255, 255, 255, 0.5);
+		border-radius: 50%;
+		cursor: pointer;
+	}
+
+	.dot.active {
+		background: white;
 	}
 
 	@media (max-width: 760px) {
