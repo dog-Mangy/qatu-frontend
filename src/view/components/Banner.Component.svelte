@@ -1,8 +1,12 @@
 <script>
+	import { onMount } from 'svelte';
+
 	export let containerId;
 	export let images;
 
 	let currentIndex = 0;
+	let autoSlideInterval;
+	const slideDuration = 5000;
 
 	$: displayedImage = {
 		src: images[currentIndex],
@@ -12,6 +16,24 @@
 	function moveSlide(direction) {
 		currentIndex = (currentIndex + direction + images.length) % images.length;
 	}
+
+	function startAutoSlide() {
+		stopAutoSlide();
+		autoSlideInterval = setInterval(() => {
+			moveSlide(1);
+		}, slideDuration);
+	}
+
+	function stopAutoSlide() {
+		if (autoSlideInterval) {
+			clearInterval(autoSlideInterval);
+		}
+	}
+
+	onMount(() => {
+		startAutoSlide();
+		return () => stopAutoSlide();
+	});
 </script>
 
 <div id={containerId}>
