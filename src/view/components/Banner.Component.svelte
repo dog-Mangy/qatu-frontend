@@ -30,16 +30,15 @@
 	.banner-container {
 		align-items: center;
 		display: flex;
-		height: 400px;
+		height: 300px;
 		justify-content: center;
 		margin: 0 auto;
-		max-width: 1200px;
+		max-width: 500px;
 		position: relative;
-		width: 50%;
 	}
 
 	.banner-image {
-		height: 400px;
+		height: 300px;
 		object-fit: cover;
 		width: 100%;
 	}
@@ -64,5 +63,27 @@
 
 	.banner-btn:hover {
 		background: rgba(0, 0, 0, 0.8);
+	}
+
+	@media (max-width: 760px) {
+		.banner-container {
+			height: 250px;
+			max-width: 400px;
+		}
+		.banner-image {
+			height: 250px;
+		}
+	}
+
+	@media (max-width: 390px) {
+		.banner-container {
+			height: 200px;
+			max-width: 340px;
+			min-width: 300px;
+		}
+		.banner-image {
+			height: 200px;
+			min-width: 300px;
+		}
 	}
 </style>
