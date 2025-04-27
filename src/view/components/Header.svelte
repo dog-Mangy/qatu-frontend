@@ -22,21 +22,7 @@
       font-size: 1.5em;
       font-weight: bold;
     }
-  
-    .navbar-toggle {
-      display: none;
-      font-size: 1.5em;
-      background: none;
-      border: none;
-      color: white;
-      cursor: pointer;
-    }
-  
-    @media (max-width: 768px) {
-      .navbar-toggle {
-        display: block;
-      }
-    }
+
   </style>
   
   <nav class="navbar">
