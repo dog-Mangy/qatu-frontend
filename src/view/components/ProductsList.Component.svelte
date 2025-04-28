@@ -115,4 +115,51 @@
         font-size: 1rem;
     }
 
+    .add-to-cart-btn {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 0.4rem 0.8rem;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-size: 0.85rem;
+    }
+
+    .add-to-cart-btn:hover, 
+    .add-to-cart-btn:focus {
+        background-color: #2980b9;
+        outline: none;
+    }
+
+    @media (max-width: 1200px) {
+        .products-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    @media (max-width: 900px) {
+        .products-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .product-card {
+            max-width: 300px;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .products-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .product-card {
+            max-width: 100%;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+        }
+    }
 </style>
