@@ -114,7 +114,6 @@
 
 	.banner-btn {
 		background: transparent;
-		background-color: transparent;
 		border: none;
 		color: transparent;
 		cursor: pointer;
@@ -131,7 +130,11 @@
 		right: 0px;
 	}
 
-	.banner-btn:hover {
+	.banner-btn:hover,
+	.banner-btn:focus,
+	.banner-btn:active {
+		background: transparent;
+		color: transparent;
 		cursor: pointer;
 	}
 
