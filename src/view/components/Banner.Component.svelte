@@ -21,6 +21,20 @@
 		currentIndex = index;
 	}
 
+	function handleKeyPress(event, direction) {
+		if (event.key === 'Enter' || event.key === ' ') {
+			event.preventDefault();
+			moveSlide(direction);
+		}
+	}
+
+	function handleDotKeyPress(event, index) {
+		if (event.key === 'Enter' || event.key === ' ') {
+			event.preventDefault();
+			goToSlide(index);
+		}
+	}
+
 	function startAutoSlide() {
 		stopAutoSlide();
 		autoSlideInterval = setInterval(() => {
@@ -46,19 +60,34 @@
 	on:mouseleave={startAutoSlide}
 >
 	<div class="banner-container">
-		<button class="banner-btn prev" on:click={() => moveSlide(-1)}>❮</button>
+		<button
+			class="banner-btn prev"
+			on:click={() => moveSlide(-1)}
+			on:keypress={(e) => handleKeyPress(e, -1)}
+		>
+			❮
+		</button>
 		<img
 			src={displayedImage.src}
 			alt={displayedImage.alt}
 			class="banner-image"
 		/>
-		<button class="banner-btn next" on:click={() => moveSlide(1)}>❯</button>
+		<button
+			class="banner-btn next"
+			on:click={() => moveSlide(1)}
+			on:keypress={(e) => handleKeyPress(e, 1)}
+		>
+			❯
+		</button>
 		<div class="dots-container">
 			{#each images as _, index}
 				<span
 					class="dot"
 					class:active={index === currentIndex}
 					on:click={() => goToSlide(index)}
+					on:keypress={(e) => handleDotKeyPress(e, index)}
+					role="button"
+					tabindex="0"
 				></span>
 			{/each}
 		</div>
@@ -80,6 +109,7 @@
 		height: 300px;
 		object-fit: cover;
 		width: 100%;
+		transition: opacity 0.5s ease-in-out;
 	}
 
 	.banner-btn {
