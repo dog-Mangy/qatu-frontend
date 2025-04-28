@@ -3,7 +3,7 @@
 </script>
 
 <div class="products-container">
-    <h2 class="section-title">Our Products</h2>
+    <h2 class="section-title">Products</h2>
     <div class="products-grid">
         {#each products as product (product.id)}
             <div class="product-card">
