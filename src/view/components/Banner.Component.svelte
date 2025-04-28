@@ -153,6 +153,14 @@
 		background: rgba(255, 255, 255, 0.5);
 		border-radius: 50%;
 		cursor: pointer;
+		transition:
+			background 0.3s ease,
+			transform 0.3s ease;
+	}
+
+	.dot:hover {
+		background: rgba(255, 255, 255, 0.8);
+		transform: scale(1.2);
 	}
 
 	.dot.active {
