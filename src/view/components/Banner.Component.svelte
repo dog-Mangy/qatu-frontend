@@ -113,13 +113,14 @@
 	}
 
 	.banner-btn {
-		background: rgba(0, 0, 0, 0.5);
-		border-radius: 5px;
+		background: transparent;
+		background-color: transparent;
 		border: none;
-		color: white;
+		color: transparent;
 		cursor: pointer;
-		font-size: 20px;
+		height: 100%;
 		position: absolute;
+		width: 50px;
 	}
 
 	.banner-btn.prev {
@@ -131,7 +132,7 @@
 	}
 
 	.banner-btn:hover {
-		background: rgba(0, 0, 0, 0.8);
+		cursor: pointer;
 	}
 
 	.dots-container {
@@ -163,6 +164,9 @@
 		.banner-image {
 			height: 250px;
 		}
+		.banner-btn {
+			width: 40px;
+		}
 	}
 
 	@media (max-width: 390px) {
@@ -174,6 +178,9 @@
 		.banner-image {
 			height: 200px;
 			min-width: 300px;
+		}
+		.banner-btn {
+			width: 30px;
 		}
 	}
 </style>
