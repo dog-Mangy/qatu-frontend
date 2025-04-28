@@ -1,6 +1,6 @@
 <script>
   import SearchBar from './SearchBar.svelte';
-  import Navbar from './NavBar.svelte';
+  import Navbar from './Navbar.svelte';
   import { onMount } from 'svelte';
 
   export let userRole;
