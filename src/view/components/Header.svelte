@@ -26,37 +26,47 @@
   });
 </script>
 
-<nav class="navbar">
-  <!-- Logo -->
-  <div class="navbar-brand">
-    <a href="/">
-      <img src="https://i.ibb.co/gbgX7HSw/Chat-GPT-Image-27-abr-2025-10-39-02-a-m.png" alt="Qatu Logo" class="logo" />
-    </a>
-  </div>
-
-  <!-- SearchBar -->
-  {#if isDesktop || searchOpen}
-    <div class="navbar-search">
-      <SearchBar />
+<div class="navbar-container">
+  <nav class="navbar">
+    <!-- Logo -->
+    <div class="navbar-brand">
+      <a href="/">
+        <img src="https://i.ibb.co/gbgX7HSw/Chat-GPT-Image-27-abr-2025-10-39-02-a-m.png" alt="Qatu Logo" class="logo" />
+      </a>
     </div>
-  {/if}
 
-  <!-- Icono de búsqueda y Navbar -->
-  <div class="navbar-actions">
-    {#if !isDesktop}
-      <button class="icon-button" on:click={toggleSearch}>
-        {#if searchOpen}
-          ✖️
-        {:else}
-          🔍
-        {/if}
-      </button>
+    <!-- SearchBar -->
+    {#if isDesktop || searchOpen}
+      <div class="navbar-search">
+        <SearchBar />
+      </div>
     {/if}
-    <Navbar {userRole} />
-  </div>
-</nav>
+
+    <!-- Icono de búsqueda y Navbar -->
+    <div class="navbar-actions">
+      {#if !isDesktop}
+        <button class="icon-button" on:click={toggleSearch}>
+          {#if searchOpen}
+            ✖️
+          {:else}
+            🔍
+          {/if}
+        </button>
+      {/if}
+      <Navbar {userRole} />
+    </div>
+  </nav>
+</div>
+
 
 <style>
+  .navbar-container {
+    background: #3f028f;
+    width: 100%;
+    display: flex;
+    justify-content: center; 
+  }
+
   .navbar {
     background-color: #3f028f;
     color: white;
@@ -67,6 +77,8 @@
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 10px;
+    max-width: 1200px;
+    width: 100%;
   }
 
   .navbar-brand {
