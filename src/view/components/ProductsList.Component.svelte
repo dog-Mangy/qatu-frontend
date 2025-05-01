@@ -116,7 +116,7 @@
     }
 
     .add-to-cart-btn {
-        background-color: #3498db;
+        background-color: #3f028f;
         color: white;
         border: none;
         padding: 0.4rem 0.8rem;
@@ -128,7 +128,7 @@
 
     .add-to-cart-btn:hover, 
     .add-to-cart-btn:focus {
-        background-color: #2980b9;
+        background-color: #6d00fc;
         outline: none;
     }
 
