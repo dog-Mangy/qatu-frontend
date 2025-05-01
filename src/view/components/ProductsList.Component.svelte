@@ -37,7 +37,7 @@
 <style>
     .products-container {
         padding: 2rem 1rem;
-        max-width: 1400px;
+        max-width: 1200px;
         margin: 0 auto;
     }
 
@@ -132,7 +132,7 @@
         outline: none;
     }
 
-    @media (max-width: 1200px) {
+    @media (max-width: 1140px) {
         .products-grid {
             grid-template-columns: repeat(3, 1fr);
         }
