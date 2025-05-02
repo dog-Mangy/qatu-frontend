@@ -44,7 +44,7 @@
   background-color: #3f028f;
   color: white;
   padding: 40px 20px;
-  margin-top: auto;
+  margin-top: 60px;
   text-align: center;
 }
 
@@ -54,7 +54,6 @@
   gap: 20px;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 40px;
   text-align: center;
 }
 
@@ -102,7 +101,6 @@
   margin-top: 10px;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .footer-container {
     grid-template-columns: repeat(2, 1fr);
