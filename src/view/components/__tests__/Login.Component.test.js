@@ -64,4 +64,27 @@ describe("Login Component", () => {
             "error-message"
         );
     });
+
+    it("calls login function with correct credentials", async () => {
+        authViewModel.login.mockResolvedValueOnce({
+            success: "Login successful",
+        });
+
+        render(Login);
+
+        const testCredentials = {
+            email: "person@gmail.com",
+            password: "password123",
+        };
+
+        await fireEvent.input(screen.getByPlaceholderText("Email"), {
+            target: { value: testCredentials.email },
+        });
+        await fireEvent.input(screen.getByPlaceholderText("Password"), {
+            target: { value: testCredentials.password },
+        });
+        await fireEvent.click(screen.getByRole("button", { name: "Log In" }));
+
+        expect(authViewModel.login).toHaveBeenCalledWith(testCredentials);
+    });
 });
