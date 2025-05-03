@@ -2,7 +2,6 @@ import { render, fireEvent, screen } from "@testing-library/svelte";
 import Register from "../Register.Component.svelte";
 import { vi } from "vitest";
 import { authViewModel } from "../../../viewmodel/viewmodels/authViewModel";
-import { navigate } from "svelte-routing";
 
 vi.mock("svelte-routing", () => ({
     navigate: vi.fn(),
