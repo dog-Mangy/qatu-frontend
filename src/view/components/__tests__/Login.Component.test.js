@@ -2,6 +2,7 @@ import { render, fireEvent, screen } from "@testing-library/svelte";
 import Login from "../Login.Component.svelte";
 import { vi } from "vitest";
 import { authViewModel } from "../../../viewmodel/viewmodels/authViewModel";
+import { navigate } from "svelte-routing";
 
 vi.mock("svelte-routing", () => ({
     navigate: vi.fn(),
@@ -37,6 +38,30 @@ describe("Login Component", () => {
         expect(await screen.findByText("Login successful")).toBeInTheDocument();
         expect(screen.getByText("Login successful")).toHaveClass(
             "success-message"
+        );
+    });
+
+    it("shows error message when login fails", async () => {
+        authViewModel.login.mockResolvedValueOnce({
+            error: "Invalid credentials",
+            success: null,
+        });
+
+        render(Login);
+
+        await fireEvent.input(screen.getByPlaceholderText("Email"), {
+            target: { value: "person@gmail.com" },
+        });
+        await fireEvent.input(screen.getByPlaceholderText("Password"), {
+            target: { value: "wrongpassword" },
+        });
+        await fireEvent.click(screen.getByRole("button", { name: "Log In" }));
+
+        expect(
+            await screen.findByText("Invalid credentials")
+        ).toBeInTheDocument();
+        expect(screen.getByText("Invalid credentials")).toHaveClass(
+            "error-message"
         );
     });
 });
