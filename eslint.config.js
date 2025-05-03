@@ -1,12 +1,18 @@
-import js from "@eslint/js";
-import svelte from "eslint-plugin-svelte";
-import globals from "globals";
+import js from '@eslint/js';
+import svelte from 'eslint-plugin-svelte';
+import globals from 'globals';
+import prettier from 'eslint-plugin-prettier';
+import prettierConfig from 'eslint-config-prettier';
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
   js.configs.recommended,
   ...svelte.configs.recommended,
+  prettierConfig,
   {
+    plugins: {
+      prettier,
+    },
     languageOptions: {
       globals: {
         ...globals.browser,
@@ -15,7 +21,7 @@ export default [
     },
   },
   {
-    files: ["**/*.svelte", "**/*.svelte.js"],
+    files: ['**/*.svelte', '**/*.svelte.js'],
     languageOptions: {
       parserOptions: {
         // We recommend importing and specifying svelte.config.js.
@@ -29,6 +35,7 @@ export default [
     rules: {
       // Override or add rule settings here, such as:
       // 'svelte/rule-name': 'error'
+      'prettier/prettier': 'error',
     },
   },
 ];
