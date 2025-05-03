@@ -38,4 +38,13 @@ export default [
       'prettier/prettier': 'error',
     },
   },
+  {
+    ignores: [
+      'node_modules',
+      'package-lock.json',
+      'public/build/',
+      'rollup.config.js',
+      'setupTypeScript.js',
+    ],
+  },
 ];
