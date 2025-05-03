@@ -16,26 +16,23 @@ export default [
     languageOptions: {
       globals: {
         ...globals.browser,
-        ...globals.node, // Add this if you are using SvelteKit in non-SPA mode
+        ...globals.node,
       },
     },
   },
   {
-    files: ['**/*.svelte', '**/*.svelte.js'],
+    files: ['src/**/*.svelte', 'src/**/*.js'],
     languageOptions: {
-      parserOptions: {
-        // We recommend importing and specifying svelte.config.js.
-        // By doing so, some rules in eslint-plugin-svelte will automatically read the configuration and adjust their behavior accordingly.
-        // While certain Svelte settings may be statically loaded from svelte.config.js even if you don’t specify it,
-        // explicitly specifying it ensures better compatibility and functionality.
-      },
+      parserOptions: {},
     },
   },
   {
     rules: {
-      // Override or add rule settings here, such as:
-      // 'svelte/rule-name': 'error'
       'prettier/prettier': 'error',
+      'svelte/no-at-html-tags': 'error',
+      'svelte/valid-compile': 'error',
+      'svelte/require-each-key': 'error',
+      'no-unused-vars': ['error', { vars: 'all', args: 'after-used' }],
     },
   },
   {
