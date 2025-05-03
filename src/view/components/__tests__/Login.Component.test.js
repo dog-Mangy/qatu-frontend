@@ -87,4 +87,10 @@ describe("Login Component", () => {
 
         expect(authViewModel.login).toHaveBeenCalledWith(testCredentials);
     });
+
+    it("navigates to register page when register button is clicked", async () => {
+        render(Login);
+        await fireEvent.click(screen.getByRole("button", { name: "Register" }));
+        expect(navigate).toHaveBeenCalledWith("/register");
+    });
 });
