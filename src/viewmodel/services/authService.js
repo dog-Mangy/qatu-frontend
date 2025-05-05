@@ -1,8 +1,52 @@
 import { userStore } from '../store/userStore.js';
+import { createAuth0Client } from '@auth0/auth0-spa-js';
+
 
 let minSize = 6;
+let auth0 = null;
+
+export async function initAuth0() {
+	auth0 = await createAuth0Client({
+		domain: 'insertdomain',
+		clientId: 'insertclientid',
+		cacheLocation: 'localstorage',
+		useRefreshTokens: true,
+		redirect_uri: window.location.origin,
+	});
+}
 
 export const authService = {
+
+	loginWithRedirect: async () => {
+		await auth0.loginWithRedirect({
+			authorizationParams: {
+				redirect_uri: window.location.origin
+			}
+		});
+	},
+
+	loginWithPopup: async () => {
+		await auth0.loginWithPopup();
+		return await auth0.getUser();
+	},
+
+	handleRedirectCallback: async () => {
+		const result = await auth0.handleRedirectCallback();
+		return result;
+	},
+
+	getUser: async () => {
+		return await auth0.getUser();
+	},
+
+	logout: () => {
+		auth0.logout({
+			logoutParams: {
+				returnTo: window.location.origin
+			}
+		});
+	},
+
 	register: async (user) => {
 		if (
 			!user.name ||
