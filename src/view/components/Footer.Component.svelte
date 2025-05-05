@@ -1,40 +1,40 @@
-<footer class="footer" role="contentinfo" data-testid="footer">
-  <div class="footer-container" data-testid="footer-container">
-    <div class="footer-column" data-testid="footer-column">
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-column">
       <h3>About Us</h3>
       <ul>
-        <li><a href="#" aria-label="Who We Are">Who We Are</a></li>
-        <li><a href="#" aria-label="Join as a Seller">Join as a Seller</a></li>
-        <li><a href="#" aria-label="News">News</a></li>
+        <li><a href="#">Who We Are</a></li>
+        <li><a href="#">Join as a Seller</a></li>
+        <li><a href="#">News</a></li>
       </ul>
     </div>
-    <div class="footer-column" data-testid="footer-column">
+    <div class="footer-column">
       <h3>Customer Support</h3>
       <ul>
-        <li><a href="#" aria-label="Help Center">Help Center</a></li>
-        <li><a href="#" aria-label="FAQs">FAQs</a></li>
-        <li><a href="#" aria-label="Contact Us">Contact Us</a></li>
+        <li><a href="#">Help Center</a></li>
+        <li><a href="#">FAQs</a></li>
+        <li><a href="#">Contact Us</a></li>
       </ul>
     </div>
-    <div class="footer-column" data-testid="footer-column">
+    <div class="footer-column">
       <h3>Account</h3>
       <ul>
-        <li><a href="#" aria-label="My Account">My Account</a></li>
-        <li><a href="#" aria-label="Order History">Order History</a></li>
-        <li><a href="#" aria-label="Wishlist">Wishlist</a></li>
+        <li><a href="#">My Account</a></li>
+        <li><a href="#">Order History</a></li>
+        <li><a href="#">Wishlist</a></li>
       </ul>
     </div>
-    <div class="footer-column" data-testid="footer-column">
+    <div class="footer-column">
       <h3>Legal Information</h3>
       <ul>
-        <li><a href="#" aria-label="Privacy Policy">Privacy Policy</a></li>
-        <li><a href="#" aria-label="Terms & Conditions">Terms & Conditions</a></li>
-        <li><a href="#" aria-label="Return Policy">Return Policy</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms & Conditions</a></li>
+        <li><a href="#">Return Policy</a></li>
       </ul>
     </div>
   </div>
 
-  <hr class="footer-separator" role="separator">
+  <hr class="footer-separator">
 
   <p class="footer-copy">© Copyright. All rights reserved.</p>
 </footer>
