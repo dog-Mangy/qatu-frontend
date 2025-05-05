@@ -56,6 +56,7 @@
 
 <div
 	id={containerId}
+	data-testid={containerId}
 	on:mouseenter={stopAutoSlide}
 	on:mouseleave={startAutoSlide}
 >
@@ -64,6 +65,7 @@
 			class="banner-btn prev"
 			on:click={() => moveSlide(-1)}
 			on:keypress={(e) => handleKeyPress(e, -1)}
+			aria-label="Previous slide"
 		>
 			❮
 		</button>
@@ -76,7 +78,8 @@
 			class="banner-btn next"
 			on:click={() => moveSlide(1)}
 			on:keypress={(e) => handleKeyPress(e, 1)}
-		>
+			aria-label="Next slide"
+			>
 			❯
 		</button>
 		<div class="dots-container">

@@ -25,7 +25,7 @@
         on:input={handleInput}
     />
     <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <i class="fa fa-search search-icon" on:click={handleSearch}></i>
+    <i class="fa fa-search search-icon" role="button" on:click={handleSearch} aria-label="Search"></i>
 </div>
 
 <style>
