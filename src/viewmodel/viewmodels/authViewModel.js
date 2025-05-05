@@ -48,4 +48,20 @@ export const authViewModel = {
 
 		return { error, success };
 	},
+	auth0Login: async () => {
+		try {
+			await authService.loginWithRedirect();
+		}
+		catch (err) {
+			console.error('Social login failed', err);
+		}
+	},
+	auth0Logout: async () => {
+		try {
+			await authService.logout();
+		}
+		catch (err) {
+			console.error('Social logout failed', err);
+		}
+	}
 };
