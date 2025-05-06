@@ -63,5 +63,22 @@ export const authViewModel = {
 		catch (err) {
 			console.error('Social logout failed', err);
 		}
-	}
+	},
+	getUser: async () => {
+		let user = null;
+		try {
+			user = await authService.getUser();
+		} catch (err) {
+			console.error('Failed to get user', err);
+		}
+		return user;
+	},
+	logout: async () => {
+		try {
+			await authService.logout();
+			navigate('/login', { replace: true });
+		} catch (err) {
+			console.error('Logout failed', err);
+		}
+	},
 };
