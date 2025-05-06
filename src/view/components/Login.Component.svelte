@@ -56,6 +56,10 @@
     </p>
 
     <p>
+      <button on:click={() => authViewModel.auth0Login()}> Continue with Auth0</button>
+    </p>
+
+    <p>
       Still don't have an account?
       <button type="button" on:click={goToRegister}>Register</button>
     </p>
