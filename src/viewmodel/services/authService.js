@@ -39,6 +39,7 @@ export const authService = {
 	getUser: async () => {
 		return await auth0.getUser();
 	},
+	
 	getToken: async () => {
 		return await auth0.getTokenSilently();
 	},

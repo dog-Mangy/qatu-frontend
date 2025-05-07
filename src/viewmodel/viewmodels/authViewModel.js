@@ -80,5 +80,5 @@ export const authViewModel = {
 		} catch (err) {
 			console.error('Logout failed', err);
 		}
-	},
+	}
 };
