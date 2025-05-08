@@ -1,3 +1,15 @@
+<script>
+  import { onMount } from 'svelte';
+  import { navigate } from 'svelte-routing';
+
+
+  function goToProfile() {
+    navigate('/profile');
+  }
+
+</script>
+
+
 <footer class="footer">
   <div class="footer-container">
     <div class="footer-column">
@@ -19,7 +31,7 @@
     <div class="footer-column">
       <h3>Account</h3>
       <ul>
-        <li><a href="#">My Account</a></li>
+        <li><a href="/profile">My Account</a></li>
         <li><a href="#">Order History</a></li>
         <li><a href="#">Wishlist</a></li>
       </ul>
