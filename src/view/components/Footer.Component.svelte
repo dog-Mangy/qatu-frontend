@@ -3,33 +3,33 @@
     <div class="footer-column">
       <h3>About Us</h3>
       <ul>
-        <li><a href="#">Who We Are</a></li>
-        <li><a href="#">Join as a Seller</a></li>
-        <li><a href="#">News</a></li>
+        <li><a href="/#">Who We Are</a></li>
+        <li><a href="/#">Join as a Seller</a></li>
+        <li><a href="/#">News</a></li>
       </ul>
     </div>
     <div class="footer-column">
       <h3>Customer Support</h3>
       <ul>
-        <li><a href="#">Help Center</a></li>
-        <li><a href="#">FAQs</a></li>
-        <li><a href="#">Contact Us</a></li>
+        <li><a href="/#">Help Center</a></li>
+        <li><a href="/#">FAQs</a></li>
+        <li><a href="/#">Contact Us</a></li>
       </ul>
     </div>
     <div class="footer-column">
       <h3>Account</h3>
       <ul>
         <li><a href="/#/profile">My Account</a></li>
-        <li><a href="#">Order History</a></li>
-        <li><a href="#">Wishlist</a></li>
+        <li><a href="/#">Order History</a></li>
+        <li><a href="/#">Wishlist</a></li>
       </ul>
     </div>
     <div class="footer-column">
       <h3>Legal Information</h3>
       <ul>
-        <li><a href="#">Privacy Policy</a></li>
-        <li><a href="#">Terms & Conditions</a></li>
-        <li><a href="#">Return Policy</a></li>
+        <li><a href="/#">Privacy Policy</a></li>
+        <li><a href="/#">Terms & Conditions</a></li>
+        <li><a href="/#">Return Policy</a></li>
       </ul>
     </div>
   </div>
