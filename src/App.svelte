@@ -1,9 +1,9 @@
 <script>
 	import Router from "svelte-spa-router";
-	import routes from './view/routes/Router.js';
+	import routes from './lib/view/routes/Router.js';
 
-	import Header from './view/components/Header.svelte';
-	import Footer from './view/components/Footer.Component.svelte';
+	import Header from './lib/view/components/Header.svelte';
+	import Footer from './lib/view/components/Footer.Component.svelte';
 
 	let userRole = 'buyer';
 </script>

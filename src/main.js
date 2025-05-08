@@ -1,7 +1,7 @@
 import { mount } from 'svelte';
 import './app.css';
 import App from './App.svelte';
-import { initAuth0, authService } from './viewmodel/services/authService';
+import { initAuth0, authService } from './lib/viewmodel/services/authService';
 
 async function main() {
   await initAuth0();
