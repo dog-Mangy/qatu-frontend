@@ -1,15 +1,3 @@
-<script>
-  import { onMount } from 'svelte';
-  import { push } from 'svelte-spa-router';
-
-
-  function goToProfile() {
-    push('/profile');
-  }
-
-</script>
-
-
 <footer class="footer">
   <div class="footer-container">
     <div class="footer-column">
