@@ -42,6 +42,7 @@
     }
 
     .search-input {
+        color: black;
         width: 100%;
         padding: 10px 45px 10px 20px;
         border-radius: 999px;
