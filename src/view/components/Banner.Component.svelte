@@ -56,6 +56,7 @@
 
 <div
 	id={containerId}
+	role="region"
 	on:mouseenter={stopAutoSlide}
 	on:mouseleave={startAutoSlide}
 >
