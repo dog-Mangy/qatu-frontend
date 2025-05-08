@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import { authViewModel } from '../../viewmodel/viewmodels/authViewModel'
-  import { navigate } from 'svelte-routing';
+  import { push } from 'svelte-spa-router';
 
   let user = null;
   let loading = true;
@@ -11,7 +11,7 @@
       user = await authViewModel.getUser();
     } catch (err) {
       console.error('Failed to load user:', err);
-      navigate('/login');
+      push('/login');
     } finally {
       loading = false;
     }

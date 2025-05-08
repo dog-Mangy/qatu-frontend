@@ -1,10 +1,10 @@
 <script>
   import { onMount } from 'svelte';
-  import { navigate } from 'svelte-routing';
+  import { push } from 'svelte-spa-router';
 
 
   function goToProfile() {
-    navigate('/profile');
+    push('/profile');
   }
 
 </script>
@@ -31,7 +31,7 @@
     <div class="footer-column">
       <h3>Account</h3>
       <ul>
-        <li><a href="/profile">My Account</a></li>
+        <li><a href="/#/profile">My Account</a></li>
         <li><a href="#">Order History</a></li>
         <li><a href="#">Wishlist</a></li>
       </ul>
