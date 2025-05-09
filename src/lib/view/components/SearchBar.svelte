@@ -11,8 +11,8 @@
 
     function handleSearch() {
         dispatch("search", { query: searchQuery });
-        console.log("Buscando:", searchQuery);
-        alert("Buscando: " + searchQuery);
+        console.log("Searching:", searchQuery);
+        alert("Searching: " + searchQuery);
     }
 </script>
 
@@ -24,8 +24,13 @@
         bind:value={searchQuery}
         on:input={handleInput}
     />
-    <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <i class="fa fa-search search-icon" on:click={handleSearch}></i>
+    <button
+        class="search-icon"
+        on:click={handleSearch}
+        aria-label="Search"
+    >
+        <i class="fa fa-search"></i>
+    </button>
 </div>
 
 <style>
@@ -37,6 +42,7 @@
     }
 
     .search-input {
+        color: black;
         width: 100%;
         padding: 10px 45px 10px 20px;
         border-radius: 999px;

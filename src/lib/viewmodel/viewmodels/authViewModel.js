@@ -1,5 +1,5 @@
+import { push } from 'svelte-spa-router';
 import { authService } from '../services/authService.js';
-import { navigate } from 'svelte-routing';
 
 let timeDelay = 2000;
 
@@ -19,7 +19,7 @@ export const authViewModel = {
 			userData.password = '';
 			userData.confirmPassword = '';
 			setTimeout(() => {
-				navigate('/login', { replace: true });
+				push('/login');
 			}, timeDelay);
 		} catch (err) {
 			error = err.message || 'Registration failed';
@@ -40,7 +40,7 @@ export const authViewModel = {
 			userData.password = '';
 
 			setTimeout(() => {
-				navigate('/', { replace: true });
+				push('/');
 			}, timeDelay);
 		} catch (err) {
 			error = err.message || 'Login failed';
@@ -76,7 +76,7 @@ export const authViewModel = {
 	logout: async () => {
 		try {
 			await authService.logout();
-			navigate('/login', { replace: true });
+			push('/login');
 		} catch (err) {
 			console.error('Logout failed', err);
 		}
