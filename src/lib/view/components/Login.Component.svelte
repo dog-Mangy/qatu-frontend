@@ -1,7 +1,7 @@
 <script>
   import FormInput from "./FormInput.Component.svelte";
   import { authViewModel } from "../../viewmodel/viewmodels/authViewModel";
-  import { navigate } from "svelte-routing";
+  import { push } from "svelte-spa-router";
 
   let email = "";
   let password = "";
@@ -18,7 +18,7 @@
   }
 
   function goToRegister() {
-    navigate("/register");
+    push("/register");
   }
 </script>
 
