@@ -8,6 +8,8 @@
 	let autoSlideInterval;
 	const slideDuration = 5000;
 
+	let disableAutoSlide = false;
+	
 	$: displayedImage = {
 		src: images[currentIndex],
 		alt: `Banner Image ${currentIndex + 1}`,
@@ -36,6 +38,7 @@
 	}
 
 	function startAutoSlide() {
+		if (disableAutoSlide) return;
 		stopAutoSlide();
 		autoSlideInterval = setInterval(() => {
 			moveSlide(1);
@@ -65,6 +68,7 @@
 			class="banner-btn prev"
 			on:click={() => moveSlide(-1)}
 			on:keypress={(e) => handleKeyPress(e, -1)}
+			aria-label="Previous slide"
 		>
 			❮
 		</button>
@@ -77,6 +81,7 @@
 			class="banner-btn next"
 			on:click={() => moveSlide(1)}
 			on:keypress={(e) => handleKeyPress(e, 1)}
+			aria-label="Next slide"
 		>
 			❯
 		</button>
@@ -89,6 +94,7 @@
 					on:keypress={(e) => handleDotKeyPress(e, index)}
 					role="button"
 					tabindex="0"
+					aria-label={`Go to slide ${index + 1}`}
 				></span>
 			{/each}
 		</div>
