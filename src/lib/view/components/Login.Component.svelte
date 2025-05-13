@@ -33,7 +33,7 @@
       <p class="success-message">{success}</p>
     {/if}
 
-    <form on:submit={handleLogin}>
+    <form on:submit={handleLogin} aria-label="Login form">
       <FormInput
         id="email"
         type="email"
