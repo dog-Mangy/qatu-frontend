@@ -1,0 +1,7 @@
+stages:
+  - frontend_stage
+
+frontend_job:
+  stage: frontend_stage
+  script:
+    - echo "Hello World from Frontend"
