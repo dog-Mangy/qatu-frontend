@@ -1,5 +1,6 @@
 import { render } from "@testing-library/svelte";
 import FormInput from "../FormInput.Component.svelte";
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 describe("FormInput Component", () => {
     it("should render text input by default", () => {
