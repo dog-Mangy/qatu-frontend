@@ -38,7 +38,7 @@
       <p class="success-message">{success}</p>
     {/if}
 
-    <form on:submit={handleRegister}>
+    <form on:submit={handleRegister} data-testid="register-form">      
       <FormInput id="name" placeholder="Name" bind:value={name} required />
       <FormInput
         id="lastName"
