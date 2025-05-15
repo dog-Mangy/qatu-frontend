@@ -101,7 +101,7 @@
   margin-top: 10px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .footer-container {
     grid-template-columns: repeat(2, 1fr);
   }

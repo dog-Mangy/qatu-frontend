@@ -36,7 +36,7 @@
 <style>
     .search-container {
         position: relative;
-        width: 500px;
+        width: 550px;
         margin-top: 8px;
         margin-right: 16px;
     }
@@ -45,7 +45,7 @@
         color: black;
         width: 100%;
         padding: 10px 45px 10px 20px;
-        border-radius: 999px;
+        border-radius: 8px;
         font-size: 17px;
         border: 1px solid #ccc;
         outline: none;
