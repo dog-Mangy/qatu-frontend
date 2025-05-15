@@ -16,6 +16,6 @@ export default defineConfig({
     },
   },
   resolve: {
-    conditions: ['browser']
-  }
+    conditions: ['browser'],
+  },
 });

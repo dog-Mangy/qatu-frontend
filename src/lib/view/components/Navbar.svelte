@@ -1,26 +1,26 @@
 <script>
-  import { slide } from "svelte/transition";
-  export let userRole = "buyer";
+  import { slide } from 'svelte/transition';
+  export let userRole = 'buyer';
   let isOpen = false;
 
   const linksByRole = {
     buyer: [
-      { name: "Home", href: "/#/" },
-      { name: "Stores", href: "#" },
-      { name: "Products", href: "/#/" },
-      { name: "Chats", href: "#" },
-      { name: "Login", href: "/#/login" },
+      { name: 'Home', href: '/#/' },
+      { name: 'Stores', href: '#' },
+      { name: 'Products', href: '/#/' },
+      { name: 'Chats', href: '#' },
+      { name: 'Login', href: '/#/login' },
     ],
     seller: [
-      { name: "Home", href: "/#/" },
-      { name: "My Store", href: "#" },
-      { name: "Chats", href: "#" },
-      { name: "Login", href: "/#/login" },
+      { name: 'Home', href: '/#/' },
+      { name: 'My Store', href: '#' },
+      { name: 'Chats', href: '#' },
+      { name: 'Login', href: '/#/login' },
     ],
     admin: [
-      { name: "Home", href: "/#/" },
-      { name: "Requests", href: "#" },
-      { name: "Login", href: "/#/login" },
+      { name: 'Home', href: '/#/' },
+      { name: 'Requests', href: '#' },
+      { name: 'Login', href: '/#/login' },
     ],
   };
 
