@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/svelte';
-import Products from '../ProductsList.Component.svelte';
+import ProductsList from '../ProductsList.Component.svelte';
 import { describe, expect, it } from 'vitest';
 
-describe('Products Component', () => {
+describe('ProductsList Component', () => {
   const mockProducts = [
     {
       id: 1,
@@ -21,12 +21,12 @@ describe('Products Component', () => {
   ];
 
   it('should render the products title', () => {
-    render(Products);
+    render(ProductsList);
     expect(screen.getByText('Products')).toBeInTheDocument();
   });
 
-  it('should render product images with correct attributes', () => {
-    render(Products, { props: { products: mockProducts } });
+  it('should render product cards with correct images', () => {
+    render(ProductsList, { props: { products: mockProducts } });
 
     const images = screen.getAllByRole('img');
     expect(images).toHaveLength(mockProducts.length);
