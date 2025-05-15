@@ -19,27 +19,53 @@ describe('Footer Component', () => {
   });
 
   it('should render correct column headings', () => {
-    expect(screen.getByRole('heading', { name: 'About Us' })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Customer Support' })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Account' })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Legal Information' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { name: 'About Us' })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { name: 'Customer Support' })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { name: 'Account' })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { name: 'Legal Information' })
+    ).toBeInTheDocument();
   });
 
   it('should render all links in each column', () => {
-    expect(screen.getByRole('link', { name: 'Who We Are' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Join as a Seller' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: 'Who We Are' })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: 'Join as a Seller' })
+    ).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'News' })).toBeInTheDocument();
 
-    expect(screen.getByRole('link', { name: 'Help Center' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: 'Help Center' })
+    ).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'FAQs' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Contact Us' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: 'Contact Us' })
+    ).toBeInTheDocument();
 
-    expect(screen.getByRole('link', { name: 'My Account' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Order History' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: 'My Account' })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: 'Order History' })
+    ).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Wishlist' })).toBeInTheDocument();
 
-    expect(screen.getByRole('link', { name: 'Privacy Policy' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Terms & Conditions' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Return Policy' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: 'Privacy Policy' })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: 'Terms & Conditions' })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: 'Return Policy' })
+    ).toBeInTheDocument();
   });
 });
