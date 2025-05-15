@@ -1,17 +1,17 @@
 <script>
-  import FormInput from "./FormInput.Component.svelte";
-  import { authViewModel } from "../../viewmodel/viewmodels/authViewModel.js";
+  import FormInput from './FormInput.Component.svelte';
+  import { authViewModel } from '../../viewmodel/viewmodels/authViewModel.js';
 
-  let name = "";
-  let lastName = "";
-  let email = "";
-  let identificationDocument = "";
-  let phoneNumber = "";
-  let password = "";
-  let confirmPassword = "";
+  let name = '';
+  let lastName = '';
+  let email = '';
+  let identificationDocument = '';
+  let phoneNumber = '';
+  let password = '';
+  let confirmPassword = '';
 
-  let error = "";
-  let success = "";
+  let error = '';
+  let success = '';
 
   async function handleRegister(event) {
     event.preventDefault();
@@ -38,7 +38,7 @@
       <p class="success-message">{success}</p>
     {/if}
 
-    <form on:submit={handleRegister} data-testid="register-form">      
+    <form on:submit={handleRegister} data-testid="register-form">
       <FormInput id="name" placeholder="Name" bind:value={name} required />
       <FormInput
         id="lastName"
