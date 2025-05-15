@@ -28,12 +28,15 @@
 </script>
 
 <div class="navbar-container">
-
   <nav class="navbar">
     <!-- Logo -->
     <div class="navbar-brand">
       <a href="/">
-        <img src="https://i.ibb.co/gbgX7HSw/Chat-GPT-Image-27-abr-2025-10-39-02-a-m.png" alt="Qatu Logo" class="logo" />
+        <img
+          src="https://i.ibb.co/gbgX7HSw/Chat-GPT-Image-27-abr-2025-10-39-02-a-m.png"
+          alt="Qatu Logo"
+          class="logo"
+        />
       </a>
     </div>
 
@@ -70,7 +73,7 @@
     background: #3f028f;
     width: 100%;
     display: flex;
-    justify-content: center; 
+    justify-content: center;
   }
 
   .navbar {
@@ -108,7 +111,6 @@
     height: 50px;
     width: auto;
   }
-
 
   .navbar-actions {
     margin-top: 16px;

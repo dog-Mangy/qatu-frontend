@@ -1,141 +1,145 @@
 <script>
-    import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher } from 'svelte';
 
-    const dispatch = createEventDispatcher();
-    let searchQuery = "";
-    let selectedCategory = "";
-    let priceMin = "";
-    let priceMax = "";
-    let selectedRating = 0;
+  const dispatch = createEventDispatcher();
+  let searchQuery = '';
+  let selectedCategory = '';
+  let priceMin = '';
+  let priceMax = '';
+  let selectedRating = 0;
 
-    let showDropdown = false;
-    let showRatingDropdown = false;
+  let showDropdown = false;
+  let showRatingDropdown = false;
 
+  const categories = [
+    'All Categories',
+    'Books',
+    'Electronics',
+    'Clothing',
+    'Furniture',
+  ];
 
-    const categories = ["All Categories", "Books", "Electronics", "Clothing", "Furniture"];
+  function selectCategory(category) {
+    selectedCategory = category;
+    showDropdown = false;
+    dispatchSearch();
+  }
 
-    function selectCategory(category) {
-        selectedCategory = category;
-        showDropdown = false;
-        dispatchSearch();
-    }
-
-    function selectRating(rating) {
+  function selectRating(rating) {
     selectedRating = rating;
     dispatchSearch();
-    }
+  }
 
-    function dispatchSearch() {
-        dispatch("search", {
-            query: searchQuery,
-            category: selectedCategory,
-            rating: selectedRating,
-            minPrice: priceMin,
-            maxPrice: priceMax
-        });
-    }
+  function dispatchSearch() {
+    dispatch('search', {
+      query: searchQuery,
+      category: selectedCategory,
+      rating: selectedRating,
+      minPrice: priceMin,
+      maxPrice: priceMax,
+    });
+  }
 </script>
 
 <div class="filters-container">
-    <div class="filter-group">
-
-        <div
-        class="dropdown"
-        role="button"
-        tabindex="0"
-        on:click={() => showDropdown = !showDropdown}
-        on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && (showDropdown = !showDropdown)}
-        >
-            <div class="dropdown-label">
-                {selectedCategory || "Categorías"} ⬇
-            </div>
-            {#if showDropdown}
-                <ul class="dropdown-menu">
-                    {#each categories as category}
-                        <li
-                            role="option"
-                            tabindex="0"
-                            aria-selected={selectedCategory === category}
-                            on:click={() => selectCategory(category)}
-                            on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && selectCategory(category)}
-                            >
-                            {category}
-                        </li>
-
-                    {/each}
-                </ul>
-            {/if}
-        </div>
-
-
-        <div
-        class="dropdown rating"
-        role="button"
-        tabindex="0"
-        on:click={() => showRatingDropdown = !showRatingDropdown}
-        on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && (showRatingDropdown = !showRatingDropdown)}
-        >
-            <div class="dropdown-label">
-                {selectedRating > 0 ? `Rating: ${selectedRating}★` : "Rating"}
-            </div>
-            {#if showRatingDropdown}
-                <div class="dropdown-menu rating-menu">
-                    <div class="rating-filter">
-                        {#each Array(5) as _, index}
-                            <span
-                                role="button"
-                                tabindex="0"
-                                class="star {index < selectedRating ? 'filled' : ''}"
-                                on:click={() => {
-                                    selectRating(index + 1);
-                                    showRatingDropdown = false;
-                                }}
-                                on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && (
-                                    selectRating(index + 1),
-                                    showRatingDropdown = false
-                                )}
-                            >
-                                ★
-                            </span>
-                        {/each}
-                    </div>
-                </div>
-            {/if}
-        </div>
-
-
-
-        <input
-            type="number"
-            placeholder="Min Price"
-            class="dropdown-input"
-            bind:value={priceMin}
-            on:input={dispatchSearch}
-        />
-        <input
-            type="number"
-            placeholder="Max Price"
-            class="dropdown-input second-input"
-            bind:value={priceMax}
-            on:input={dispatchSearch}
-        />
+  <div class="filter-group">
+    <div
+      class="dropdown"
+      role="button"
+      tabindex="0"
+      on:click={() => (showDropdown = !showDropdown)}
+      on:keydown={e =>
+        (e.key === 'Enter' || e.key === ' ') && (showDropdown = !showDropdown)}
+    >
+      <div class="dropdown-label">
+        {selectedCategory || 'Categorías'} ⬇
+      </div>
+      {#if showDropdown}
+        <ul class="dropdown-menu">
+          {#each categories as category}
+            <li
+              role="option"
+              tabindex="0"
+              aria-selected={selectedCategory === category}
+              on:click={() => selectCategory(category)}
+              on:keydown={e =>
+                (e.key === 'Enter' || e.key === ' ') &&
+                selectCategory(category)}
+            >
+              {category}
+            </li>
+          {/each}
+        </ul>
+      {/if}
     </div>
+
+    <div
+      class="dropdown rating"
+      role="button"
+      tabindex="0"
+      on:click={() => (showRatingDropdown = !showRatingDropdown)}
+      on:keydown={e =>
+        (e.key === 'Enter' || e.key === ' ') &&
+        (showRatingDropdown = !showRatingDropdown)}
+    >
+      <div class="dropdown-label">
+        {selectedRating > 0 ? `Rating: ${selectedRating}★` : 'Rating'}
+      </div>
+      {#if showRatingDropdown}
+        <div class="dropdown-menu rating-menu">
+          <div class="rating-filter">
+            {#each Array(5) as _, index}
+              <span
+                role="button"
+                tabindex="0"
+                class="star {index < selectedRating ? 'filled' : ''}"
+                on:click={() => {
+                  selectRating(index + 1);
+                  showRatingDropdown = false;
+                }}
+                on:keydown={e =>
+                  (e.key === 'Enter' || e.key === ' ') &&
+                  (selectRating(index + 1), (showRatingDropdown = false))}
+              >
+                ★
+              </span>
+            {/each}
+          </div>
+        </div>
+      {/if}
+    </div>
+
+    <input
+      type="number"
+      placeholder="Min Price"
+      class="dropdown-input"
+      bind:value={priceMin}
+      on:input={dispatchSearch}
+    />
+    <input
+      type="number"
+      placeholder="Max Price"
+      class="dropdown-input second-input"
+      bind:value={priceMax}
+      on:input={dispatchSearch}
+    />
+  </div>
 </div>
 
 <style>
-    .filters-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        align-items: center;
-    }
-    .filter-group {
-        display: flex;
-        gap: 8px;
-        flex-wrap: wrap;
-    }
+  .filters-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+  }
+  .filter-group {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
 
-    .dropdown {
+  .dropdown {
     position: relative;
     cursor: pointer;
     padding: 2px 5px;
@@ -143,31 +147,30 @@
     min-width: 150px;
     font-size: 16px;
     color: white;
-    }
+  }
 
-    .rating {
-        min-width: 90px;
-    }
+  .rating {
+    min-width: 90px;
+  }
 
-    .rating-filter {
-        display: flex;
-        gap: 4px;
-        cursor: pointer;
-        color: white;
-    }
+  .rating-filter {
+    display: flex;
+    gap: 4px;
+    cursor: pointer;
+    color: white;
+  }
 
-    .star {
-        font-size: 20px;
-        color: #ccc;
-        transition: color 0.2s;
-    }
+  .star {
+    font-size: 20px;
+    color: #ccc;
+    transition: color 0.2s;
+  }
 
-    .star.filled {
-        color: gold;
-    }
+  .star.filled {
+    color: gold;
+  }
 
-
-   .dropdown-input{
+  .dropdown-input {
     position: relative;
     cursor: pointer;
     padding: 2px 16px;
@@ -175,19 +178,19 @@
     max-width: 115px;
     font-size: 16px;
     color: white;
-    background-color: transparent; 
+    background-color: transparent;
     border: none;
-   }
+  }
 
-   .second-input{
+  .second-input {
     margin-right: 50px;
-   }
+  }
 
-   .dropdown-input::placeholder {
+  .dropdown-input::placeholder {
     color: white;
     opacity: 1;
-}
-.dropdown-menu {
+  }
+  .dropdown-menu {
     position: absolute;
     top: 100%;
     left: 0;
@@ -199,25 +202,23 @@
     padding: 0;
     z-index: 10;
     width: 100%;
-}
+  }
 
-    .dropdown-menu li {
-        padding: 10px;
-        cursor: pointer;
+  .dropdown-menu li {
+    padding: 10px;
+    cursor: pointer;
+  }
+
+  .dropdown-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  @media screen and (max-width: 600px) {
+    .filters-container {
+      flex-direction: column;
+      align-items: stretch;
     }
-
-
-    .dropdown-label {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-
-    @media screen and (max-width: 600px) {
-        .filters-container {
-            flex-direction: column;
-            align-items: stretch;
-        }
-    }
+  }
 </style>

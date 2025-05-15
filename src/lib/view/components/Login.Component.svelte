@@ -1,13 +1,13 @@
 <script>
-  import FormInput from "./FormInput.Component.svelte";
-  import { authViewModel } from "../../viewmodel/viewmodels/authViewModel";
-  import { push } from "svelte-spa-router";
+  import FormInput from './FormInput.Component.svelte';
+  import { authViewModel } from '../../viewmodel/viewmodels/authViewModel';
+  import { push } from 'svelte-spa-router';
 
-  let email = "";
-  let password = "";
+  let email = '';
+  let password = '';
 
-  let error = "";
-  let success = "";
+  let error = '';
+  let success = '';
 
   async function handleLogin(event) {
     event.preventDefault();
@@ -18,7 +18,7 @@
   }
 
   function goToRegister() {
-    push("/register");
+    push('/register');
   }
 </script>
 
@@ -56,7 +56,9 @@
     </p>
 
     <p>
-      <button on:click={() => authViewModel.auth0Login()}> Continue with Auth0</button>
+      <button on:click={() => authViewModel.auth0Login()}>
+        Continue with Auth0</button
+      >
     </p>
 
     <p>

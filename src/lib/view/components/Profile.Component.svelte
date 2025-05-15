@@ -1,6 +1,6 @@
 <script>
   import { onMount } from 'svelte';
-  import { authViewModel } from '../../viewmodel/viewmodels/authViewModel'
+  import { authViewModel } from '../../viewmodel/viewmodels/authViewModel';
   import { push } from 'svelte-spa-router';
 
   let user = null;
