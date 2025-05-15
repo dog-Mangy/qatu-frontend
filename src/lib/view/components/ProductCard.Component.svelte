@@ -107,7 +107,8 @@
     margin-top: 1rem;
     display: flex;
     gap: 0.5rem;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    justify-content: center;
   }
 
   .view-product-btn,
