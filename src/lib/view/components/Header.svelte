@@ -1,6 +1,7 @@
 <script>
   import SearchBar from './SearchBar.svelte';
   import Navbar from './Navbar.svelte';
+  import CategoryFilters from './Filter.Component.svelte';
   import { onMount } from 'svelte';
 
   export let userRole;
@@ -38,8 +39,13 @@
 
     <!-- SearchBar -->
     {#if isDesktop || searchOpen}
-      <div class="navbar-search">
-        <SearchBar />
+      <div class="navbar-search-area">
+        <div class="navbar-search">
+          <SearchBar />
+        </div>
+        <div class="navbar-filter">
+          <CategoryFilters />
+        </div>
       </div>
     {/if}
 
@@ -73,7 +79,6 @@
     padding: 10px 20px;
     border-radius: 15px;
     display: flex;
-    align-items: center;
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 10px;
@@ -81,27 +86,32 @@
     width: 100%;
   }
 
-  .navbar-brand {
+  .navbar-search-area {
     display: flex;
-    align-items: center;
-    flex: 0 0 auto;
+    flex-direction: column;
+    flex-grow: 1;
+    margin: 0 10px;
+  }
+
+  .navbar-search {
+    display: flex;
+    justify-content: center;
+  }
+
+  .navbar-filter {
+    display: flex;
+    justify-content: center;
   }
 
   .logo {
+    margin-top: 5px;
     height: 50px;
     width: auto;
   }
 
-  .navbar-search {
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
-    margin: 10px 0;
-  }
 
   .navbar-actions {
-    display: flex;
-    align-items: center;
+    margin-top: 16px;
     flex: 0 0 auto;
     gap: 10px;
   }
