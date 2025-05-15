@@ -2,7 +2,6 @@ import { render, fireEvent, screen } from '@testing-library/svelte';
 import Login from '../Login.Component.svelte';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { authViewModel } from '../../../viewmodel/viewmodels/authViewModel';
-import { push } from 'svelte-spa-router';
 
 vi.mock('svelte-spa-router', () => ({
   push: vi.fn(),
@@ -89,10 +88,11 @@ describe('Login Component', () => {
     });
   });
 
-  it('navigates to register page when register button is clicked', async () => {
+  it('has a link to register page', async () => {
     render(Login);
-    await fireEvent.click(screen.getByRole('button', { name: 'Register' }));
-    expect(push).toHaveBeenCalledWith('/register');
+    const link = screen.getByRole('link', { name: 'Register' });
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute('href', '/#/register');
   });
 
   it('calls auth0Login when Auth0 button is clicked', async () => {
