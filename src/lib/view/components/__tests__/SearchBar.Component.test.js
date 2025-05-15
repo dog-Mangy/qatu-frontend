@@ -1,14 +1,6 @@
 import { render, fireEvent, screen } from '@testing-library/svelte';
 import SearchBar from '../SearchBar.svelte';
-import {
-  afterEach,
-  beforeAll,
-  beforeEach,
-  describe,
-  expect,
-  it,
-  vi,
-} from 'vitest';
+import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 
 describe('SearchBar Component', () => {
   beforeAll(() => {

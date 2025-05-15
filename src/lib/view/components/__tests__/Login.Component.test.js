@@ -1,6 +1,6 @@
 import { render, fireEvent, screen } from '@testing-library/svelte';
 import Login from '../Login.Component.svelte';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { authViewModel } from '../../../viewmodel/viewmodels/authViewModel';
 import { push } from 'svelte-spa-router';
 

@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/svelte';
 import Products from '../ProductsList.Component.svelte';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 describe('Products Component', () => {
   const mockProducts = [
