@@ -39,33 +39,62 @@
 <div class="filters-container">
     <div class="filter-group">
 
-        <div class="dropdown" on:click={() => showDropdown = !showDropdown}>
+        <div
+        class="dropdown"
+        role="button"
+        tabindex="0"
+        on:click={() => showDropdown = !showDropdown}
+        on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && (showDropdown = !showDropdown)}
+        >
             <div class="dropdown-label">
                 {selectedCategory || "Categorías"} ⬇
             </div>
             {#if showDropdown}
                 <ul class="dropdown-menu">
                     {#each categories as category}
-                        <li on:click={() => selectCategory(category)}>{category}</li>
+                        <li
+                            role="option"
+                            tabindex="0"
+                            aria-selected={selectedCategory === category}
+                            on:click={() => selectCategory(category)}
+                            on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && selectCategory(category)}
+                            >
+                            {category}
+                        </li>
+
                     {/each}
                 </ul>
             {/if}
         </div>
 
-        <div class="dropdown rating" on:click={() => showRatingDropdown = !showRatingDropdown}>
+
+        <div
+        class="dropdown rating"
+        role="button"
+        tabindex="0"
+        on:click={() => showRatingDropdown = !showRatingDropdown}
+        on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && (showRatingDropdown = !showRatingDropdown)}
+        >
             <div class="dropdown-label">
-                {selectedRating > 0 ? `Rating: ${selectedRating}★` : "Rating"} 
+                {selectedRating > 0 ? `Rating: ${selectedRating}★` : "Rating"}
             </div>
             {#if showRatingDropdown}
                 <div class="dropdown-menu rating-menu">
                     <div class="rating-filter">
                         {#each Array(5) as _, index}
-                            <span 
-                                class="star {index < selectedRating ? 'filled' : ''}" 
+                            <span
+                                role="button"
+                                tabindex="0"
+                                class="star {index < selectedRating ? 'filled' : ''}"
                                 on:click={() => {
                                     selectRating(index + 1);
                                     showRatingDropdown = false;
-                                }}>
+                                }}
+                                on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && (
+                                    selectRating(index + 1),
+                                    showRatingDropdown = false
+                                )}
+                            >
                                 ★
                             </span>
                         {/each}
