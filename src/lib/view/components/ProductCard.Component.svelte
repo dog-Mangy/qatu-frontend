@@ -16,12 +16,25 @@
     <p class="product-description">{product.description}</p>
     <div class="product-footer">
       <span class="product-price">${product.price.toFixed(2)}</span>
+    </div>
+    <div class="product-actions">
       <button
-        class="add-to-cart-btn"
+        class="view-product-btn"
         type="button"
-        aria-label={`Add ${product.name} to cart`}
+        aria-label={`View ${product.name} in store`}
+        on:click={() =>
+          (window.location.href = `/#/store/${product.id_Store}/product/${product.id}`)}
       >
-        Add to Cart
+        View Product
+      </button>
+
+      <button
+        class="chat-seller-btn"
+        type="button"
+        aria-label={`Chat with seller of ${product.name}`}
+        on:click={() => alert('Chat with seller feature coming soon')}
+      >
+        Chat with Seller
       </button>
     </div>
   </div>
@@ -90,19 +103,31 @@
     font-size: 1rem;
   }
 
-  .add-to-cart-btn {
+  .product-actions {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .view-product-btn,
+  .chat-seller-btn {
     background-color: #3f028f;
     color: white;
     border: none;
     padding: 0.4rem 0.8rem;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
     font-size: 0.85rem;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
   }
 
-  .add-to-cart-btn:hover,
-  .add-to-cart-btn:focus {
+  .chat-seller-btn:hover,
+  .view-product-btn:hover,
+  .chat-seller-btn:focus,
+  .view-product-btn:focus {
     background-color: #6d00fc;
     outline: none;
   }
