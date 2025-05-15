@@ -37,12 +37,13 @@ describe('ProductCard Component', () => {
     ).toBeInTheDocument();
   });
 
-  it('should render add to cart button with correct aria-label', () => {
+  it('should render chat with seller button with correct aria-label', () => {
     render(ProductCard, { props: { product: mockProduct } });
-    const button = screen.getByRole('button', {
-      name: `Add ${mockProduct.name} to cart`,
+
+    const chatButton = screen.getByRole('button', {
+      name: `Chat with seller of ${mockProduct.name}`,
     });
-    expect(button).toBeInTheDocument();
-    expect(button).toHaveTextContent('Add to Cart');
+
+    expect(chatButton).toBeInTheDocument();
   });
 });
