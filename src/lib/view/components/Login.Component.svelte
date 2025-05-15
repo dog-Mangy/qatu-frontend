@@ -1,7 +1,6 @@
 <script>
   import FormInput from './FormInput.Component.svelte';
   import { authViewModel } from '../../viewmodel/viewmodels/authViewModel';
-  import { push } from 'svelte-spa-router';
 
   let email = '';
   let password = '';
@@ -15,10 +14,6 @@
       email,
       password,
     }));
-  }
-
-  function goToRegister() {
-    push('/register');
   }
 </script>
 
@@ -63,7 +58,7 @@
 
     <p>
       Still don't have an account?
-      <button type="button" on:click={goToRegister}>Register</button>
+      <a href="/#/register">Register</a>
     </p>
   </div>
 </div>
