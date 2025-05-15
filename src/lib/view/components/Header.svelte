@@ -96,7 +96,6 @@
   .navbar-search {
     display: flex;
     justify-content: center;
-    margin-bottom: 5px;
   }
 
   .navbar-filter {
