@@ -6,10 +6,12 @@
   let selectedCategory = '';
   let priceMin = '';
   let priceMax = '';
-  let selectedRating = 0;
+  let minRating = 0;
+  let maxRating = 0;
 
   let showDropdown = false;
-  let showRatingDropdown = false;
+  let showMinRatingDropdown = false;
+  let showMaxRatingDropdown = false;
 
   const categories = [
     'All Categories',
@@ -25,8 +27,19 @@
     dispatchSearch();
   }
 
-  function selectRating(rating) {
-    selectedRating = rating;
+  function selectMinRating(rating) {
+    minRating = rating;
+    if (maxRating > 0 && minRating > maxRating) {
+      maxRating = minRating;
+    }
+    dispatchSearch();
+  }
+
+  function selectMaxRating(rating) {
+    maxRating = rating;
+    if (minRating > 0 && maxRating < minRating) {
+      minRating = maxRating;
+    }
     dispatchSearch();
   }
 
@@ -34,7 +47,8 @@
     dispatch('search', {
       query: searchQuery,
       category: selectedCategory,
-      rating: selectedRating,
+      minRating,
+      maxRating,
       minPrice: priceMin,
       maxPrice: priceMax,
     });
@@ -77,29 +91,65 @@
       class="dropdown rating"
       role="button"
       tabindex="0"
-      on:click={() => (showRatingDropdown = !showRatingDropdown)}
+      on:click={() => (showMinRatingDropdown = !showMinRatingDropdown)}
       on:keydown={e =>
         (e.key === 'Enter' || e.key === ' ') &&
-        (showRatingDropdown = !showRatingDropdown)}
+        (showMinRatingDropdown = !showMinRatingDropdown)}
     >
       <div class="dropdown-label">
-        {selectedRating > 0 ? `Rating: ${selectedRating}★` : 'Rating'}
+        {minRating > 0 ? `Min: ${minRating}★` : 'Min Rating'}
       </div>
-      {#if showRatingDropdown}
+      {#if showMinRatingDropdown}
         <div class="dropdown-menu rating-menu">
           <div class="rating-filter">
             {#each Array(5) as _, index}
               <span
                 role="button"
                 tabindex="0"
-                class="star {index < selectedRating ? 'filled' : ''}"
+                class="star {index < minRating ? 'filled' : ''}"
                 on:click={() => {
-                  selectRating(index + 1);
-                  showRatingDropdown = false;
+                  selectMinRating(index + 1);
+                  showMinRatingDropdown = false;
                 }}
                 on:keydown={e =>
                   (e.key === 'Enter' || e.key === ' ') &&
-                  (selectRating(index + 1), (showRatingDropdown = false))}
+                  (selectMinRating(index + 1), (showMinRatingDropdown = false))}
+              >
+                ★
+              </span>
+            {/each}
+          </div>
+        </div>
+      {/if}
+    </div>
+
+    <div
+      class="dropdown rating"
+      role="button"
+      tabindex="0"
+      on:click={() => (showMaxRatingDropdown = !showMaxRatingDropdown)}
+      on:keydown={e =>
+        (e.key === 'Enter' || e.key === ' ') &&
+        (showMaxRatingDropdown = !showMaxRatingDropdown)}
+    >
+      <div class="dropdown-label">
+        {maxRating > 0 ? `Max: ${maxRating}★` : 'Max Rating'}
+      </div>
+      {#if showMaxRatingDropdown}
+        <div class="dropdown-menu rating-menu">
+          <div class="rating-filter">
+            {#each Array(5) as _, index}
+              <span
+                role="button"
+                tabindex="0"
+                class="star {index < maxRating ? 'filled' : ''}"
+                on:click={() => {
+                  selectMaxRating(index + 1);
+                  showMaxRatingDropdown = false;
+                }}
+                on:keydown={e =>
+                  (e.key === 'Enter' || e.key === ' ') &&
+                  (selectMaxRating(index + 1), (showMaxRatingDropdown = false))}
               >
                 ★
               </span>
