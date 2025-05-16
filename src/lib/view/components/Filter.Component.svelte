@@ -8,10 +8,14 @@
   let priceMax = '';
   let minRating = 0;
   let maxRating = 0;
+  let sortBy = 'Name';
+  let ascending = true;
 
   let showDropdown = false;
   let showMinRatingDropdown = false;
   let showMaxRatingDropdown = false;
+  let showSortByDropdown = false;
+  let showOrderDropdown = false;
 
   const categories = [
     'All Categories',
@@ -19,6 +23,17 @@
     'Electronics',
     'Clothing',
     'Furniture',
+  ];
+
+  const sortByOptions = [
+    { field: 'Price', label: 'Price' },
+    { field: 'Name', label: 'Name' },
+    { field: 'Rating', label: 'Rating' },
+  ];
+
+  const orderOptions = [
+    { value: true, label: 'Ascending' },
+    { value: false, label: 'Descending' },
   ];
 
   function selectCategory(category) {
@@ -43,6 +58,18 @@
     dispatchSearch();
   }
 
+  function selectSortBy(field) {
+    sortBy = field;
+    showSortByDropdown = false;
+    dispatchSearch();
+  }
+
+  function selectOrder(value) {
+    ascending = value;
+    showOrderDropdown = false;
+    dispatchSearch();
+  }
+
   function dispatchSearch() {
     dispatch('search', {
       query: searchQuery,
@@ -51,12 +78,15 @@
       maxRating,
       minPrice: priceMin,
       maxPrice: priceMax,
+      sortBy,
+      ascending,
     });
   }
 </script>
 
 <div class="filters-container">
   <div class="filter-group">
+    <!-- Category Dropdown -->
     <div
       class="dropdown"
       role="button"
@@ -66,7 +96,7 @@
         (e.key === 'Enter' || e.key === ' ') && (showDropdown = !showDropdown)}
     >
       <div class="dropdown-label">
-        {selectedCategory || 'Categorías'} ⬇
+        {selectedCategory || 'Categoríes'} ⬇
       </div>
       {#if showDropdown}
         <ul class="dropdown-menu">
@@ -87,6 +117,7 @@
       {/if}
     </div>
 
+    <!-- Min Rating Dropdown -->
     <div
       class="dropdown rating"
       role="button"
@@ -123,6 +154,7 @@
       {/if}
     </div>
 
+    <!-- Max Rating Dropdown -->
     <div
       class="dropdown rating"
       role="button"
@@ -159,6 +191,7 @@
       {/if}
     </div>
 
+    <!-- Price Inputs -->
     <input
       type="number"
       placeholder="Min Price"
@@ -173,6 +206,70 @@
       bind:value={priceMax}
       on:input={dispatchSearch}
     />
+
+    <!-- Sort By Dropdown -->
+    <div
+      class="dropdown"
+      role="button"
+      tabindex="0"
+      on:click={() => (showSortByDropdown = !showSortByDropdown)}
+      on:keydown={e =>
+        (e.key === 'Enter' || e.key === ' ') &&
+        (showSortByDropdown = !showSortByDropdown)}
+    >
+      <div class="dropdown-label">
+        Sort by: {sortBy} ⬇
+      </div>
+      {#if showSortByDropdown}
+        <ul class="dropdown-menu">
+          {#each sortByOptions as option}
+            <li
+              role="option"
+              tabindex="0"
+              aria-selected={sortBy === option.field}
+              on:click={() => selectSortBy(option.field)}
+              on:keydown={e =>
+                (e.key === 'Enter' || e.key === ' ') &&
+                selectSortBy(option.field)}
+            >
+              {option.label}
+            </li>
+          {/each}
+        </ul>
+      {/if}
+    </div>
+
+    <!-- Order Dropdown -->
+    <div
+      class="dropdown"
+      role="button"
+      tabindex="0"
+      on:click={() => (showOrderDropdown = !showOrderDropdown)}
+      on:keydown={e =>
+        (e.key === 'Enter' || e.key === ' ') &&
+        (showOrderDropdown = !showOrderDropdown)}
+    >
+      <div class="dropdown-label">
+        {ascending ? 'Ascending' : 'Descending'} ⬇
+      </div>
+      {#if showOrderDropdown}
+        <ul class="dropdown-menu">
+          {#each orderOptions as option}
+            <li
+              role="option"
+              tabindex="0"
+              aria-selected={ascending === option.value}
+              on:click={() => selectOrder(option.value)}
+              on:keydown={e =>
+                (e.key === 'Enter' || e.key === ' ') &&
+                selectOrder(option.value)}
+            >
+              {option.label}
+            </li>
+          {/each}
+        </ul>
+      {/if}
+    </div>
   </div>
 </div>
 
