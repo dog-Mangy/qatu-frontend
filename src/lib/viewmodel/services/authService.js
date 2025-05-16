@@ -45,7 +45,7 @@ export const authService = {
   logout: () => {
     auth0.logout({
       logoutParams: {
-        returnTo: window.location.origin,
+        returnTo: `${window.location.origin}/#/login`, 
       },
     });
   },
