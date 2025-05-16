@@ -12,7 +12,7 @@
   let ascending = true;
 
   let showDropdown = false;
-  let showMinRatingDropdown = false;
+  let showMinRatingDropdown = false
   let showMaxRatingDropdown = false;
   let showSortByDropdown = false;
   let showOrderDropdown = false;
@@ -50,15 +50,25 @@
   });
 
   function updateURL() {
-    const params = new URLSearchParams();
-    if (searchQuery) params.set('searchQuery', searchQuery);
-    if (selectedCategory) params.set('category', selectedCategory);
-    if (priceMin) params.set('minPrice', priceMin);
-    if (priceMax) params.set('maxPrice', priceMax);
-    if (minRating > 0) params.set('minRating', String(minRating));
-    if (maxRating > 0) params.set('maxRating', String(maxRating));
-    params.set('sortBy', sortBy);
-    params.set('ascending', String(ascending));
+    const params = new URLSearchParams(window.location.search);
+    const paramMap = {
+      category: selectedCategory,
+      minPrice: priceMin,
+      maxPrice: priceMax,
+      minRating: minRating > 0 ? String(minRating) : null,
+      maxRating: maxRating > 0 ? String(maxRating) : null,
+      sortBy,
+      ascending: String(ascending),
+    };
+
+    for (const [key, value] of Object.entries(paramMap)) {
+      if (value) {
+        params.set(key, value);
+      } else {
+        params.delete(key);
+      }
+    }
+
     window.history.pushState(
       {},
       '',
