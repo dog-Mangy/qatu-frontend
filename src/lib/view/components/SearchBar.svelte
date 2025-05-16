@@ -1,18 +1,43 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, onMount } from 'svelte';
 
   const dispatch = createEventDispatcher();
   let searchQuery = '';
 
+  // Initialize searchQuery from URL on mount
+  onMount(() => {
+    const params = new URLSearchParams(window.location.search);
+    searchQuery = params.get('searchQuery') || '';
+  });
+
+  function updateURL() {
+    const params = new URLSearchParams(window.location.search);
+    if (searchQuery) {
+      params.set('searchQuery', searchQuery);
+    } else {
+      params.delete('searchQuery');
+    }
+    window.history.pushState(
+      {},
+      '',
+      `${window.location.pathname}?${params.toString()}`
+    );
+  }
+
   function handleInput(event) {
     searchQuery = event.target.value;
+    updateURL();
     dispatch('search', { query: searchQuery });
+  }
+
+  function handleKeydown(event) {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
   }
 
   function handleSearch() {
     dispatch('search', { query: searchQuery });
-    console.log('Searching:', searchQuery);
-    alert('Searching: ' + searchQuery);
   }
 </script>
 
@@ -23,6 +48,7 @@
     class="search-input"
     bind:value={searchQuery}
     on:input={handleInput}
+    on:keydown={handleKeydown}
   />
   <button class="search-icon" on:click={handleSearch} aria-label="Search">
     <i class="fa fa-search"></i>

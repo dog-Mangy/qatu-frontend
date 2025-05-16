@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, onMount } from 'svelte';
 
   const dispatch = createEventDispatcher();
   let searchQuery = '';
@@ -36,6 +36,36 @@
     { value: false, label: 'Descending' },
   ];
 
+  // Initialize filter state from URL on mount
+  onMount(() => {
+    const params = new URLSearchParams(window.location.search);
+    searchQuery = params.get('searchQuery') || '';
+    selectedCategory = params.get('category') || '';
+    priceMin = params.get('minPrice') || '';
+    priceMax = params.get('maxPrice') || '';
+    minRating = parseInt(params.get('minRating')) || 0;
+    maxRating = parseInt(params.get('maxRating')) || 0;
+    sortBy = params.get('sortBy') || 'Name';
+    ascending = params.get('ascending') === 'true';
+  });
+
+  function updateURL() {
+    const params = new URLSearchParams();
+    if (searchQuery) params.set('searchQuery', searchQuery);
+    if (selectedCategory) params.set('category', selectedCategory);
+    if (priceMin) params.set('minPrice', priceMin);
+    if (priceMax) params.set('maxPrice', priceMax);
+    if (minRating > 0) params.set('minRating', String(minRating));
+    if (maxRating > 0) params.set('maxRating', String(maxRating));
+    params.set('sortBy', sortBy);
+    params.set('ascending', String(ascending));
+    window.history.pushState(
+      {},
+      '',
+      `${window.location.pathname}?${params.toString()}`
+    );
+  }
+
   function selectCategory(category) {
     selectedCategory = category;
     showDropdown = false;
@@ -71,6 +101,7 @@
   }
 
   function dispatchSearch() {
+    updateURL();
     dispatch('search', {
       query: searchQuery,
       category: selectedCategory,
@@ -96,7 +127,7 @@
         (e.key === 'Enter' || e.key === ' ') && (showDropdown = !showDropdown)}
     >
       <div class="dropdown-label">
-        {selectedCategory || 'Categoríes'} ⬇
+        {selectedCategory || 'Categorías'} ⬇
       </div>
       {#if showDropdown}
         <ul class="dropdown-menu">
