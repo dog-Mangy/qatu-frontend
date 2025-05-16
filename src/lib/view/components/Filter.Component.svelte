@@ -12,7 +12,7 @@
   let ascending = true;
 
   let showDropdown = false;
-  let showMinRatingDropdown = false
+  let showMinRatingDropdown = false;
   let showMaxRatingDropdown = false;
   let showSortByDropdown = false;
   let showOrderDropdown = false;
@@ -36,7 +36,6 @@
     { value: false, label: 'Descending' },
   ];
 
-  // Initialize filter state from URL on mount
   onMount(() => {
     const params = new URLSearchParams(window.location.search);
     searchQuery = params.get('searchQuery') || '';
@@ -130,6 +129,10 @@
       ascending,
     });
   }
+
+  // Handle input focus to show placeholder
+  let showMinPriceInput = false;
+  let showMaxPriceInput = false;
 </script>
 
 <div class="filters-container">
@@ -233,21 +236,61 @@
       {/if}
     </div>
 
-    <!-- Price Inputs -->
-    <input
-      type="number"
-      placeholder="Min Price"
-      class="dropdown-input"
-      bind:value={priceMin}
-      on:input={dispatchSearch}
-    />
-    <input
-      type="number"
-      placeholder="Max Price"
-      class="dropdown-input second-input"
-      bind:value={priceMax}
-      on:input={dispatchSearch}
-    />
+    <!-- Min Price Input -->
+    <div
+      class="dropdown price"
+      role="button"
+      tabindex="0"
+      on:click={() => (showMinPriceInput = true)}
+      on:keydown={e =>
+        (e.key === 'Enter' || e.key === ' ') && (showMinPriceInput = true)}
+    >
+      <div class="dropdown-label">
+        {#if priceMin && !showMinPriceInput}
+          Min: ${priceMin}
+        {:else}
+          Min Price
+          {#if showMinPriceInput}
+            <input
+              type="number"
+              placeholder="Min Price"
+              class="price-input"
+              bind:value={priceMin}
+              on:input={dispatchSearch}
+              on:blur={() => (showMinPriceInput = false)}
+            />
+          {/if}
+        {/if}
+      </div>
+    </div>
+
+    <!-- Max Price Input -->
+    <div
+      class="dropdown price"
+      role="button"
+      tabindex="0"
+      on:click={() => (showMaxPriceInput = true)}
+      on:keydown={e =>
+        (e.key === 'Enter' || e.key === ' ') && (showMaxPriceInput = true)}
+    >
+      <div class="dropdown-label">
+        {#if priceMax && !showMaxPriceInput}
+          Max: ${priceMax}
+        {:else}
+          Max Price
+          {#if showMaxPriceInput}
+            <input
+              type="number"
+              placeholder="Max Price"
+              class="price-input"
+              bind:value={priceMax}
+              on:input={dispatchSearch}
+              on:blur={() => (showMaxPriceInput = false)}
+            />
+          {/if}
+        {/if}
+      </div>
+    </div>
 
     <!-- Sort By Dropdown -->
     <div
@@ -326,6 +369,7 @@
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
+    align-items: center;
   }
 
   .dropdown {
@@ -336,10 +380,18 @@
     min-width: 150px;
     font-size: 16px;
     color: white;
+    background-color: #3f028f;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
   .rating {
     min-width: 90px;
+  }
+
+  .price {
+    min-width: 115px;
   }
 
   .rating-filter {
@@ -359,26 +411,25 @@
     color: gold;
   }
 
-  .dropdown-input {
-    position: relative;
-    cursor: pointer;
-    padding: 2px 16px;
+  .price-input {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
     border-radius: 8px;
-    max-width: 115px;
     font-size: 16px;
-    color: white;
-    background-color: transparent;
-    border: none;
+    color: #3f028f;
+    background-color: white;
+    z-index: 10;
   }
 
-  .second-input {
-    margin-right: 50px;
+  .price-input::placeholder {
+    color: #3f028f;
+    opacity: 0.7;
   }
 
-  .dropdown-input::placeholder {
-    color: white;
-    opacity: 1;
-  }
   .dropdown-menu {
     position: absolute;
     top: 100%;
@@ -402,12 +453,18 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
   }
 
   @media screen and (max-width: 600px) {
     .filters-container {
       flex-direction: column;
       align-items: stretch;
+    }
+
+    .dropdown,
+    .price {
+      min-width: 100%;
     }
   }
 </style>
