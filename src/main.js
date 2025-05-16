@@ -17,11 +17,17 @@ async function main() {
     }
   }
 
-  // Iniciar watcher de inactividad
-  startInactivityWatcher(() => {
-    authViewModel.logout();
-    alert('Sesión cerrada por inactividad');
-  });
+  // Solo iniciar watcher si NO estamos en login ni en register
+  const hash = window.location.hash;
+  if (
+    !hash.startsWith('#/login') &&
+    !hash.startsWith('#/register')
+  ) {
+    startInactivityWatcher(() => {
+      authViewModel.logout();
+      alert('Sesión cerrada por inactividad');
+    });
+  }
 
   return mount(App, {
     target: document.getElementById('app'),
