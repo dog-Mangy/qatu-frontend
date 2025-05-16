@@ -1,8 +1,8 @@
 let timeoutId;
 let warningTimeoutId;
 let inactividadMostrada = false;
-const WARNING_LIMIT = 1 * 60 * 1000; // 1 minutos
-const INACTIVITY_LIMIT = 3 * 60 * 1000; // 15 minutos
+const WARNING_LIMIT = 2 * 60 * 1000; 
+const INACTIVITY_LIMIT = 15 * 60 * 1000;
 
 export function startInactivityWatcher(logoutCallback) {
   resetTimer();

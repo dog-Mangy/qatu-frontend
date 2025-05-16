@@ -17,7 +17,7 @@ async function main() {
     }
   }
 
-  // Solo iniciar watcher si NO estamos en login ni en register
+
   const hash = window.location.hash;
   if (
     !hash.startsWith('#/login') &&
