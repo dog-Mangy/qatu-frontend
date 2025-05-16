@@ -1,7 +1,7 @@
 let timeoutId;
 let warningTimeoutId;
-let inactividadMostrada = false;
-const WARNING_LIMIT = 2 * 60 * 1000; 
+let inactivityDisplayed = false;
+const WARNING_LIMIT = 2 * 60 * 1000;
 const INACTIVITY_LIMIT = 15 * 60 * 1000;
 
 export function startInactivityWatcher(logoutCallback) {
@@ -16,24 +16,24 @@ export function startInactivityWatcher(logoutCallback) {
     'wheel',
   ];
 
-  events.forEach(event =>
-    window.addEventListener(event, resetTimer, true)
-  );
+  events.forEach(event => window.addEventListener(event, resetTimer, true));
 
   function resetTimer() {
     clearTimeout(timeoutId);
     clearTimeout(warningTimeoutId);
-    inactividadMostrada = false;
+    inactivityDisplayed = false;
 
     warningTimeoutId = setTimeout(() => {
-      if (!inactividadMostrada) {
-        alert('Ha empezado el conteo de inactividad. Si permaneces inactiv@ por 15 minutos, se cerrará la sesión automáticamente.');
-        inactividadMostrada = true;
+      if (!inactivityDisplayed) {
+        alert(
+          'Inactivity timeout has started. If you remain inactive for 15 minutes, you will be automatically logged out.'
+        );
+        inactivityDisplayed = true;
       }
     }, WARNING_LIMIT);
 
     timeoutId = setTimeout(() => {
-      inactividadMostrada = false;
+      inactivityDisplayed = false;
       logoutCallback();
     }, INACTIVITY_LIMIT);
   }
@@ -44,6 +44,6 @@ export function startInactivityWatcher(logoutCallback) {
     events.forEach(event =>
       window.removeEventListener(event, resetTimer, true)
     );
-    inactividadMostrada = false;
+    inactivityDisplayed = false;
   };
 }

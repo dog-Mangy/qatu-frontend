@@ -17,15 +17,11 @@ async function main() {
     }
   }
 
-
   const hash = window.location.hash;
-  if (
-    !hash.startsWith('#/login') &&
-    !hash.startsWith('#/register')
-  ) {
+  if (!hash.startsWith('#/login') && !hash.startsWith('#/register')) {
     startInactivityWatcher(() => {
       authViewModel.logout();
-      alert('Sesión cerrada por inactividad');
+      alert('Session closed due to inactivity');
     });
   }
 
