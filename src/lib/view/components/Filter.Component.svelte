@@ -66,35 +66,42 @@
     );
   }
 
-  function selectCategory(category) {
+  function selectCategory(category, event) {
+    event.stopPropagation();
     selectedCategory = category;
     showDropdown = false;
     dispatchSearch();
   }
 
-  function selectMinRating(rating) {
+  function selectMinRating(rating, event) {
+    event.stopPropagation();
     minRating = rating;
     if (maxRating > 0 && minRating > maxRating) {
       maxRating = minRating;
     }
+    showMinRatingDropdown = false;
     dispatchSearch();
   }
 
-  function selectMaxRating(rating) {
+  function selectMaxRating(rating, event) {
+    event.stopPropagation();
     maxRating = rating;
     if (minRating > 0 && maxRating < minRating) {
       minRating = maxRating;
     }
+    showMaxRatingDropdown = false;
     dispatchSearch();
   }
 
-  function selectSortBy(field) {
+  function selectSortBy(field, event) {
+    event.stopPropagation();
     sortBy = field;
     showSortByDropdown = false;
     dispatchSearch();
   }
 
-  function selectOrder(value) {
+  function selectOrder(value, event) {
+    event.stopPropagation();
     ascending = value;
     showOrderDropdown = false;
     dispatchSearch();
@@ -127,7 +134,7 @@
         (e.key === 'Enter' || e.key === ' ') && (showDropdown = !showDropdown)}
     >
       <div class="dropdown-label">
-        {selectedCategory || 'Categorías'} ⬇
+        {selectedCategory || 'Categories'} ⬇
       </div>
       {#if showDropdown}
         <ul class="dropdown-menu">
@@ -136,10 +143,10 @@
               role="option"
               tabindex="0"
               aria-selected={selectedCategory === category}
-              on:click={() => selectCategory(category)}
+              on:click={event => selectCategory(category, event)}
               on:keydown={e =>
                 (e.key === 'Enter' || e.key === ' ') &&
-                selectCategory(category)}
+                selectCategory(category, e)}
             >
               {category}
             </li>
@@ -169,13 +176,10 @@
                 role="button"
                 tabindex="0"
                 class="star {index < minRating ? 'filled' : ''}"
-                on:click={() => {
-                  selectMinRating(index + 1);
-                  showMinRatingDropdown = false;
-                }}
+                on:click={event => selectMinRating(index + 1, event)}
                 on:keydown={e =>
                   (e.key === 'Enter' || e.key === ' ') &&
-                  (selectMinRating(index + 1), (showMinRatingDropdown = false))}
+                  selectMinRating(index + 1, e)}
               >
                 ★
               </span>
@@ -206,13 +210,10 @@
                 role="button"
                 tabindex="0"
                 class="star {index < maxRating ? 'filled' : ''}"
-                on:click={() => {
-                  selectMaxRating(index + 1);
-                  showMaxRatingDropdown = false;
-                }}
+                on:click={event => selectMaxRating(index + 1, event)}
                 on:keydown={e =>
                   (e.key === 'Enter' || e.key === ' ') &&
-                  (selectMaxRating(index + 1), (showMaxRatingDropdown = false))}
+                  selectMaxRating(index + 1, e)}
               >
                 ★
               </span>
@@ -258,10 +259,10 @@
               role="option"
               tabindex="0"
               aria-selected={sortBy === option.field}
-              on:click={() => selectSortBy(option.field)}
+              on:click={event => selectSortBy(option.field, event)}
               on:keydown={e =>
                 (e.key === 'Enter' || e.key === ' ') &&
-                selectSortBy(option.field)}
+                selectSortBy(option.field, e)}
             >
               {option.label}
             </li>
@@ -290,10 +291,10 @@
               role="option"
               tabindex="0"
               aria-selected={ascending === option.value}
-              on:click={() => selectOrder(option.value)}
+              on:click={event => selectOrder(option.value, event)}
               on:keydown={e =>
                 (e.key === 'Enter' || e.key === ' ') &&
-                selectOrder(option.value)}
+                selectOrder(option.value, e)}
             >
               {option.label}
             </li>
