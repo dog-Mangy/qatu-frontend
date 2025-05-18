@@ -42,6 +42,28 @@
     isOpen = !isOpen;
   }
 
+  function handleLogout(e) {
+    e.preventDefault();
+    authViewModel.logout();
+  }
+
+  $: roleLinks = (() => {
+    if (isLoading) return linksByRole.guest;
+    
+    if (!currentUser) {
+      return linksByRole.guest;
+    }
+    
+    const userRoles = (currentUser['https://qatu.api/roles'] || []).map(role => role.toLowerCase());
+    
+    if (userRoles.includes('admin')) {
+      return linksByRole.admin;
+    } else if (userRoles.includes('vendor') || userRoles.includes('seller')) {
+      return linksByRole.seller;
+    } else {
+      return linksByRole.buyer;
+    }
+  })();
 </script>
 
 <!-- Botón hamburguesa -->
