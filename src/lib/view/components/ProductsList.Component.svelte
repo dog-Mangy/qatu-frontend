@@ -1,5 +1,16 @@
 <script>
+  import { authService } from '../../viewmodel/services/authService';
   export let products = [];
+
+  async function handleAddToCart(product) {
+    const isUser = await authService.isUser();
+    if (!isUser) {
+      alert("Only users with the 'User' role can add products to the cart.");
+      return;
+    }
+
+    alert(`Product added to cart.`);
+  }
 </script>
 
 <div class="products-container">
@@ -24,6 +35,7 @@
               class="add-to-cart-btn"
               type="button"
               aria-label={`Add ${product.name} to cart`}
+              on:click={() => handleAddToCart(product)}
             >
               Add to Cart
             </button>
