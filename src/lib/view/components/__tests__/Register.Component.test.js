@@ -1,6 +1,6 @@
 import { render, fireEvent, screen } from '@testing-library/svelte';
 import Register from '../Register.Component.svelte';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { authViewModel } from '../../../viewmodel/viewmodels/authViewModel';
 
 vi.mock('../../../viewmodel/viewmodels/authViewModel', () => ({

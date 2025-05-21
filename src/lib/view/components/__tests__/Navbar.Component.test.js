@@ -1,6 +1,6 @@
-import { render, fireEvent, screen } from '@testing-library/svelte';
+import { render, screen } from '@testing-library/svelte';
 import Navbar from '../Navbar.svelte';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 describe('Navbar Component', () => {
   vi.mock('svelte/transition', () => ({

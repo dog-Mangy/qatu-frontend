@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/svelte';
 import ProgressBar from '../ProgressIndicator.Component.svelte';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 describe('ProgressBar Component', () => {
   it('should render with default values', () => {
