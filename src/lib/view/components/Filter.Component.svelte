@@ -1,15 +1,5 @@
 <script>
-  import { createEventDispatcher, onMount } from 'svelte';
-
-  const dispatch = createEventDispatcher();
-  let searchQuery = '';
-  let selectedCategory = '';
-  let priceMin = '';
-  let priceMax = '';
-  let minRating = 0;
-  let maxRating = 0;
-  let sortBy = 'Name';
-  let ascending = true;
+  import { filters } from '../../viewmodel/store/filterStore';
 
   let showDropdown = false;
   let showMinRatingDropdown = false;
@@ -36,101 +26,48 @@
     { value: false, label: 'Descending' },
   ];
 
-  onMount(() => {
-    const params = new URLSearchParams(window.location.search);
-    searchQuery = params.get('searchQuery') || '';
-    selectedCategory = params.get('category') || '';
-    priceMin = params.get('minPrice') || '';
-    priceMax = params.get('maxPrice') || '';
-    minRating = parseInt(params.get('minRating')) || 0;
-    maxRating = parseInt(params.get('maxRating')) || 0;
-    sortBy = params.get('sortBy') || 'Name';
-    ascending = params.get('ascending') === 'true';
-  });
-
-  function updateURL() {
-    const params = new URLSearchParams(window.location.search);
-    const paramMap = {
-      category: selectedCategory,
-      minPrice: priceMin,
-      maxPrice: priceMax,
-      minRating: minRating > 0 ? String(minRating) : null,
-      maxRating: maxRating > 0 ? String(maxRating) : null,
-      sortBy,
-      ascending: String(ascending),
-    };
-
-    for (const [key, value] of Object.entries(paramMap)) {
-      if (value) {
-        params.set(key, value);
-      } else {
-        params.delete(key);
-      }
-    }
-
-    window.history.pushState(
-      {},
-      '',
-      `${window.location.pathname}?${params.toString()}`
-    );
-  }
-
   function selectCategory(category, event) {
     event.stopPropagation();
-    selectedCategory = category;
+    filters.update(current => ({ ...current, category }));
     showDropdown = false;
-    dispatchSearch();
   }
 
   function selectMinRating(rating, event) {
     event.stopPropagation();
-    minRating = rating;
-    if (maxRating > 0 && minRating > maxRating) {
-      maxRating = minRating;
-    }
+    filters.update(current => {
+      const newMaxRating =
+        current.maxRating > 0 && rating > current.maxRating
+          ? rating
+          : current.maxRating;
+      return { ...current, minRating: rating, maxRating: newMaxRating };
+    });
     showMinRatingDropdown = false;
-    dispatchSearch();
   }
 
   function selectMaxRating(rating, event) {
     event.stopPropagation();
-    maxRating = rating;
-    if (minRating > 0 && maxRating < minRating) {
-      minRating = maxRating;
-    }
+    filters.update(current => {
+      const newMinRating =
+        current.minRating > 0 && rating < current.minRating
+          ? rating
+          : current.minRating;
+      return { ...current, maxRating: rating, minRating: newMinRating };
+    });
     showMaxRatingDropdown = false;
-    dispatchSearch();
   }
 
   function selectSortBy(field, event) {
     event.stopPropagation();
-    sortBy = field;
+    filters.update(current => ({ ...current, sortBy: field }));
     showSortByDropdown = false;
-    dispatchSearch();
   }
 
   function selectOrder(value, event) {
     event.stopPropagation();
-    ascending = value;
+    filters.update(current => ({ ...current, ascending: value }));
     showOrderDropdown = false;
-    dispatchSearch();
   }
 
-  function dispatchSearch() {
-    updateURL();
-    dispatch('search', {
-      query: searchQuery,
-      category: selectedCategory,
-      minRating,
-      maxRating,
-      minPrice: priceMin,
-      maxPrice: priceMax,
-      sortBy,
-      ascending,
-    });
-  }
-
-  // Handle input focus to show placeholder
   let showMinPriceInput = false;
   let showMaxPriceInput = false;
 </script>
@@ -147,7 +84,7 @@
         (e.key === 'Enter' || e.key === ' ') && (showDropdown = !showDropdown)}
     >
       <div class="dropdown-label">
-        {selectedCategory || 'Categories'} ⬇
+        {$filters.category || 'Categories'} ⬇
       </div>
       {#if showDropdown}
         <ul class="dropdown-menu">
@@ -155,7 +92,7 @@
             <li
               role="option"
               tabindex="0"
-              aria-selected={selectedCategory === category}
+              aria-selected={$filters.category === category}
               on:click={event => selectCategory(category, event)}
               on:keydown={e =>
                 (e.key === 'Enter' || e.key === ' ') &&
@@ -179,7 +116,7 @@
         (showMinRatingDropdown = !showMinRatingDropdown)}
     >
       <div class="dropdown-label">
-        {minRating > 0 ? `Min: ${minRating}★` : 'Min Rating'}
+        {$filters.minRating > 0 ? `Min: ${$filters.minRating}★` : 'Min Rating'}
       </div>
       {#if showMinRatingDropdown}
         <div class="dropdown-menu rating-menu">
@@ -188,7 +125,7 @@
               <span
                 role="button"
                 tabindex="0"
-                class="star {index < minRating ? 'filled' : ''}"
+                class="star {index < $filters.minRating ? 'filled' : ''}"
                 on:click={event => selectMinRating(index + 1, event)}
                 on:keydown={e =>
                   (e.key === 'Enter' || e.key === ' ') &&
@@ -213,7 +150,7 @@
         (showMaxRatingDropdown = !showMaxRatingDropdown)}
     >
       <div class="dropdown-label">
-        {maxRating > 0 ? `Max: ${maxRating}★` : 'Max Rating'}
+        {$filters.maxRating > 0 ? `Max: ${$filters.maxRating}★` : 'Max Rating'}
       </div>
       {#if showMaxRatingDropdown}
         <div class="dropdown-menu rating-menu">
@@ -222,7 +159,7 @@
               <span
                 role="button"
                 tabindex="0"
-                class="star {index < maxRating ? 'filled' : ''}"
+                class="star {index < $filters.maxRating ? 'filled' : ''}"
                 on:click={event => selectMaxRating(index + 1, event)}
                 on:keydown={e =>
                   (e.key === 'Enter' || e.key === ' ') &&
@@ -246,8 +183,8 @@
         (e.key === 'Enter' || e.key === ' ') && (showMinPriceInput = true)}
     >
       <div class="dropdown-label">
-        {#if priceMin && !showMinPriceInput}
-          Min: ${priceMin}
+        {#if $filters.minPrice && !showMinPriceInput}
+          Min: ${$filters.minPrice}
         {:else}
           Min Price
           {#if showMinPriceInput}
@@ -255,8 +192,7 @@
               type="number"
               placeholder="Min Price"
               class="price-input"
-              bind:value={priceMin}
-              on:input={dispatchSearch}
+              bind:value={$filters.minPrice}
               on:blur={() => (showMinPriceInput = false)}
             />
           {/if}
@@ -274,8 +210,8 @@
         (e.key === 'Enter' || e.key === ' ') && (showMaxPriceInput = true)}
     >
       <div class="dropdown-label">
-        {#if priceMax && !showMaxPriceInput}
-          Max: ${priceMax}
+        {#if $filters.maxPrice && !showMaxPriceInput}
+          Max: ${$filters.maxPrice}
         {:else}
           Max Price
           {#if showMaxPriceInput}
@@ -283,8 +219,7 @@
               type="number"
               placeholder="Max Price"
               class="price-input"
-              bind:value={priceMax}
-              on:input={dispatchSearch}
+              bind:value={$filters.maxPrice}
               on:blur={() => (showMaxPriceInput = false)}
             />
           {/if}
@@ -303,7 +238,7 @@
         (showSortByDropdown = !showSortByDropdown)}
     >
       <div class="dropdown-label">
-        Sort by: {sortBy} ⬇
+        Sort by: {$filters.sortBy} ⬇
       </div>
       {#if showSortByDropdown}
         <ul class="dropdown-menu">
@@ -311,7 +246,7 @@
             <li
               role="option"
               tabindex="0"
-              aria-selected={sortBy === option.field}
+              aria-selected={$filters.sortBy === option.field}
               on:click={event => selectSortBy(option.field, event)}
               on:keydown={e =>
                 (e.key === 'Enter' || e.key === ' ') &&
@@ -335,7 +270,7 @@
         (showOrderDropdown = !showOrderDropdown)}
     >
       <div class="dropdown-label">
-        {ascending ? 'Ascending' : 'Descending'} ⬇
+        {$filters.ascending ? 'Ascending' : 'Descending'} ⬇
       </div>
       {#if showOrderDropdown}
         <ul class="dropdown-menu">
@@ -343,7 +278,7 @@
             <li
               role="option"
               tabindex="0"
-              aria-selected={ascending === option.value}
+              aria-selected={$filters.ascending === option.value}
               on:click={event => selectOrder(option.value, event)}
               on:keydown={e =>
                 (e.key === 'Enter' || e.key === ' ') &&
