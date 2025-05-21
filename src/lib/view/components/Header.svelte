@@ -46,9 +46,6 @@
         <div class="navbar-search">
           <SearchBar />
         </div>
-        <div class="navbar-filter">
-          <CategoryFilters />
-        </div>
       </div>
     {/if}
 
@@ -65,6 +62,12 @@
       {/if}
       <Navbar {userRole} />
     </div>
+
+    {#if isDesktop || searchOpen}
+      <div class="navbar-filter">
+        <CategoryFilters />
+      </div>
+    {/if}
   </nav>
 </div>
 
@@ -139,6 +142,11 @@
 
     .navbar-actions {
       gap: 5px;
+    }
+
+    .navbar-filter {
+      flex: 0 0 100%;
+      justify-content: center;
     }
   }
 </style>
