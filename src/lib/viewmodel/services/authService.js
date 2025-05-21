@@ -45,7 +45,7 @@ export const authService = {
   logout: () => {
     auth0.logout({
       logoutParams: {
-        returnTo: window.location.origin,
+        returnTo: `${window.location.origin}/#/login`,
       },
     });
   },
@@ -99,5 +99,17 @@ export const authService = {
     if (!foundUser) {
       throw new Error('Invalid email or password');
     }
+  },
+
+  isUser: async () => {
+    const claims = await auth0.getIdTokenClaims();
+    const roles = claims?.['https://qatu.api/roles'];
+    return Array.isArray(roles) && roles.includes('User');
+  },
+
+  isVendor: async function () {
+    const claims = await auth0.getIdTokenClaims();
+    const roles = claims?.['https://qatu.api/roles'];
+    return Array.isArray(roles) && roles.includes('Vendor');
   },
 };

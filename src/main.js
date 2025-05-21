@@ -2,6 +2,8 @@ import { mount } from 'svelte';
 import './app.css';
 import App from './App.svelte';
 import { initAuth0, authService } from './lib/viewmodel/services/authService';
+import { authViewModel } from './lib/viewmodel/viewmodels/authViewModel';
+import { startInactivityWatcher } from './lib/viewmodel/utils/inactivityLogout';
 
 async function main() {
   await initAuth0();
@@ -13,6 +15,14 @@ async function main() {
     } catch (error) {
       console.error('Error handling redirect callback:', error);
     }
+  }
+
+  const hash = window.location.hash;
+  if (!hash.startsWith('#/login') && !hash.startsWith('#/register')) {
+    startInactivityWatcher(() => {
+      authViewModel.logout();
+      alert('Session closed due to inactivity');
+    });
   }
 
   return mount(App, {
