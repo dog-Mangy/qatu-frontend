@@ -1,12 +1,20 @@
 import { writable } from 'svelte/store';
 
-export const filters = writable({
-  searchQuery: '',
-  category: '',
-  minPrice: '',
-  maxPrice: '10000',
-  minRating: 0,
-  maxRating: 5,
-  sortBy: 'Name',
-  ascending: true,
+const persistedFilters = writable(
+  JSON.parse(localStorage.getItem('filters')) || {
+    searchQuery: '',
+    category: '',
+    minPrice: '',
+    maxPrice: '10000',
+    minRating: 0,
+    maxRating: 0,
+    sortBy: 'Name',
+    ascending: true,
+  }
+);
+
+persistedFilters.subscribe(value => {
+  localStorage.setItem('filters', JSON.stringify(value));
 });
+
+export const filters = persistedFilters;
