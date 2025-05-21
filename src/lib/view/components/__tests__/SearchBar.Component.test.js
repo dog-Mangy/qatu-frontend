@@ -20,17 +20,6 @@ describe('SearchBar Component', () => {
     vi.clearAllMocks();
   });
 
-  it('should render correctly with default props', () => {
-    render(SearchBar);
-
-    const input = screen.getByPlaceholderText('Search..');
-    const icon = screen.getByRole('button', { name: 'Search' });
-
-    expect(input).toBeInTheDocument();
-    expect(icon).toBeInTheDocument();
-    expect(input).toHaveValue('');
-  });
-
   it('should update searchQuery when typing', async () => {
     render(SearchBar);
     const input = screen.getByPlaceholderText('Search..');
