@@ -2,6 +2,7 @@ import { push } from 'svelte-spa-router';
 import { authService } from '../services/authService.js';
 
 let timeDelay = 2000;
+let alreadyRedirected = false;
 
 export const authViewModel = {
   register: async userData => {
@@ -11,16 +12,15 @@ export const authViewModel = {
     try {
       await authService.register(userData);
       success = 'Registration successful! Redirecting to login...';
-      userData.name = '';
-      userData.lastName = '';
-      userData.email = '';
-      userData.identificationDocument = '';
-      userData.phoneNumber = '';
-      userData.password = '';
-      userData.confirmPassword = '';
-      setTimeout(() => {
-        push('/login');
-      }, timeDelay);
+
+      Object.keys(userData).forEach(key => (userData[key] = ''));
+
+      if (!alreadyRedirected) {
+        alreadyRedirected = true;
+        setTimeout(() => {
+          push('/login');
+        }, timeDelay);
+      }
     } catch (err) {
       error = err.message || 'Registration failed';
     }
@@ -39,9 +39,12 @@ export const authViewModel = {
       userData.email = '';
       userData.password = '';
 
-      setTimeout(() => {
-        push('/');
-      }, timeDelay);
+      if (!alreadyRedirected) {
+        alreadyRedirected = true;
+        setTimeout(() => {
+          push('/');
+        }, timeDelay);
+      }
     } catch (err) {
       error = err.message || 'Login failed';
     }
