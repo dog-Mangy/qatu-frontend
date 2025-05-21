@@ -9,7 +9,9 @@
   let userRole = 'buyer';
 
   onMount(() => {
-    push('/');
+    if (window.location.hash === '' || window.location.hash === '#') {
+      push('/');
+    }
   });
 </script>
 
