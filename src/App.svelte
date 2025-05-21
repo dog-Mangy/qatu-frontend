@@ -1,11 +1,16 @@
 <script>
-  import Router from 'svelte-spa-router';
+  import Router, { push } from 'svelte-spa-router';
   import routes from './lib/view/routes/Router.js';
+  import { onMount } from 'svelte';
 
   import Header from './lib/view/components/Header.svelte';
   import Footer from './lib/view/components/Footer.Component.svelte';
 
   let userRole = 'buyer';
+
+  onMount(() => {
+    push('/');
+  });
 </script>
 
 <div id="app">
@@ -13,7 +18,6 @@
   <main>
     <Router {routes} />
   </main>
-
   <Footer />
 </div>
 
