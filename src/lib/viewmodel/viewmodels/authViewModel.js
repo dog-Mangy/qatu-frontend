@@ -79,4 +79,13 @@ export const authViewModel = {
       console.error('Logout failed', err);
     }
   },
+  getToken: async () => {
+    let token = null;
+    try {
+      token = await authService.getToken();
+    } catch (err) {
+      console.error('Failed to get token', err);
+    }
+    return token;
+  },
 };
