@@ -88,7 +88,7 @@
       </div>
       {#if showDropdown}
         <ul class="dropdown-menu">
-          {#each categories as category}
+          {#each categories as category (category)}
             <li
               role="option"
               tabindex="0"
@@ -121,7 +121,8 @@
       {#if showMinRatingDropdown}
         <div class="dropdown-menu rating-menu">
           <div class="rating-filter">
-            {#each Array(5) as _, index}
+            <!-- eslint-disable-next-line no-unused-vars -->
+            {#each Array(5) as _, index (index)}
               <span
                 role="button"
                 tabindex="0"
@@ -155,7 +156,8 @@
       {#if showMaxRatingDropdown}
         <div class="dropdown-menu rating-menu">
           <div class="rating-filter">
-            {#each Array(5) as _, index}
+            <!-- eslint-disable-next-line no-unused-vars -->
+            {#each Array(5) as _, index (index)}
               <span
                 role="button"
                 tabindex="0"
@@ -242,7 +244,7 @@
       </div>
       {#if showSortByDropdown}
         <ul class="dropdown-menu">
-          {#each sortByOptions as option}
+          {#each sortByOptions as option (option.field)}
             <li
               role="option"
               tabindex="0"
@@ -274,7 +276,7 @@
       </div>
       {#if showOrderDropdown}
         <ul class="dropdown-menu">
-          {#each orderOptions as option}
+          {#each orderOptions as option (option.value)}
             <li
               role="option"
               tabindex="0"
