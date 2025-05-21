@@ -100,4 +100,16 @@ export const authService = {
       throw new Error('Invalid email or password');
     }
   },
+
+  isUser: async () => {
+    const claims = await auth0.getIdTokenClaims();
+    const roles = claims?.['https://qatu.api/roles'];
+    return Array.isArray(roles) && roles.includes('User');
+  },
+
+  isVendor: async function () {
+    const claims = await auth0.getIdTokenClaims();
+    const roles = claims?.['https://qatu.api/roles'];
+    return Array.isArray(roles) && roles.includes('Vendor');
+  },
 };
