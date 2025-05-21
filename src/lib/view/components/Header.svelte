@@ -31,7 +31,7 @@
   <nav class="navbar">
     <!-- Logo -->
     <div class="navbar-brand">
-      <a href="/">
+      <a href="/#">
         <img
           src="https://i.ibb.co/gbgX7HSw/Chat-GPT-Image-27-abr-2025-10-39-02-a-m.png"
           alt="Qatu Logo"
@@ -45,9 +45,6 @@
       <div class="navbar-search-area">
         <div class="navbar-search">
           <SearchBar />
-        </div>
-        <div class="navbar-filter">
-          <CategoryFilters />
         </div>
       </div>
     {/if}
@@ -65,6 +62,12 @@
       {/if}
       <Navbar {userRole} />
     </div>
+
+    {#if isDesktop || searchOpen}
+      <div class="navbar-filter">
+        <CategoryFilters />
+      </div>
+    {/if}
   </nav>
 </div>
 
@@ -139,6 +142,11 @@
 
     .navbar-actions {
       gap: 5px;
+    }
+
+    .navbar-filter {
+      flex: 0 0 100%;
+      justify-content: center;
     }
   }
 </style>
