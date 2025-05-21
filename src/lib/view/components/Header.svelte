@@ -31,7 +31,7 @@
   <nav class="navbar">
     <!-- Logo -->
     <div class="navbar-brand">
-      <a href="/">
+      <a href="/#">
         <img
           src="https://i.ibb.co/gbgX7HSw/Chat-GPT-Image-27-abr-2025-10-39-02-a-m.png"
           alt="Qatu Logo"
