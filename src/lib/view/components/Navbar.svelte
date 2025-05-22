@@ -35,6 +35,7 @@
     seller: [
       { name: 'Home', href: '/#/' },
       { name: 'My Store', href: '#' },
+      { name: 'Products', href: '/#/' },
       { name: 'Chats', href: '#' },
       { name: 'Logout', href: '#' },
     ],
