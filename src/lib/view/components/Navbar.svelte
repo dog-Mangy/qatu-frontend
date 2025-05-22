@@ -1,14 +1,26 @@
 <script>
   import { slide } from 'svelte/transition';
   import { onMount } from 'svelte';
-  import { authViewModel } from '../../viewmodel/viewmodels/authViewModel.js';
-  
+  import { authService } from '../../viewmodel/services/authService.js';
+
   let isOpen = false;
   let currentUser = null;
   let isLoading = true;
+  let roleLinks = [];
 
   onMount(async () => {
-    currentUser = await authViewModel.getUser();
+    currentUser = await authService.getUser();
+
+    if (await authService.isAdmin()) {
+      roleLinks = linksByRole.admin;
+    } else if (await authService.isVendor()) {
+      roleLinks = linksByRole.seller;
+    } else if (await authService.isUser()) {
+      roleLinks = linksByRole.buyer;
+    } else {
+      roleLinks = linksByRole.guest;
+    }
+
     isLoading = false;
   });
 
@@ -18,23 +30,23 @@
       { name: 'Stores', href: '#' },
       { name: 'Products', href: '/#/' },
       { name: 'Chats', href: '#' },
-      { name: 'Logout', href: '#' }
+      { name: 'Logout', href: '#' },
     ],
     seller: [
       { name: 'Home', href: '/#/' },
       { name: 'My Store', href: '#' },
       { name: 'Chats', href: '#' },
-      { name: 'Logout', href: '#' }
+      { name: 'Logout', href: '#' },
     ],
     admin: [
       { name: 'Home', href: '/#/' },
       { name: 'Requests', href: '#' },
-      { name: 'Logout', href: '#' }
+      { name: 'Logout', href: '#' },
     ],
     guest: [
       { name: 'Home', href: '/#/' },
       { name: 'Login', href: '/#/login' },
-      { name: 'Register', href: '/#/register' }
+      { name: 'Register', href: '/#/register' },
     ],
   };
 
@@ -44,26 +56,8 @@
 
   function handleLogout(e) {
     e.preventDefault();
-    authViewModel.logout();
+    authService.logout();
   }
-
-  $: roleLinks = (() => {
-    if (isLoading) return linksByRole.guest;
-    
-    if (!currentUser) {
-      return linksByRole.guest;
-    }
-    
-    const userRoles = (currentUser['https://qatu.api/roles'] || []).map(role => role.toLowerCase());
-    
-    if (userRoles.includes('admin')) {
-      return linksByRole.admin;
-    } else if (userRoles.includes('vendor') || userRoles.includes('seller')) {
-      return linksByRole.seller;
-    } else {
-      return linksByRole.buyer;
-    }
-  })();
 </script>
 
 <!-- Botón hamburguesa -->
@@ -75,7 +69,9 @@
     {#each roleLinks as link}
       <li>
         {#if link.name === 'Logout'}
-          <a href={link.href} on:click|preventDefault={handleLogout}>{link.name}</a>
+          <a href={link.href} on:click|preventDefault={handleLogout}
+            >{link.name}</a
+          >
         {:else}
           <a href={link.href}>{link.name}</a>
         {/if}
@@ -87,7 +83,9 @@
     {#each roleLinks as link}
       <li>
         {#if link.name === 'Logout'}
-          <a href={link.href} on:click|preventDefault={handleLogout}>{link.name}</a>
+          <a href={link.href} on:click|preventDefault={handleLogout}
+            >{link.name}</a
+          >
         {:else}
           <a href={link.href}>{link.name}</a>
         {/if}
