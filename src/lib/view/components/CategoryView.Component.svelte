@@ -1,12 +1,12 @@
 <script>
   import { onMount } from 'svelte';
   import CategoryGrid from './Category.Component.svelte';
-  import { fetchCategories } from '../../viewmodel/viewmodels/categoryViewModel.js';
-  import { deleteCategoryById } from '../../viewmodel/viewmodels/deleteCategoryByid.js';
-  import { updateCategoryById } from '../../viewmodel/viewmodels/updateCategory.js';
-  import { createCategory } from '../../viewmodel/viewmodels/createCategory.js';
-
-
+  import {
+    fetchCategories,
+    createCategory,
+    updateCategoryById,
+    deleteCategoryById
+  } from '../../viewmodel/viewmodels/categoryViewModel.js';
 
   let categories = [];
   let creatingCategory = false;
@@ -30,13 +30,12 @@
     description = selectedCategory.description ?? '';
   }
 
-    function closeModal() {
+  function closeModal() {
     selectedCategory = null;
     creatingCategory = false;
     name = '';
     description = '';
   }
-
 
   async function saveChanges() {
     const payload = { name, description };
@@ -57,6 +56,7 @@
     }
   }
 </script>
+
 
 <CategoryGrid
   {categories}
@@ -135,6 +135,7 @@
 
   .modal input,
   .modal textarea {
+    color: black;
     width: 100%;
     padding: 0.5rem;
     margin-top: 0.5rem;
