@@ -8,10 +8,12 @@ export async function initAuth0() {
   auth0 = await createAuth0Client({
     domain: 'dev-a8y38ts0ji0zxod3.us.auth0.com',
     clientId: 'RgvN5zdugNVUiVxjSuv1p7h7R7Tyzbxz',
-    audience: 'https://qatu.api',
     cacheLocation: 'localstorage',
     useRefreshTokens: true,
-    redirect_uri: window.location.origin,
+    authorizationParams: {
+      audience: 'https://qatu.api',
+      redirect_uri: window.location.origin,
+    },
   });
 }
 
