@@ -23,7 +23,7 @@ const routes = {
   '/mystore': MyStore,
   '/stores': Stores,
   '/storesAdmin': StoreView,
-  '/requests' : AdminRequest,
+  '/requests': AdminRequest,
   '/mystore/create-product': ProductCreate,
   '/store/:id': Store,
 };
