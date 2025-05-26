@@ -97,6 +97,54 @@
   background-color: #6d00fc;
 }
 
+.comments-section {
+  margin-top: 2rem;
+}
+
+.comments-section h3 {
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.comment-card {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background: #f9f9f9;
+  border-radius: 6px;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.comment-user {
+  font-weight: bold;
+}
+
+.comment-rating {
+  color: #ffc107;
+}
+
+.star-filled {
+  color: #ffc107;
+}
+
+.star-empty {
+  color: #ddd;
+}
+
+.comment-date {
+  font-size: 0.8rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.comment-text {
+  line-height: 1.5;
+}
+
 @media (max-width: 600px) {
   .rating-header {
     flex-direction: column;
