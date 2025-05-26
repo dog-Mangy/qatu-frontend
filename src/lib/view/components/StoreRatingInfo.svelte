@@ -77,6 +77,26 @@
   color: #666;
 }
 
+.rating-actions {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.rate-button {
+  background-color: #3f028f;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.rate-button:hover {
+  background-color: #6d00fc;
+}
+
 @media (max-width: 600px) {
   .rating-header {
     flex-direction: column;
