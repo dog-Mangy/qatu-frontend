@@ -22,8 +22,8 @@ const routes = {
   '/mystore': MyStore,
   '/stores': Stores,
   '/storesAdmin': StoreView,
-  '/requests' : AdminRequest,
-  '/mystore/create-product': ProductCreate
+  '/requests': AdminRequest,
+  '/mystore/create-product': ProductCreate,
 };
 
 export default routes;
