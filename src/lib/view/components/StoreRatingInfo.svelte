@@ -8,10 +8,10 @@
   let rating = 0;
   let comment = '';
   let hoverRating = 0;
-  let isBuyer = false;
+  let isVendor = false;
 
   onMount(async () => {
-    isBuyer = await authService.isUser();
+    isVendor = await authService.isVendor();
   });
 
   function openRatingModal() {
@@ -54,7 +54,7 @@
     </div>
   </div>
 
-  {#if isBuyer}
+  {#if !isVendor}
     <div class="rating-actions">
       <button class="rate-button" on:click={openRatingModal}>
         Rate store
