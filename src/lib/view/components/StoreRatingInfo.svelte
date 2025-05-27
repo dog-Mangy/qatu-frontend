@@ -122,19 +122,19 @@
   }
 
   .rating-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid #eee;
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
 
-  .rating-average {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #3f028f;
-  }
+.rating-average {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #3f028f;
+}
 
   .rating-actions {
     margin-bottom: 2rem;
@@ -249,17 +249,17 @@
     transform: scale(1.2);
   }
 
-  .comment-input {
-    width: 100%;
-    min-height: 100px;
-    padding: 0.8rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    resize: vertical;
-    margin-bottom: 1.5rem;
-    font-family: inherit;
-    color: black;
-  }
+.comment-input {
+  width: 100%;
+  min-height: 100px;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: vertical;
+  margin-bottom: 1.5rem;
+  font-family: inherit;
+  color: black;
+}
 
   .modal-buttons {
     display: flex;
