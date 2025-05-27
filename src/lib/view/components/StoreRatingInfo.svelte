@@ -1,10 +1,18 @@
 <script>
+  import { authService } from '../../viewmodel/services/authService.js';
+  import { onMount } from 'svelte';
+
   export let storeRating;
 
   let showRatingModal = false;
   let rating = 0;
   let comment = '';
   let hoverRating = 0;
+  let isBuyer = false;
+
+  onMount(async () => {
+    isBuyer = await authService.isUser();
+  });
 
   function openRatingModal() {
     showRatingModal = true;
@@ -46,9 +54,13 @@
     </div>
   </div>
 
-  <div class="rating-actions">
-    <button class="rate-button" on:click={openRatingModal}> Rate store </button>
-  </div>
+  {#if isBuyer}
+    <div class="rating-actions">
+      <button class="rate-button" on:click={openRatingModal}>
+        Rate store
+      </button>
+    </div>
+  {/if}
 
   <div class="comments-section">
     <h3>Comments</h3>
@@ -58,9 +70,9 @@
           <span class="comment-user">{comment.user}</span>
           <span class="comment-rating">
             {#each Array(5) as _, i}
-              <span class={i < comment.rating ? 'star-filled' : 'star-empty'}
-                >★</span
-              >
+              <span class={i < comment.rating ? 'star-filled' : 'star-empty'}>
+                ★
+              </span>
             {/each}
           </span>
         </div>
@@ -122,19 +134,19 @@
   }
 
   .rating-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #eee;
-}
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+  }
 
-.rating-average {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #3f028f;
-}
+  .rating-average {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #3f028f;
+  }
 
   .rating-actions {
     margin-bottom: 2rem;
@@ -249,17 +261,17 @@
     transform: scale(1.2);
   }
 
-.comment-input {
-  width: 100%;
-  min-height: 100px;
-  padding: 0.8rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  resize: vertical;
-  margin-bottom: 1.5rem;
-  font-family: inherit;
-  color: black;
-}
+  .comment-input {
+    width: 100%;
+    min-height: 100px;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: vertical;
+    margin-bottom: 1.5rem;
+    font-family: inherit;
+    color: black;
+  }
 
   .modal-buttons {
     display: flex;
