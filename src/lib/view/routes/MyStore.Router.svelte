@@ -108,6 +108,6 @@
 </script>
 
 <main>
-  <ProductsList products={productList} />
+  <ProductsList products={productList} isStoreView={true} />
   <StoreRatingInfo {storeRating} />
 </main>
