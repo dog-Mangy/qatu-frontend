@@ -3,7 +3,7 @@ import Register from './Register.Router.svelte';
 import MainPage from './MainPage.Router.svelte';
 import Profile from './Profile.Router.svelte';
 import Category from './Category.Router.svelte';
-
+import ProductDetail from '../components/ProductDetail.Component.svelte';
 
 const routes = {
   '/categories': Category,
@@ -11,6 +11,7 @@ const routes = {
   '/login': Login,
   '/register': Register,
   '/': MainPage,
+  '/store/:id_Store/product/:id': ProductDetail,
 };
 
 export default routes;
