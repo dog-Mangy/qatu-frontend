@@ -114,4 +114,10 @@ export const authService = {
     const roles = claims?.['https://qatu.api/roles'];
     return Array.isArray(roles) && roles.includes('Vendor');
   },
+
+  isAdmin: async function () {
+    const claims = await auth0.getIdTokenClaims();
+    const roles = claims?.['https://qatu.api/roles'];
+    return Array.isArray(roles) && roles.includes('Admin');
+  },
 };
