@@ -1,7 +1,28 @@
 <script>
   import { slide } from 'svelte/transition';
-  export let userRole = 'buyer';
+  import { onMount } from 'svelte';
+  import { authService } from '../../viewmodel/services/authService.js';
+
   let isOpen = false;
+  let currentUser = null;
+  let isLoading = true;
+  let roleLinks = [];
+
+  onMount(async () => {
+    currentUser = await authService.getUser();
+
+    if (await authService.isAdmin()) {
+      roleLinks = linksByRole.admin;
+    } else if (await authService.isVendor()) {
+      roleLinks = linksByRole.seller;
+    } else if (await authService.isUser()) {
+      roleLinks = linksByRole.buyer;
+    } else {
+      roleLinks = linksByRole.guest;
+    }
+
+    isLoading = false;
+  });
 
   const linksByRole = {
     buyer: [
@@ -9,18 +30,24 @@
       { name: 'Stores', href: '#' },
       { name: 'Products', href: '/#/' },
       { name: 'Chats', href: '#' },
-      { name: 'Login', href: '/#/login' },
+      { name: 'Logout', href: '#' },
     ],
     seller: [
       { name: 'Home', href: '/#/' },
       { name: 'My Store', href: '#' },
+      { name: 'Products', href: '/#/' },
       { name: 'Chats', href: '#' },
-      { name: 'Login', href: '/#/login' },
+      { name: 'Logout', href: '#' },
     ],
     admin: [
       { name: 'Home', href: '/#/' },
       { name: 'Requests', href: '#' },
+      { name: 'Logout', href: '#' },
+    ],
+    guest: [
+      { name: 'Home', href: '/#/' },
       { name: 'Login', href: '/#/login' },
+      { name: 'Register', href: '/#/register' },
     ],
   };
 
@@ -28,7 +55,10 @@
     isOpen = !isOpen;
   }
 
-  $: roleLinks = linksByRole[userRole] || [];
+  function handleLogout(e) {
+    e.preventDefault();
+    authService.logout();
+  }
 </script>
 
 <!-- Botón hamburguesa -->
@@ -39,7 +69,13 @@
   <ul class="navbar-links show" transition:slide={{ duration: 300 }}>
     {#each roleLinks as link}
       <li>
-        <a href={link.href}>{link.name}</a>
+        {#if link.name === 'Logout'}
+          <a href={link.href} on:click|preventDefault={handleLogout}
+            >{link.name}</a
+          >
+        {:else}
+          <a href={link.href}>{link.name}</a>
+        {/if}
       </li>
     {/each}
   </ul>
@@ -47,7 +83,13 @@
   <ul class="navbar-links">
     {#each roleLinks as link}
       <li>
-        <a href={link.href}>{link.name}</a>
+        {#if link.name === 'Logout'}
+          <a href={link.href} on:click|preventDefault={handleLogout}
+            >{link.name}</a
+          >
+        {:else}
+          <a href={link.href}>{link.name}</a>
+        {/if}
       </li>
     {/each}
   </ul>
@@ -68,7 +110,6 @@
     text-decoration: none;
   }
 
-  /* El botón no se muestra en escritorio */
   .navbar-toggle {
     display: none;
     font-size: 1.8rem;
@@ -78,7 +119,6 @@
     cursor: pointer;
   }
 
-  /* Responsive */
   @media (max-width: 768px) {
     .navbar-toggle {
       display: block;
@@ -89,7 +129,7 @@
       flex-direction: column;
       width: 100%;
       margin-top: 10px;
-      background-color: #3f028f; /* Para que se vea bien */
+      background-color: #3f028f;
     }
 
     .navbar-links.show {
