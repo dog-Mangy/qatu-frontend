@@ -29,10 +29,13 @@ export async function createCategory(newCategoryData) {
 }
 
 export async function updateCategoryById(id, updatedData) {
-  const response = await fetchAuth(`http://localhost:5028/api/categories/${id}`, {
-    method: 'PUT',
-    body: JSON.stringify(updatedData),
-  });
+  const response = await fetchAuth(
+    `http://localhost:5028/api/categories/${id}`,
+    {
+      method: 'PUT',
+      body: JSON.stringify(updatedData),
+    }
+  );
 
   if (!response.ok) {
     throw new Error('Error actualizando categoría');
@@ -42,9 +45,12 @@ export async function updateCategoryById(id, updatedData) {
 }
 
 export async function deleteCategoryById(id) {
-  const response = await fetchAuth(`http://localhost:5028/api/categories/${id}`, {
-    method: 'DELETE',
-  });
+  const response = await fetchAuth(
+    `http://localhost:5028/api/categories/${id}`,
+    {
+      method: 'DELETE',
+    }
+  );
 
   if (!response.ok) {
     throw new Error('Error al eliminar la categoría');

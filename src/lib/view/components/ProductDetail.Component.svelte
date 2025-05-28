@@ -6,27 +6,26 @@
   let loading = true;
   let error = '';
 
-
   async function fetchProduct(id_Store, id) {
-
     return {
       id,
       id_Store,
       name: 'Nombre de producto',
       description: 'Descripción del producto',
-      image: 'https://images.pexels.com/photos/30028610/pexels-photo-30028610/free-photo-of-constelacion-de-orion.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+      image:
+        'https://images.pexels.com/photos/30028610/pexels-photo-30028610/free-photo-of-constelacion-de-orion.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
       storeName: 'Nombre de la tienda',
       rating: 4.5,
       interactions: 12,
       comments: [
         { text: 'Buen producto', rating: 5 },
-        { text: 'Regular', rating: 3 }
-      ]
+        { text: 'Regular', rating: 3 },
+      ],
     };
   }
 
   onMount(() => {
-    const unsubscribe = params.subscribe(async ($params) => {
+    const unsubscribe = params.subscribe(async $params => {
       try {
         const { id_Store, id } = $params;
         product = await fetchProduct(id_Store, id);
@@ -77,7 +76,7 @@
     max-width: 500px;
     margin: 2rem auto;
     padding: 2rem;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -111,7 +110,8 @@
     gap: 1rem;
     margin-bottom: 1rem;
   }
-  .qualify-btn, .chat-btn {
+  .qualify-btn,
+  .chat-btn {
     background: #3f028f;
     color: white;
     border: none;
