@@ -1,5 +1,13 @@
 <script>
+  import { onMount } from 'svelte';
+  import { authService } from '../../viewmodel/services/authService.js';
+  
   export let product = {};
+  let isSeller = false;
+
+  onMount(async () => {
+    isSeller = await authService.isVendor();
+  });
 </script>
 
 <div class="product-card">
@@ -28,14 +36,16 @@
         View Product
       </button>
 
-      <button
-        class="chat-seller-btn"
-        type="button"
-        aria-label={`Chat with seller of ${product.name}`}
-        on:click={() => alert('Chat with seller feature coming soon')}
-      >
-        Chat with Seller
-      </button>
+      {#if !isSeller}
+        <button
+          class="chat-seller-btn"
+          type="button"
+          aria-label={`Chat with seller of ${product.name}`}
+          on:click={() => alert('Chat with seller feature coming soon')}
+        >
+          Chat with Seller
+        </button>
+      {/if}
     </div>
   </div>
 </div>

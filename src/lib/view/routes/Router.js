@@ -2,8 +2,7 @@ import Login from './Login.Router.svelte';
 import Register from './Register.Router.svelte';
 import MainPage from './MainPage.Router.svelte';
 import Profile from './Profile.Router.svelte';
-import Category from './Category.Router.svelte';
-
+import MyStore from './MyStore.Router.svelte';
 
 const routes = {
   '/categories': Category,
@@ -11,6 +10,7 @@ const routes = {
   '/login': Login,
   '/register': Register,
   '/': MainPage,
+  '/mystore': MyStore
 };
 
 export default routes;
