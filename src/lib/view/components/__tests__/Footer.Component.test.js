@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/svelte';
 import Footer from '../Footer.Component.svelte';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 describe('Footer Component', () => {
   beforeEach(() => {
