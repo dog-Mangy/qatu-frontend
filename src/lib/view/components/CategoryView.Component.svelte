@@ -5,7 +5,7 @@
     fetchCategories,
     createCategory,
     updateCategoryById,
-    deleteCategoryById
+    deleteCategoryById,
   } from '../../viewmodel/viewmodels/categoryViewModel.js';
 
   let categories = [];
@@ -45,7 +45,10 @@
         const newCategory = await createCategory(payload);
         categories = [...categories, newCategory];
       } else if (selectedCategory) {
-        const updatedCategory = await updateCategoryById(selectedCategory.id, payload);
+        const updatedCategory = await updateCategoryById(
+          selectedCategory.id,
+          payload
+        );
         categories = categories.map(c =>
           c.id === selectedCategory.id ? { ...c, ...updatedCategory } : c
         );
@@ -56,7 +59,6 @@
     }
   }
 </script>
-
 
 <CategoryGrid
   {categories}
@@ -71,24 +73,23 @@
 />
 
 {#if selectedCategory || creatingCategory}
-    <div
-      class="modal-backdrop"
-      role="button"
-      tabindex="0"
-      on:click={closeModal}
-      on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && closeModal()}
-    >
+  <div
+    class="modal-backdrop"
+    role="button"
+    tabindex="0"
+    on:click={closeModal}
+    on:keydown={e => (e.key === 'Enter' || e.key === ' ') && closeModal()}
+  >
     <div
       class="modal"
       role="dialog"
       aria-modal="true"
       tabindex="0"
       on:click|stopPropagation
-      on:keydown={(e) => {
+      on:keydown={e => {
         if (e.key === 'Escape') closeModal();
       }}
     >
-
       {#if selectedCategory}
         <img src={selectedCategory.image} alt={name} />
       {/if}
@@ -102,7 +103,6 @@
   </div>
 {/if}
 
-
 <style>
   .modal-backdrop {
     position: fixed;
@@ -110,7 +110,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0, 0, 0, 0.4);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -123,7 +123,7 @@
     max-width: 400px;
     width: 90%;
     text-align: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   }
 
   .modal img {

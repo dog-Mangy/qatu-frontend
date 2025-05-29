@@ -5,7 +5,7 @@
   const dispatch = createEventDispatcher();
 
   function handleDelete(id, e) {
-    e.stopPropagation(); 
+    e.stopPropagation();
     dispatch('deleteCategory', { id });
   }
 
@@ -18,17 +18,19 @@
   <h2 class="section-title">Categories</h2>
   <div class="categories-grid">
     {#each categories as category (category.id)}
-    <div
-      class="category-card"
-      role="button"
-      tabindex="0"
-      on:click={() => dispatch('viewCategory', { category })}
-      on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && dispatch('viewCategory', { category })}
-    >
+      <div
+        class="category-card"
+        role="button"
+        tabindex="0"
+        on:click={() => dispatch('viewCategory', { category })}
+        on:keydown={e =>
+          (e.key === 'Enter' || e.key === ' ') &&
+          dispatch('viewCategory', { category })}
+      >
         <button
           class="delete-button"
-          on:click|stopPropagation={(e) => handleDelete(category.id, e)}
-        >✕</button>
+          on:click|stopPropagation={e => handleDelete(category.id, e)}>✕</button
+        >
 
         <div class="category-image-container">
           <img
@@ -40,23 +42,21 @@
         </div>
         <div class="category-name">{category.name}</div>
       </div>
-      
     {/each}
 
-      <div
-        class="category-card add-card"
-        role="button"
-        tabindex="0"
-        on:click={() => dispatch('createCategory')}
-        on:keydown={(e) => (e.key === 'Enter' || e.key === ' ') && dispatch('createCategory')}
-      >
-        <div class="plus-icon">+</div>
-        <div class="category-name">Nueva</div>
-      </div>
-
+    <div
+      class="category-card add-card"
+      role="button"
+      tabindex="0"
+      on:click={() => dispatch('createCategory')}
+      on:keydown={e =>
+        (e.key === 'Enter' || e.key === ' ') && dispatch('createCategory')}
+    >
+      <div class="plus-icon">+</div>
+      <div class="category-name">Nueva</div>
+    </div>
   </div>
 </div>
-
 
 <style>
   .categories-container {
@@ -77,7 +77,7 @@
     grid-template-columns: repeat(10, 1fr);
     gap: 2rem;
     justify-items: center;
-}
+  }
 
   .category-card {
     position: relative;
@@ -114,9 +114,10 @@
     max-width: 100px;
     text-align: center;
     cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
 
   .category-card:hover {
     transform: translateY(-3px);
@@ -145,21 +146,21 @@
   }
 
   .add-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: #555;
-  background-color: #f0f0f0;
-  border: 2px dashed #aaa;
-}
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #555;
+    background-color: #f0f0f0;
+    border: 2px dashed #aaa;
+  }
 
-.add-card:hover {
-  background-color: #e0e0e0;
-}
+  .add-card:hover {
+    background-color: #e0e0e0;
+  }
 
-.plus-icon {
-  font-size: 2rem;
-  font-weight: bold;
-}
+  .plus-icon {
+    font-size: 2rem;
+    font-weight: bold;
+  }
 </style>
