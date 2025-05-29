@@ -16,6 +16,7 @@
   const productList = [
     {
       id: 1,
+      id_Store: 101,
       name: 'Constellation Canvas',
       price: 49.99,
       description: 'Orion constellation canvas.',
@@ -23,6 +24,7 @@
     },
     {
       id: 2,
+      id_Store: 101,
       name: 'Vibrant Nebula Poster',
       price: 29.99,
       description: 'Nebula poster.',
@@ -30,6 +32,7 @@
     },
     {
       id: 3,
+      id_Store: 102,
       name: 'Milky Way Photograph',
       price: 39.99,
       description: 'Photograph of our galaxy.',
@@ -37,6 +40,7 @@
     },
     {
       id: 4,
+      id_Store: 103,
       name: 'Space Horizon Art',
       price: 34.99,
       description: 'Space artwork.',
@@ -44,6 +48,7 @@
     },
     {
       id: 5,
+      id_Store: 104,
       name: 'Night Sky Canvas',
       price: 44.99,
       description: 'Night Sky Canvas.',
@@ -51,6 +56,7 @@
     },
     {
       id: 6,
+      id_Store: 105,
       name: 'Mountain Stars Poster',
       price: 27.99,
       description: 'Mountains POster',
@@ -58,6 +64,7 @@
     },
     {
       id: 7,
+      id_Store: 106,
       name: 'Aurora Borealis Print',
       price: 32.99,
       description: 'Print of Aurora Borealis.',
@@ -65,6 +72,7 @@
     },
     {
       id: 8,
+      id_Store: 107,
       name: 'Starry Night Landscape',
       price: 36.99,
       description: 'Poster.',
