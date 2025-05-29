@@ -6,6 +6,9 @@
   let loading = true;
   let error = '';
 
+  // Simulación: cambia a true si quieres probar como vendedor
+  let isSeller = false;
+
   async function fetchProduct(id_Store, id) {
     return {
       id,
@@ -55,7 +58,9 @@
       <span class="interactions">{product.interactions} interactions</span>
     </div>
     <div class="actions">
-      <button class="qualify-btn">Qualify</button>
+      {#if !isSeller}
+        <button class="qualify-btn">Qualify</button>
+      {/if}
       <button class="chat-btn">Chat with the seller</button>
     </div>
     <div class="comments">
