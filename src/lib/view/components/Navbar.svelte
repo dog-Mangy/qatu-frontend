@@ -28,13 +28,13 @@
     buyer: [
       { name: 'Home', href: '/#/' },
       { name: 'Stores', href: '#' },
-      { name: 'Products', href: '/#/' },
+      { name: 'Products', href: '/#/mystore' },
       { name: 'Chats', href: '#' },
       { name: 'Logout', href: '#' },
     ],
     seller: [
       { name: 'Home', href: '/#/' },
-      { name: 'My Store', href: '#' },
+      { name: 'My Store', href: '/#/mystore' },
       { name: 'Products', href: '/#/' },
       { name: 'Chats', href: '#' },
       { name: 'Logout', href: '#' },
