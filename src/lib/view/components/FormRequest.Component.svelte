@@ -1,11 +1,25 @@
 <script>
+  import { createRequest } from '../../viewmodel/viewmodels/requestViewModel.js';
   let description = '';
 
-  function handleSubmit() {
-    alert(`Descripción enviada:\n${description}`);
-    description = '';
+  async function handleSubmit() {
+    try {
+      const userId = '33333333-3333-3333-3333-333333333333'; 
+      const requestData = {
+        userId,
+        description
+      };
+
+      const response = await createRequest(requestData);
+
+      alert(`Solicitud enviada con éxito. ID: ${response.id}`);
+      description = '';
+    } catch (error) {
+      alert('Ocurrió un error al enviar la solicitud: ' + error.message);
+    }
   }
 </script>
+
 
 <form on:submit|preventDefault={handleSubmit} class="form-container">
   <h2>Justifica por qué quieres ser vendedor</h2>
