@@ -17,7 +17,7 @@
   <div class="title-container">
     <h2 class="section-title">Products</h2>
     {#if isVendor && isStoreView}
-      <a href="/#/" class="add-product-btn">Add a product</a>
+      <a href="/#/mystore/create-product" class="add-product-btn">Add a product</a>
     {/if}
   </div>
   <div class="products-grid">
