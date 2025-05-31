@@ -6,6 +6,7 @@ import Category from './Category.Router.svelte';
 import ProductDetail from '../components/ProductDetail.Component.svelte';
 import FormRequest from './FormRequest.svelte';
 import MyStore from './MyStore.Router.svelte';
+import ProductCreate from '../components/ProductCreate.Component.svelte';
 
 const routes = {
   '/categories': Category,
@@ -15,7 +16,8 @@ const routes = {
   '/formrequest': FormRequest,
   '/': MainPage,
   '/store/:id_Store/product/:id': ProductDetail,
-  '/mystore': MyStore
+  '/mystore': MyStore,
+  '/mystore/create-product': ProductCreate
 };
 
 export default routes;
