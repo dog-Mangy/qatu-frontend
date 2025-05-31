@@ -53,7 +53,7 @@
         (e.key === 'Enter' || e.key === ' ') && dispatch('createCategory')}
     >
       <div class="plus-icon">+</div>
-      <div class="category-name">Nueva</div>
+      <div class="category-name">New</div>
     </div>
   </div>
 </div>

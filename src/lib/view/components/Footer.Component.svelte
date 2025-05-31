@@ -4,7 +4,7 @@
       <h3>About Us</h3>
       <ul>
         <li><a href="/#">Who We Are</a></li>
-        <li><a href="/#">Join as a Seller</a></li>
+        <li><a href="/#/formrequest">Join as a Seller</a></li>
         <li><a href="/#">News</a></li>
       </ul>
     </div>
