@@ -2,13 +2,16 @@
   import { onMount } from 'svelte';
   import { authViewModel } from '../../viewmodel/viewmodels/authViewModel';
   import { push } from 'svelte-spa-router';
-
+ 
   let user = null;
+  let userToken = null;
   let loading = true;
-
+ 
   onMount(async () => {
     try {
       user = await authViewModel.getUser();
+      userToken = await authViewModel.getToken();
+      console.log(userToken)
     } catch (err) {
       console.error('Failed to load user:', err);
       push('/login');
@@ -16,7 +19,7 @@
       loading = false;
     }
   });
-
+ 
   function logout() {
     authViewModel.logout();
   }
