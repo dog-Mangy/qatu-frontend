@@ -12,10 +12,11 @@
 
   // Categorías hardcodeadas
   let categories = [
-    { id: '55555555-5555-5555-5555-555555555555', name: 'Electrónica' },
-    { id: '11111111-1111-1111-1111-111111111111', name: 'Ropa' },
-    { id: '22222222-2222-2222-2222-222222222222', name: 'Hogar' }
+    { id: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', name: 'Electrónica' },
+    { id: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb', name: 'Ropa' },
+    { id: 'cccccccc-cccc-cccc-cccc-cccccccccccc', name: 'Hogar' }
   ];
+
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -26,7 +27,7 @@
         price: parseFloat(price),
         stock: parseInt(stock),
         categoryId,
-        storeId: 'REEMPLAZA_CON_STORE_ID'
+        storeId: '44444444-4444-4444-4444-444444444444'
       });
       success = 'Producto creado correctamente';
       setTimeout(() => push('/mystore'), 1200);
