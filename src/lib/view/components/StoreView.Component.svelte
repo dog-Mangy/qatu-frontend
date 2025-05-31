@@ -25,7 +25,7 @@
   async function handleSubmit() {
     try {
       const newStore = await createStore({ UserId, Name, Description });
-      stores = [...stores, newStore]; 
+      stores = [...stores, newStore];
       showForm = false;
       Name = '';
       Description = '';
@@ -40,20 +40,19 @@
   <p class="error">Error: {error}</p>
 {:else}
   <div class="stores-container">
-    <h2>Tiendas Registradas</h2>
+    <h2>Registered Stores</h2>
 
     <button type="button" class="add-store-container" on:click={() => showForm = !showForm}>
       <span class="add-icon">➕</span>
-      <span class="add-text">Añadir tienda</span>
+      <span class="add-text">Add Store</span>
     </button>
-
 
     {#if showForm}
       <form class="store-form" on:submit|preventDefault={handleSubmit}>
-        <input type="text" placeholder="ID del usuario" bind:value={UserId} required />
-        <input type="text" placeholder="Nombre de la tienda" bind:value={Name} required />
-        <textarea placeholder="Descripción" bind:value={Description} required></textarea>
-        <button type="submit">Crear tienda</button>
+        <input type="text" placeholder="User ID" bind:value={UserId} required />
+        <input type="text" placeholder="Store Name" bind:value={Name} required />
+        <textarea placeholder="Description" bind:value={Description} required></textarea>
+        <button type="submit">Create Store</button>
       </form>
     {/if}
 
@@ -61,8 +60,8 @@
       {#each stores as store}
         <div class="card">
           <h3>{store.name}</h3>
-          <p><strong>Usuario ID:</strong> {store.userId}</p>
-          <p><strong>Descripción:</strong> {store.description}</p>
+          <p><strong>User ID:</strong> {store.userId}</p>
+          <p><strong>Description:</strong> {store.description}</p>
         </div>
       {/each}
     </div>

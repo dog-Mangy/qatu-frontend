@@ -17,29 +17,29 @@
 
       const response = await createRequest(requestData);
 
-      alert(`Solicitud enviada con éxito. ID: ${response.id}`);
+      alert(`Request submitted successfully. ID: ${response.id}`);
       storeName = '';
       storeDescription = '';
       description = '';
     } catch (error) {
-      alert('Ocurrió un error al enviar la solicitud: ' + error.message);
+      alert('An error occurred while submitting the request: ' + error.message);
     }
   }
 </script>
 
 <form on:submit|preventDefault={handleSubmit} class="form-container">
-  <h2>Solicitud para ser vendedor</h2>
+  <h2>Request to Become a Seller</h2>
 
   <input
     type="text"
-    placeholder="Nombre de la tienda"
+    placeholder="Store Name"
     bind:value={storeName}
     required
   />
 
   <textarea
     rows="4"
-    placeholder="Descripción de la tienda"
+    placeholder="Store Description"
     bind:value={storeDescription}
     required
   ></textarea>
@@ -48,11 +48,11 @@
     id="description"
     bind:value={description}
     rows="10"
-    placeholder="Justificación: ¿Por qué quieres ser vendedor?"
+    placeholder="Justification: Why do you want to become a seller?"
     required
   ></textarea>
 
-  <button type="submit">Enviar</button>
+  <button type="submit">Submit</button>
 </form>
 
 <style>
@@ -60,8 +60,9 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
-    max-width: 900px; 
-    margin: 40px auto;
+    max-width: 800px; 
+    margin: 40px auto;        
+    width:100%;
     padding: 30px;
     background-color: white; 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
@@ -71,6 +72,7 @@
 
   h2 {
     text-align: center;
+    max-width: 1200px;
     margin: 0;
     font-size: 1.5rem;
   }

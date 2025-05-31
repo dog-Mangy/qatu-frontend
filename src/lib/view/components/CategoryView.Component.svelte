@@ -93,11 +93,11 @@
       {#if selectedCategory}
         <img src={selectedCategory.image} alt={name} />
       {/if}
-      <input bind:value={name} placeholder="Nombre" />
-      <textarea bind:value={description} placeholder="Descripción"></textarea>
+      <input bind:value={name} placeholder="Name" />
+      <textarea bind:value={description} placeholder="Description"></textarea>
       <div class="buttons">
-        <button on:click={saveChanges}>Guardar</button>
-        <button on:click={closeModal}>Cancelar</button>
+        <button on:click={saveChanges}>Save</button>
+        <button on:click={closeModal}>Cancel</button>
       </div>
     </div>
   </div>

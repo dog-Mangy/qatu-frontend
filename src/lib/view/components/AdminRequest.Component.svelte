@@ -1,6 +1,6 @@
 <script>
   import { onMount } from 'svelte';
-  import { getAllRequests, deleteRequestById, updateRequestStatus  } from '../../viewmodel/viewmodels/requestViewModel.js';
+  import { getAllRequests, deleteRequestById, updateRequestStatus } from '../../viewmodel/viewmodels/requestViewModel.js';
 
   let requests = [];
   let error = '';
@@ -15,16 +15,16 @@
 
   function translateStatus(status) {
     switch (status) {
-      case 'Pending': return 'Pendiente';
-      case 'Accepted': return 'Aceptado';
-      case 'Rejected': return 'Rechazado';
+      case 'Pending': return 'Pending';
+      case 'Accepted': return 'Accepted';
+      case 'Rejected': return 'Rejected';
       default: return status;
     }
   }
 
   function formatDate(dateStr) {
     const date = new Date(dateStr);
-    return date.toLocaleDateString('es-ES', {
+    return date.toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'long',
       day: 'numeric'
@@ -32,57 +32,57 @@
   }
 
   async function approveRequest(id) {
-  const confirmReject = confirm('¿Estás seguro de que deseas aceptar esta solicitud?');
-  if (!confirmReject) return;
+    const confirmApprove = confirm('Are you sure you want to approve this request?');
+    if (!confirmApprove) return;
 
-  try {
-    await updateRequestStatus(id, 1);
-    requests = requests.map(req => req.id === id ? { ...req, status: 'Accepted' } : req);
-  } catch (err) {
-    error = err.message;
+    try {
+      await updateRequestStatus(id, 1);
+      requests = requests.map(req => req.id === id ? { ...req, status: 'Accepted' } : req);
+    } catch (err) {
+      error = err.message;
+    }
   }
-}
 
   async function rejectRequest(id) {
-  const confirmReject = confirm('¿Estás seguro de que deseas rechazar esta solicitud?');
-  if (!confirmReject) return;
+    const confirmReject = confirm('Are you sure you want to reject this request?');
+    if (!confirmReject) return;
 
-  try {
-    await updateRequestStatus(id, 2);
-    requests = requests.map(req => req.id === id ? { ...req, status: 'Rejected' } : req);
-  } catch (err) {
-    error = err.message;
+    try {
+      await updateRequestStatus(id, 2);
+      requests = requests.map(req => req.id === id ? { ...req, status: 'Rejected' } : req);
+    } catch (err) {
+      error = err.message;
+    }
   }
-}
 
   async function deleteRequest(id) {
-  const confirmDelete = confirm('¿Estás seguro de que deseas eliminar esta solicitud?');
-  if (!confirmDelete) return;
+    const confirmDelete = confirm('Are you sure you want to delete this request?');
+    if (!confirmDelete) return;
 
-  try {
-    await deleteRequestById(id);
-    requests = requests.filter(req => req.id !== id);  
-  } catch (err) {
-    error = err.message;
+    try {
+      await deleteRequestById(id);
+      requests = requests.filter(req => req.id !== id);
+    } catch (err) {
+      error = err.message;
+    }
   }
-}
 </script>
 
 {#if error}
   <p class="error">Error: {error}</p>
 {:else}
   <div class="table-container">
-    <h2>Lista de Solicitudes</h2>
+    <h2>Request List</h2>
     <table>
       <thead>
         <tr>
-          <th>Usuario</th>
-          <th>Nombre de la tienda</th>
-          <th>Descripción de la tienda</th>
-          <th>Descripción</th>
-          <th>Estado</th>
-          <th>Creado el</th>
-          <th>Acciones</th>
+          <th>User</th>
+          <th>Store Name</th>
+          <th>Store Description</th>
+          <th>Description</th>
+          <th>Status</th>
+          <th>Created On</th>
+          <th>Actions</th>
         </tr>
       </thead>
 
@@ -96,14 +96,13 @@
             <td>{translateStatus(req.status)}</td>
             <td>{formatDate(req.createdAt)}</td>
             <td class="actions">
-              <button title="Aprobar" on:click={() => approveRequest(req.id)}>✅</button>
-              <button title="Rechazar" on:click={() => rejectRequest(req.id)}>❌</button>
-              <button title="Eliminar" on:click={() => deleteRequest(req.id)}>🗑️</button>
+              <button title="Approve" on:click={() => approveRequest(req.id)}>✅</button>
+              <button title="Reject" on:click={() => rejectRequest(req.id)}>❌</button>
+              <button title="Delete" on:click={() => deleteRequest(req.id)}>🗑️</button>
             </td>
           </tr>
         {/each}
       </tbody>
-
     </table>
   </div>
 {/if}
