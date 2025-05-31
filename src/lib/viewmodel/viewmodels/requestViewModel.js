@@ -25,3 +25,34 @@ export async function createRequest(newRequestData) {
 
   return await response.json();
 }
+
+
+export async function deleteRequestById(id) {
+  const response = await fetchAuth(`http://localhost:5028/api/requests/${id}`, {
+    method: 'DELETE',
+  });
+
+  if (!response.ok) {
+    throw new Error('Error eliminando la solicitud');
+  }
+
+  return true;
+}
+
+
+export async function updateRequestStatus(id, status) {
+  const response = await fetchAuth(`http://localhost:5028/api/requests/${id}/status`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ status })
+  });
+
+  if (!response.ok) {
+    const err = await response.json();
+    throw new Error(err.message || 'Error al actualizar estado');
+  }
+
+  return await response.json();
+}
