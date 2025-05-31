@@ -1,5 +1,8 @@
 <script>
   import { createRequest } from '../../viewmodel/viewmodels/requestViewModel.js';
+
+  let storeName = '';
+  let storeDescription = '';
   let description = '';
 
   async function handleSubmit() {
@@ -7,12 +10,16 @@
       const userId = '33333333-3333-3333-3333-333333333333'; 
       const requestData = {
         userId,
+        storeName,
+        storeDescription,
         description
       };
 
       const response = await createRequest(requestData);
 
       alert(`Solicitud enviada con éxito. ID: ${response.id}`);
+      storeName = '';
+      storeDescription = '';
       description = '';
     } catch (error) {
       alert('Ocurrió un error al enviar la solicitud: ' + error.message);
@@ -20,15 +27,28 @@
   }
 </script>
 
-
 <form on:submit|preventDefault={handleSubmit} class="form-container">
-  <h2>Justifica por qué quieres ser vendedor</h2>
+  <h2>Solicitud para ser vendedor</h2>
+
+  <input
+    type="text"
+    placeholder="Nombre de la tienda"
+    bind:value={storeName}
+    required
+  />
+
+  <textarea
+    rows="4"
+    placeholder="Descripción de la tienda"
+    bind:value={storeDescription}
+    required
+  ></textarea>
 
   <textarea
     id="description"
     bind:value={description}
     rows="10"
-    placeholder="Escribe aquí tu justificación..."
+    placeholder="Justificación: ¿Por qué quieres ser vendedor?"
     required
   ></textarea>
 
@@ -40,7 +60,7 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
-    max-width: 700px;
+    max-width: 900px; 
     margin: 40px auto;
     padding: 30px;
     background-color: white; 
@@ -55,17 +75,25 @@
     font-size: 1.5rem;
   }
 
-  label {
-    font-weight: bold;
+  input,
+  textarea,
+  button {
+    width: 100%; 
+    box-sizing: border-box;
   }
 
+  input,
   textarea {
     padding: 15px;
     border-radius: 4px;
     border: 1px solid #888;
-    resize: vertical;
     font-size: 1rem;
-    height: 200px; 
+    background-color: white;
+    color: black;
+  }
+
+  textarea {
+    resize: vertical;
   }
 
   button {
@@ -78,19 +106,8 @@
     cursor: pointer;
   }
 
-  textarea {
-  padding: 15px;
-  border-radius: 4px;
-  border: 1px solid #888;
-  resize: vertical;
-  font-size: 1rem;
-  height: 200px;
-  background-color: white;  
-  color: black;             
-}
-
-
   button:hover {
     background-color: #5a31b0;
   }
 </style>
+
