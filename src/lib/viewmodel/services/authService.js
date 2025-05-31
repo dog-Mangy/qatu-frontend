@@ -44,6 +44,17 @@ export const authService = {
     return await auth0.getTokenSilently();
   },
 
+  getUUID: async () => {
+    try {
+      const claims = await auth0.getIdTokenClaims();
+      return claims?.['https://qatu.api/uuid'];
+    } catch (err) {
+      console.error('Failed to get UUID from token claims', err);
+      return null;
+    }
+  },
+
+
   logout: () => {
     auth0.logout({
       logoutParams: {
