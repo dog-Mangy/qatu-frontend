@@ -7,6 +7,7 @@ import ProductDetail from '../components/ProductDetail.Component.svelte';
 import FormRequest from './FormRequest.svelte';
 import MyStore from './MyStore.Router.svelte';
 import AdminRequest from './AdminRequest.Router.svelte';
+import StoreView from './StoreView.Router.svelte';
 
 
 const routes = {
@@ -18,6 +19,7 @@ const routes = {
   '/': MainPage,
   '/store/:id_Store/product/:id': ProductDetail,
   '/mystore': MyStore,
+  '/stores': StoreView,
   '/requests' : AdminRequest
 };
 
