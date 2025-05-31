@@ -1,6 +1,8 @@
 <script>
   import { createProduct } from '../../viewmodel/viewmodels/productViewModel.js';
+  import { fetchCategories } from '../../viewmodel/viewmodels/categoryViewModel.js';
   import { push } from 'svelte-spa-router';
+  import { onMount } from 'svelte';
 
   let name = '';
   let description = '';
@@ -9,13 +11,16 @@
   let categoryId = '';
   let error = '';
   let success = '';
+  let categories = [];
 
-  // Categorías hardcodeadas
-  let categories = [
-    { id: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', name: 'Electrónica' },
-    { id: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb', name: 'Ropa' },
-    { id: 'cccccccc-cccc-cccc-cccc-cccccccccccc', name: 'Hogar' }
-  ];
+
+  onMount(async () => {
+    try {
+      categories = await fetchCategories();
+    } catch (err) {
+      error = 'No se pudieron cargar las categorías';
+    }
+  });
 
 
   async function handleSubmit(e) {
