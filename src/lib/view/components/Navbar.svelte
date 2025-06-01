@@ -27,13 +27,14 @@
   const linksByRole = {
     buyer: [
       { name: 'Home', href: '/#/' },
-      { name: 'Stores', href: '#' },
+      { name: 'Stores', href: '#/stores' },
       { name: 'Products', href: '/#/mystore' },
       { name: 'Chats', href: '#' },
       { name: 'Logout', href: '#' },
     ],
     seller: [
       { name: 'Home', href: '/#/' },
+      { name: 'Stores', href: '#/stores' },
       { name: 'My Store', href: '/#/mystore' },
       { name: 'Products', href: '/#/' },
       { name: 'Chats', href: '#' },
