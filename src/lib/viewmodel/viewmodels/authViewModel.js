@@ -91,4 +91,14 @@ export const authViewModel = {
     }
     return token;
   },
+
+   getUUID: async () => {
+    let uuid = null;
+    try {
+      uuid = await authService.getUUID();
+    } catch (err) {
+      console.error('Failed to get UUID', err);
+    }
+    return uuid;
+  },
 };
