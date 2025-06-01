@@ -15,7 +15,7 @@
 
   const productList = [
     {
-      id: 1,
+      id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
       id_Store: 101,
       name: 'Constellation Canvas',
       price: 49.99,
@@ -23,7 +23,7 @@
       image: images[0],
     },
     {
-      id: 2,
+      id: 'b2c3d4e5-f6a7-8901-bcde-f23456789012',
       id_Store: 101,
       name: 'Vibrant Nebula Poster',
       price: 29.99,
@@ -31,7 +31,7 @@
       image: images[1],
     },
     {
-      id: 3,
+      id: '30a8c927-9774-4057-9f6a-2c4158d2b2d3',
       id_Store: 102,
       name: 'Milky Way Photograph',
       price: 39.99,
@@ -39,7 +39,7 @@
       image: images[2],
     },
     {
-      id: 4,
+      id: '377f3896-ed4d-4e68-ad30-02cc65e426b8',
       id_Store: 103,
       name: 'Space Horizon Art',
       price: 34.99,
@@ -47,7 +47,7 @@
       image: images[3],
     },
     {
-      id: 5,
+      id: '45726569-0a33-4ed1-9ce3-072324033594',
       id_Store: 104,
       name: 'Night Sky Canvas',
       price: 44.99,
@@ -55,7 +55,7 @@
       image: images[4],
     },
     {
-      id: 6,
+      id: '73e0fe7b-530b-4cc1-9ad0-a028f116b0a8',
       id_Store: 105,
       name: 'Mountain Stars Poster',
       price: 27.99,
@@ -63,7 +63,7 @@
       image: images[5],
     },
     {
-      id: 7,
+      id: '7a44753c-aa8c-480f-ade8-bcf20ab8a6ce',
       id_Store: 106,
       name: 'Aurora Borealis Print',
       price: 32.99,
@@ -71,7 +71,7 @@
       image: images[6],
     },
     {
-      id: 8,
+      id: '81461fab-579e-4b88-8406-8c66890f59a3',
       id_Store: 107,
       name: 'Starry Night Landscape',
       price: 36.99,
