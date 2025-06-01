@@ -55,7 +55,6 @@ export const authService = {
     }
   },
 
-
   logout: () => {
     auth0.logout({
       logoutParams: {
