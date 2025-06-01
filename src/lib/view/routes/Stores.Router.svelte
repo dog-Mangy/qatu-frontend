@@ -9,7 +9,7 @@
   let totalPages = 1;
   let isLoading = true;
   let error = null;
-  const pageSize = 1;
+  const pageSize = 10;
 
   async function loadStores(page = 1) {
     isLoading = true;
