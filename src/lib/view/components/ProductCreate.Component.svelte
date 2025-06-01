@@ -1,27 +1,41 @@
 <script>
   import { createProduct } from '../../viewmodel/viewmodels/productViewModel.js';
   import { fetchCategories } from '../../viewmodel/viewmodels/categoryViewModel.js';
+  import { getStoresByUserId } from '../../viewmodel/viewmodels/storeViewModel.js';
   import { push } from 'svelte-spa-router';
   import { onMount } from 'svelte';
+  import { authViewModel } from '../../viewmodel/viewmodels/authViewModel';
 
   let name = '';
   let description = '';
   let price = '';
   let stock = '';
   let categoryId = '';
+  let storeId = '';
   let error = '';
   let success = '';
   let categories = [];
 
-
   onMount(async () => {
     try {
       categories = await fetchCategories();
+
+      const userId = await authViewModel.getUUID();
+      if (!userId) {
+        error = 'No se pudo obtener el ID del usuario';
+        return;
+      }
+
+      const stores = await getStoresByUserId(userId);
+      if (stores.length > 0) {
+        storeId = stores[0].id;
+      } else {
+        error = 'No tienes tiendas registradas';
+      }
     } catch (err) {
-      error = 'No se pudieron cargar las categorías';
+      error = err.message || 'Error al cargar datos';
     }
   });
-
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -32,7 +46,7 @@
         price: parseFloat(price),
         stock: parseInt(stock),
         categoryId,
-        storeId: '44444444-4444-4444-4444-444444444444'
+        storeId
       });
       success = 'Producto creado correctamente';
       setTimeout(() => push('/mystore'), 1200);
