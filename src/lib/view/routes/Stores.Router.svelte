@@ -1,46 +1,71 @@
 <script>
+  import { onMount } from 'svelte';
   import StoresComponent from '../components/Stores.Component.svelte';
-  
-  const stores = [
-    {
-      id: 1,
-      name: "Galactic Art",
-      description: "Arte espacial y decoración cósmica",
-      createdAt: "2023-05-15"
-    },
-    {
-      id: 2,
-      name: "Cosmic Creations",
-      description: "Posters y fotografías del universo",
-      createdAt: "2023-06-20"
-    },
-    {
-      id: 3,
-      name: "Stellar Designs",
-      description: "Diseños inspirados en las estrellas",
-      createdAt: "2023-07-10"
-    },
-    {
-      id: 4,
-      name: "Nebula Store",
-      description: "Productos únicos con temática espacial",
-      createdAt: "2023-08-05"
-    },
-    {
-      id: 5,
-      name: "Astro Shop",
-      description: "Todo para los amantes de la astronomía",
-      createdAt: "2023-09-12"
-    },
-    {
-      id: 6,
-      name: "Orion Outpost",
-      description: "Regalos y artículos coleccionables",
-      createdAt: "2023-10-18"
+  import PaginationComponent from '../components/Pagination.Component.svelte';
+  import { fetchStoresPaged } from '../../viewmodel/viewmodels/storesViewModel';
+
+  let stores = [];
+  let currentPage = 1;
+  let totalPages = 1;
+  let isLoading = true;
+  let error = null;
+  const pageSize = 1;
+
+  async function loadStores(page = 1) {
+    isLoading = true;
+    error = null;
+    try {
+      const response = await fetchStoresPaged({
+        page,
+        pageSize,
+      });
+      stores = response.items;
+      currentPage = response.page;
+      totalPages = response.totalPages;
+    } catch (err) {
+      console.error('Error loading stores:', err);
+      error = err.message;
+      stores = [];
+    } finally {
+      isLoading = false;
     }
-  ];
+  }
+
+  function handlePageChange(page) {
+    loadStores(page);
+  }
+
+  onMount(() => {
+    loadStores();
+  });
 </script>
 
 <main>
-  <StoresComponent {stores} />
+  {#if isLoading}
+    <div class="loading">Loading stores...</div>
+  {:else if error}
+    <div class="error">Error: {error}</div>
+  {:else}
+    <StoresComponent {stores} />
+    {#if totalPages > 1}
+      <PaginationComponent
+        {currentPage}
+        {totalPages}
+        onPageChange={handlePageChange}
+      />
+    {/if}
+  {/if}
 </main>
+
+<style>
+  .loading,
+  .error {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.2rem;
+  }
+
+  .error {
+    color: #d32f2f;
+  }
+</style>
