@@ -10,7 +10,7 @@
   onMount(async () => {
     try {
       user = await authViewModel.getUser();
-      userToken = await authViewModel.getToken();
+      userToken = await authViewModel.getUUID();
       console.log(userToken)
     } catch (err) {
       console.error('Failed to load user:', err);
