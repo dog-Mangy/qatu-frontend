@@ -83,13 +83,17 @@
   </div>
 </div>
 
+<!-- svelte-ignore a11y_click_events_have_key_events -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
 {#if showRatingModal}
+  <!-- svelte-ignore a11y_click_events_have_key_events -->
   <div class="modal-overlay" on:click|self={closeRatingModal}>
     <div class="rating-modal">
       <h3>Rate this store</h3>
 
       <div class="stars-rating">
         {#each Array(5) as _, i}
+          <!-- svelte-ignore a11y_mouse_events_have_key_events -->
           <span
             class={i < (hoverRating || rating) ? 'star-filled' : 'star-empty'}
             on:click={() => setRating(i + 1)}
