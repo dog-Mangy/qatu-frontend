@@ -58,35 +58,35 @@
 
 <div class="form-container">
   <form class="product-form" on:submit={handleSubmit}>
-    <h2>Crear producto</h2>
+    <h2>Create product</h2>
     {#if error}<div class="alert error">{error}</div>{/if}
     {#if success}<div class="alert success">{success}</div>{/if}
 
     <div class="form-group">
-      <label for="name">Nombre</label>
-      <input id="name" bind:value={name} required placeholder="Nombre del producto" />
+      <label for="name">Name</label>
+      <input id="name" bind:value={name} required placeholder="Product name" />
     </div>
 
     <div class="form-group">
-      <label for="description">Descripción</label>
-      <textarea id="description" bind:value={description} rows="3" placeholder="Describe tu producto"></textarea>
+      <label for="description">Description</label>
+      <textarea id="description" bind:value={description} rows="3" placeholder="Describe your product"></textarea>
     </div>
 
     <div class="form-row">
       <div class="form-group">
-        <label for="price">Precio</label>
+        <label for="price">Price</label>
         <input id="price" type="number" min="0" step="0.01" bind:value={price} required placeholder="0.00" />
       </div>
       <div class="form-group">
         <label for="stock">Stock</label>
-        <input id="stock" type="number" min="0" bind:value={stock} required placeholder="Cantidad" />
+        <input id="stock" type="number" min="0" bind:value={stock} required placeholder="Amount" />
       </div>
     </div>
 
     <div class="form-group">
-      <label for="category">Categoría</label>
+      <label for="category">Category</label>
       <select id="category" bind:value={categoryId} required>
-        <option value="" disabled selected>Selecciona una categoría</option>
+        <option value="" disabled selected>Select a category</option>
         {#each categories as cat}
           <option value={cat.id}>{cat.name}</option>
         {/each}
