@@ -1,74 +1,26 @@
 <script>
+  import { onMount } from 'svelte';
   import ProductsList from '../components/ProductsList.Component.svelte';
   import StoreRatingInfo from '../components/StoreRatingInfo.svelte';
-  const images = [
-    'https://images.pexels.com/photos/30028610/pexels-photo-30028610/free-photo-of-constelacion-de-orion.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-    'https://images.pexels.com/photos/30616133/pexels-photo-30616133/free-photo-of-nebulosa-espacial-vibrante-con-fondo-de-campo-estelar.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-    'https://images.pexels.com/photos/18131771/pexels-photo-18131771/free-photo-of-espacio-galaxy-galaxia-via-lactea.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-    'https://images.pexels.com/photos/544268/pexels-photo-544268.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-    'https://images.pexels.com/photos/1564312/nature-milky-way-stars-galaxy-1564312.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-    'https://images.pexels.com/photos/937980/pexels-photo-937980.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-    'https://images.pexels.com/photos/1723637/pexels-photo-1723637.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-    'https://images.pexels.com/photos/1906658/pexels-photo-1906658.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-  ];
+  import PaginationComponent from '../components/Pagination.Component.svelte';
+  import { getProductsByStoreId } from '../../viewmodel/viewmodels/productViewModel';
+  import { getAllStoresPaged, getStoresByUserId } from '../../viewmodel/viewmodels/storeViewModel';
+  import { authViewModel } from '../../viewmodel/viewmodels/authViewModel';
+  import { authService } from '../../viewmodel/services/authService';
+  
+  let products = [];
+  let currentPage = 1;
+  let totalPages = 1;
+  let isLoading = true;
+  let error = null;
+  const pageSize = 9;
+  let storeId = null;
+  let isVendor = false;
+  let currentStore = null;
+  let userId = null;
 
-  const productList = [
-    {
-      id: 1,
-      name: 'Constellation Canvas',
-      price: 49.99,
-      description: 'Orion constellation canvas.',
-      image: images[0],
-    },
-    {
-      id: 2,
-      name: 'Vibrant Nebula Poster',
-      price: 29.99,
-      description: 'Nebula poster.',
-      image: images[1],
-    },
-    {
-      id: 3,
-      name: 'Milky Way Photograph',
-      price: 39.99,
-      description: 'Photograph of our galaxy.',
-      image: images[2],
-    },
-    {
-      id: 4,
-      name: 'Space Horizon Art',
-      price: 34.99,
-      description: 'Space artwork.',
-      image: images[3],
-    },
-    {
-      id: 5,
-      name: 'Night Sky Canvas',
-      price: 44.99,
-      description: 'Night Sky Canvas.',
-      image: images[4],
-    },
-    {
-      id: 6,
-      name: 'Mountain Stars Poster',
-      price: 27.99,
-      description: 'Mountains POster',
-      image: images[5],
-    },
-    {
-      id: 7,
-      name: 'Aurora Borealis Print',
-      price: 32.99,
-      description: 'Print of Aurora Borealis.',
-      image: images[6],
-    },
-    {
-      id: 8,
-      name: 'Starry Night Landscape',
-      price: 36.99,
-      description: 'Poster.',
-      image: images[7],
-    },
+  const images = [
+    'https://images.pexels.com/photos/30028610/pexels-photo-30028610/free-photo-of-constelacion-de-orion.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
   ];
 
   const storeRating = {
@@ -105,9 +57,115 @@
       }
     ]
   };
+
+  async function loadProducts(page = 1) {
+    isLoading = true;
+    error = null;
+    try {
+      userId = await authViewModel.getUUID();
+      if (!userId) throw new Error('User not authenticated');
+      isVendor = await authService.isVendor();
+
+      const storesResponse = await getAllStoresPaged({
+        userId: userId,
+        page: 1,
+        pageSize: 1
+      });
+            
+      if (!storesResponse.items || storesResponse.items.length === 0) {
+        throw new Error('User has no associated stores');
+      }
+      
+      currentStore = storesResponse.items[0];
+      storeId = currentStore.id;
+      
+      const productsResponse = await getProductsByStoreId(storeId, {
+        page,
+        pageSize,
+      });
+      console.log(productsResponse)
+      products = productsResponse.items.map(product => ({
+        ...product,
+        image: product.imageUrl || images[0],
+        id_Store: storeId
+      }));
+
+      currentPage = productsResponse.page;
+      totalPages = productsResponse.totalPages;
+    } catch (err) {
+      console.error('Error loading products:', err);
+      error = err.message;
+      products = [];
+    } finally {
+      isLoading = false;
+    }
+  }
+
+  function handlePageChange(page) {
+    loadProducts(page);
+  }
+
+  onMount(() => {
+    loadProducts();
+  });
 </script>
 
 <main>
-  <ProductsList products={productList} isStoreView={true} />
-  <StoreRatingInfo {storeRating} />
+  {#if isLoading}
+    <div class="loading">Loading products...</div>
+  {:else if error}
+    <div class="error">Error: {error}</div>
+  {:else}
+    {#if currentStore}
+      <div class="store-header">
+        <h1 class="store-title">{currentStore.name}</h1>
+        <p class="store-description">{currentStore.description}</p>
+      </div>
+    {/if}
+    
+    <ProductsList {products} isStoreView={true} />
+    
+    {#if totalPages > 1}
+      <PaginationComponent
+        {currentPage}
+        {totalPages}
+        onPageChange={handlePageChange}
+      />
+    {/if}
+    
+    <StoreRatingInfo {storeRating} />
+  {/if}
 </main>
+
+<style>
+  .loading,
+  .error {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.2rem;
+  }
+
+  .error {
+    color: #d32f2f;
+  }
+
+  .store-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+  }
+
+  .store-title {
+    margin: 1rem 0 0.5rem 0;
+    color: #333;
+    font-size: 2rem;
+  }
+
+  .store-description {
+    color: #666;
+    margin-bottom: 1.5rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+</style>
