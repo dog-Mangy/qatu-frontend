@@ -2,24 +2,35 @@
   import { params } from 'svelte-spa-router';
   import { onMount } from 'svelte';
   import { getProductById } from '../../viewmodel/viewmodels/productViewModel.js';
+  import { getStoreById } from '../../viewmodel/viewmodels/storeViewModel.js';
 
   let product = null;
+  let store = null;
   let loading = true;
   let error = '';
   let isSeller = false;
 
-  async function fetchProduct(id) {
-    return await getProductById(id);
+  async function fetchProductAndStore(id) {
+    const prod = await getProductById(id);
+    let storeData = null;
+    try {
+      storeData = await getStoreById(prod.storeId);
+    } catch (e) {
+      // If store fetch fails, only show the product
+    }
+    return { prod, storeData };
   }
 
   onMount(() => {
     const unsubscribe = params.subscribe(async $params => {
       try {
         const { id } = $params;
-        product = await fetchProduct(id);
+        const { prod, storeData } = await fetchProductAndStore(id);
+        product = prod;
+        store = storeData;
         error = '';
       } catch (e) {
-        error = 'No se pudo cargar el producto';
+        error = 'Failed to load product';
       } finally {
         loading = false;
       }
@@ -29,12 +40,14 @@
 </script>
 
 {#if loading}
-  <p>Cargando...</p>
+  <p>Loading...</p>
 {:else if error}
   <p>{error}</p>
 {:else}
   <div class="product-detail">
-    <h2 class="store-name">{product.storeName}</h2>
+    <h2 class="store-name">
+      {store ? store.name : 'Unknown store'}
+    </h2>
     <img class="product-image" src={product.image} alt={product.name} />
     <h3 class="product-name">{product.name}</h3>
     <p class="product-description">{product.description}</p>
