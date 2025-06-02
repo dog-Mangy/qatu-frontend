@@ -15,6 +15,11 @@
       password,
     }));
   }
+  async function handleAuth0Login() {
+    await authViewModel.auth0Login()
+    window.location.href = '/#';
+    window.location.reload();
+  }
 </script>
 
 <div class="center-container">
@@ -51,7 +56,10 @@
     </p>
 
     <p>
-      <button on:click={() => authViewModel.auth0Login()}>
+      <button on:click={async ()=> {
+        await handleAuth0Login();
+      }
+}>
         Continue with Auth0</button
       >
     </p>
