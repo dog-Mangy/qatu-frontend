@@ -1,4 +1,3 @@
-
 <script>
   import { onMount } from 'svelte';
   import ProductsList from '../components/ProductsList.Component.svelte';
@@ -6,7 +5,7 @@
   import PaginationComponent from '../components/Pagination.Component.svelte';
   import { getProductsByStoreId } from '../../viewmodel/viewmodels/productViewModel';
   import { getStoreById } from '../../viewmodel/viewmodels/storeViewModel';
-  
+
   export let id;
 
   let products = [];
@@ -26,30 +25,32 @@
         user: 'Juan Pérez',
         rating: 5,
         comment: 'Excelente calidad en todos los productos. Muy recomendado!',
-        date: '2023-10-15'
+        date: '2023-10-15',
       },
       {
         id: 2,
         user: 'María García',
         rating: 4,
         comment: 'Buen servicio, los productos llegaron a tiempo.',
-        date: '2023-09-28'
+        date: '2023-09-28',
       },
       {
         id: 3,
         user: 'Carlos López',
         rating: 3,
-        comment: 'Algunos productos no coincidían exactamente con las fotos, pero en general bien.',
-        date: '2023-09-10'
+        comment:
+          'Algunos productos no coincidían exactamente con las fotos, pero en general bien.',
+        date: '2023-09-10',
       },
       {
         id: 4,
         user: 'Ana Martínez',
         rating: 5,
-        comment: 'Increíble atención al cliente y productos de primera calidad.',
-        date: '2023-08-22'
-      }
-    ]
+        comment:
+          'Increíble atención al cliente y productos de primera calidad.',
+        date: '2023-08-22',
+      },
+    ],
   };
 
   async function loadProducts(page = 1) {
@@ -57,20 +58,20 @@
     error = null;
     try {
       currentStore = await getStoreById(id);
-      
+
       if (!currentStore) {
         throw new Error('Store not found');
       }
-      
+
       const productsResponse = await getProductsByStoreId(id, {
         page,
         pageSize,
       });
-      
+
       products = productsResponse.items.map(product => ({
         ...product,
         image: product.image,
-        id_Store: id
+        id_Store: id,
       }));
 
       currentPage = productsResponse.page;
@@ -110,9 +111,9 @@
         <p class="store-description">{currentStore.description}</p>
       </div>
     {/if}
-    
-    <ProductsList {products}/>
-    
+
+    <ProductsList {products} />
+
     {#if totalPages > 1}
       <PaginationComponent
         {currentPage}
@@ -120,7 +121,7 @@
         onPageChange={handlePageChange}
       />
     {/if}
-    
+
     <StoreRatingInfo {storeRating} />
   {/if}
 </main>

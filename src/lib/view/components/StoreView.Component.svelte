@@ -1,6 +1,9 @@
 <script>
   import { onMount } from 'svelte';
-  import { getAllStores, createStore } from '../../viewmodel/viewmodels/storeViewModel.js';
+  import {
+    getAllStores,
+    createStore,
+  } from '../../viewmodel/viewmodels/storeViewModel.js';
 
   let stores = [];
   let error = '';
@@ -42,7 +45,11 @@
   <div class="stores-container">
     <h2>Registered Stores</h2>
 
-    <button type="button" class="add-store-container" on:click={() => showForm = !showForm}>
+    <button
+      type="button"
+      class="add-store-container"
+      on:click={() => (showForm = !showForm)}
+    >
       <span class="add-icon">➕</span>
       <span class="add-text">Add Store</span>
     </button>
@@ -50,8 +57,14 @@
     {#if showForm}
       <form class="store-form" on:submit|preventDefault={handleSubmit}>
         <input type="text" placeholder="User ID" bind:value={UserId} required />
-        <input type="text" placeholder="Store Name" bind:value={Name} required />
-        <textarea placeholder="Description" bind:value={Description} required></textarea>
+        <input
+          type="text"
+          placeholder="Store Name"
+          bind:value={Name}
+          required
+        />
+        <textarea placeholder="Description" bind:value={Description} required
+        ></textarea>
         <button type="submit">Create Store</button>
       </form>
     {/if}
@@ -71,8 +84,8 @@
 <style>
   .stores-container {
     max-width: 1200px;
-    width: 100%;              
-    margin: 40px auto;        
+    width: 100%;
+    margin: 40px auto;
     padding: 20px;
     background-color: white;
     border-radius: 8px;
@@ -81,13 +94,12 @@
     position: relative;
   }
 
-
   h2 {
     text-align: center;
     margin-bottom: 20px;
   }
 
-    input,
+  input,
   textarea {
     padding: 15px;
     border-radius: 4px;
@@ -102,7 +114,6 @@
     flex-direction: column;
     gap: 20px;
   }
-
 
   .card {
     background-color: #f0f0ff;
@@ -146,19 +157,19 @@
   }
 
   .add-store-container {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  margin-bottom: 20px;
-  background-color: #3f028f;
-  color: white;
-  padding: 6px 12px;
-  border-radius: 8px;
-  font-size: 14px;
-  width: fit-content;
-  transition: background-color 0.3s;
-}
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    background-color: #3f028f;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    width: fit-content;
+    transition: background-color 0.3s;
+  }
 
   .add-store-container:hover {
     background-color: #290260;
@@ -171,7 +182,6 @@
   .add-text {
     font-size: 14px;
   }
-
 
   .error {
     color: red;

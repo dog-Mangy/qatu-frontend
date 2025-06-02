@@ -131,7 +131,7 @@ export const authService = {
     const roles = claims?.['https://qatu.api/roles'];
     return Array.isArray(roles) && roles.includes('Admin');
   },
-  
+
   saveUser: async function (userData) {
     if (!userData || !userData.email || !userData.name) {
       throw new Error('User data is required');
@@ -151,7 +151,7 @@ export const authService = {
       (response.status === 500 && data.error === 'User already exists')
     ) {
       return true;
-    } 
+    }
     return false;
-  }
+  },
 };

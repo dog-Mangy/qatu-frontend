@@ -10,7 +10,7 @@ export async function getProducts({
   sortBy = 'CreatedAt',
   ascending = true,
   page = 1,
-  pageSize = 10
+  pageSize = 10,
 } = {}) {
   const params = new URLSearchParams();
   if (category) params.append('category', category);
@@ -19,7 +19,7 @@ export async function getProducts({
   if (minRating) params.append('minRating', minRating);
   if (maxRating) params.append('maxRating', maxRating);
   if (searchQuery) params.append('searchQuery', searchQuery);
-  
+
   params.append('sortBy', sortBy);
   // @ts-ignore
   params.append('ascending', ascending);
@@ -28,34 +28,39 @@ export async function getProducts({
   // @ts-ignore
   params.append('pageSize', pageSize);
 
-  const response = await fetchAuth(`http://localhost:5028/api/products?${params.toString()}`);
+  const response = await fetchAuth(
+    `http://localhost:5028/api/products?${params.toString()}`
+  );
 
   if (!response.ok) {
     throw new Error('Error obteniendo los productos');
   }
 
   const data = await response.json();
-  
+
   return {
     items: data.items,
     page: data.page,
     totalPages: data.nPages,
-    totalElements: data.nElements
+    totalElements: data.nElements,
   };
 }
 
-export async function getProductsByStoreId(storeId, {
-  category = null,
-  minPrice = null,
-  maxPrice = null,
-  minRating = null,
-  maxRating = null,
-  searchQuery = '',
-  sortBy = 'CreatedAt',
-  ascending = true,
-  page = 1,
-  pageSize = 10
-} = {}) {
+export async function getProductsByStoreId(
+  storeId,
+  {
+    category = null,
+    minPrice = null,
+    maxPrice = null,
+    minRating = null,
+    maxRating = null,
+    searchQuery = '',
+    sortBy = 'CreatedAt',
+    ascending = true,
+    page = 1,
+    pageSize = 10,
+  } = {}
+) {
   const params = new URLSearchParams();
   if (category) params.append('category', category);
   if (minPrice) params.append('minPrice', minPrice);
@@ -63,7 +68,7 @@ export async function getProductsByStoreId(storeId, {
   if (minRating) params.append('minRating', minRating);
   if (maxRating) params.append('maxRating', maxRating);
   if (searchQuery) params.append('searchQuery', searchQuery);
-  
+
   params.append('sortBy', sortBy);
   // @ts-ignore
   params.append('ascending', ascending);
@@ -72,18 +77,20 @@ export async function getProductsByStoreId(storeId, {
   // @ts-ignore
   params.append('pageSize', pageSize);
 
-  const response = await fetchAuth(`http://localhost:5028/api/stores/${storeId}/products?${params.toString()}`);
+  const response = await fetchAuth(
+    `http://localhost:5028/api/stores/${storeId}/products?${params.toString()}`
+  );
   if (!response.ok) {
     throw new Error('Error obteniendo los productos de la tienda');
   }
 
   const data = await response.json();
-  
+
   return {
     items: data.items,
     page: data.page,
     totalPages: data.nPages,
-    totalElements: data.nElements
+    totalElements: data.nElements,
   };
 }
 
@@ -116,7 +123,7 @@ export async function createMultipleProducts(productsArray) {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ products: productsArray })
+    body: JSON.stringify({ products: productsArray }),
   });
 
   if (!response.ok) {
@@ -133,7 +140,7 @@ export async function updateProduct(id, productData) {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(productData)
+    body: JSON.stringify(productData),
   });
 
   if (!response.ok) {
@@ -145,13 +152,16 @@ export async function updateProduct(id, productData) {
 }
 
 export async function updateProductPrice(priceData) {
-  const response = await fetchAuth('http://localhost:5028/api/products/update-price', {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(priceData)
-  });
+  const response = await fetchAuth(
+    'http://localhost:5028/api/products/update-price',
+    {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(priceData),
+    }
+  );
 
   if (!response.ok) {
     const text = await response.text();
@@ -162,13 +172,16 @@ export async function updateProductPrice(priceData) {
 }
 
 export async function updateProductStock(stockData) {
-  const response = await fetchAuth('http://localhost:5028/api/products/update-stock', {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(stockData)
-  });
+  const response = await fetchAuth(
+    'http://localhost:5028/api/products/update-stock',
+    {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(stockData),
+    }
+  );
 
   if (!response.ok) {
     const text = await response.text();
@@ -180,7 +193,7 @@ export async function updateProductStock(stockData) {
 
 export async function deleteProduct(id) {
   const response = await fetchAuth(`http://localhost:5028/api/products/${id}`, {
-    method: 'DELETE'
+    method: 'DELETE',
   });
 
   if (!response.ok) {

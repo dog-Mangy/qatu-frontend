@@ -40,13 +40,15 @@
   async function handleSubmit(e) {
     e.preventDefault();
     try {
+      imageUrl = await uploadImageToImgbb(imageFile);
       await createProduct({
         name,
         description,
         price: parseFloat(price),
         stock: parseInt(stock),
         categoryId,
-        storeId
+        storeId,
+        image: imageUrl,
       });
       success = 'Producto creado correctamente';
       setTimeout(() => push('/mystore'), 1200);
@@ -54,39 +56,92 @@
       error = err.message || 'Error al crear producto';
     }
   }
+
+  let imageFile;
+  let imageUrl = '';
+
+  function handleImageChange(event) {
+    imageFile = event.target.files[0];
+  }
+
+  async function uploadImageToImgbb(file) {
+    const apiKey = 'f8245373bfd79722b1da62d8fa1eec68';
+    const formData = new FormData();
+    formData.append('image', file);
+
+    const res = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
+      method: 'POST',
+      body: formData,
+    });
+
+    const json = await res.json();
+    if (!json.success) throw new Error('Error uploading image');
+    return json.data.url;
+  }
 </script>
 
 <div class="form-container">
   <form class="product-form" on:submit={handleSubmit}>
-    <h2>Crear producto</h2>
+    <h2>Create product</h2>
     {#if error}<div class="alert error">{error}</div>{/if}
     {#if success}<div class="alert success">{success}</div>{/if}
 
     <div class="form-group">
-      <label for="name">Nombre</label>
-      <input id="name" bind:value={name} required placeholder="Nombre del producto" />
+      <label for="image">Image</label>
+      <input
+        id="image"
+        type="file"
+        accept="image/*"
+        on:change={handleImageChange}
+        required
+      />
     </div>
 
     <div class="form-group">
-      <label for="description">Descripción</label>
-      <textarea id="description" bind:value={description} rows="3" placeholder="Describe tu producto"></textarea>
+      <label for="name">Name</label>
+      <input id="name" bind:value={name} required placeholder="Product name" />
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea
+        id="description"
+        bind:value={description}
+        rows="3"
+        placeholder="Describe your product"
+      ></textarea>
     </div>
 
     <div class="form-row">
       <div class="form-group">
-        <label for="price">Precio</label>
-        <input id="price" type="number" min="0" step="0.01" bind:value={price} required placeholder="0.00" />
+        <label for="price">Price</label>
+        <input
+          id="price"
+          type="number"
+          min="0"
+          step="0.01"
+          bind:value={price}
+          required
+          placeholder="0.00"
+        />
       </div>
       <div class="form-group">
         <label for="stock">Stock</label>
-        <input id="stock" type="number" min="0" bind:value={stock} required placeholder="Cantidad" />
+        <input
+          id="stock"
+          type="number"
+          min="0"
+          bind:value={stock}
+          required
+          placeholder="Amount"
+        />
       </div>
     </div>
 
     <div class="form-group">
-      <label for="category">Categoría</label>
+      <label for="category">Category</label>
       <select id="category" bind:value={categoryId} required>
-        <option value="" disabled selected>Selecciona una categoría</option>
+        <option value="" disabled selected>Select a category</option>
         {#each categories as cat}
           <option value={cat.id}>{cat.name}</option>
         {/each}
@@ -110,7 +165,9 @@
     background: #fff;
     padding: 2.5rem 2rem;
     border-radius: 12px;
-    box-shadow: 0 6px 32px rgba(63,2,143,0.10), 0 1.5px 6px rgba(63,2,143,0.08);
+    box-shadow:
+      0 6px 32px rgba(63, 2, 143, 0.1),
+      0 1.5px 6px rgba(63, 2, 143, 0.08);
     width: 100%;
     max-width: 420px;
     display: flex;
@@ -141,13 +198,20 @@
     flex: 1;
   }
 
+  .form-row input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
   label {
     font-size: 1rem;
     color: #3f028f;
     font-weight: 500;
   }
 
-  input, textarea, select {
+  input,
+  textarea,
+  select {
     padding: 0.6rem 0.8rem;
     border: 1.5px solid #cfc6e6;
     border-radius: 6px;
@@ -157,7 +221,9 @@
     transition: border-color 0.2s;
   }
 
-  input:focus, textarea:focus, select:focus {
+  input:focus,
+  textarea:focus,
+  select:focus {
     border-color: #3f028f;
     outline: none;
   }
