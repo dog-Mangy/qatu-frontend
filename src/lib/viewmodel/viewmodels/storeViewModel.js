@@ -70,3 +70,13 @@ export async function getStoresByUserId(userId) {
 
   return await response.json();
 }
+
+export async function getStoreById(storeId) {
+  const response = await fetchAuth(`http://localhost:5028/api/stores/${storeId}`);
+  
+  if (!response.ok) {
+    throw new Error('Error obteniendo la tienda');
+  }
+
+  return await response.json();
+}

@@ -10,6 +10,7 @@ import Stores from './Stores.Router.svelte';
 import AdminRequest from './AdminRequest.Router.svelte';
 import StoreView from './StoreView.Router.svelte';
 import ProductCreate from '../components/ProductCreate.Component.svelte';
+import Store from './Store.Router.svelte';
 
 const routes = {
   '/categories': Category,
@@ -22,8 +23,9 @@ const routes = {
   '/mystore': MyStore,
   '/stores': Stores,
   '/storesAdmin': StoreView,
-  '/requests': AdminRequest,
+  '/requests' : AdminRequest,
   '/mystore/create-product': ProductCreate,
+  '/store/:id': Store,
 };
 
 export default routes;
