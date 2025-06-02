@@ -1,13 +1,21 @@
 <script>
   import { onMount } from 'svelte';
   import { authService } from '../../viewmodel/services/authService.js';
-  
+  import { chatStore } from '../../viewmodel/store/chatStore.js';
+
   export let product = {};
   let isSeller = false;
 
   onMount(async () => {
     isSeller = await authService.isVendor();
   });
+
+  function openChat() {
+    chatStore.set({
+      isChatOpen: true,
+      selectedProductId: product.id,
+    });
+  }
 </script>
 
 <div class="product-card">
@@ -41,7 +49,7 @@
           class="chat-seller-btn"
           type="button"
           aria-label={`Chat with seller of ${product.name}`}
-          on:click={() => alert('Chat with seller feature coming soon')}
+          on:click={openChat}
         >
           Chat with Seller
         </button>

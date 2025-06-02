@@ -5,6 +5,8 @@
 
   import Header from './lib/view/components/Header.svelte';
   import Footer from './lib/view/components/Footer.Component.svelte';
+  import Chat from './lib/view/components/Chat.Component.svelte';
+  import { chatStore } from './lib/viewmodel/store/chatStore.js';
 
   let userRole = 'buyer';
 
@@ -15,24 +17,24 @@
   });
 </script>
 
-<div id="app">
-  <Header {userRole} />
-  <main>
-    <Router {routes} />
-  </main>
-  <Footer />
+<div class="relative min-h-screen">
+  <div id="app" class="flex flex-col min-h-screen">
+    <Header {userRole} />
+    <main class="flex-1 flex flex-col">
+      <Router {routes} />
+    </main>
+    <Footer />
+  </div>
+
+  <Chat
+    productId={$chatStore.selectedProductId}
+    bind:isOpen={$chatStore.isChatOpen}
+  />
 </div>
 
 <style>
   #app {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-
-  main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+    position: relative;
+    z-index: 1;
   }
 </style>
