@@ -49,5 +49,5 @@ export function fetchProducts(filters) {
         nElements: 0,
       }));
     }
-  }, 5000);
+  }, 1000);
 }
