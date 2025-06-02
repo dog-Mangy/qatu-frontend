@@ -1,40 +1,36 @@
 <script>
   import { params } from 'svelte-spa-router';
   import { onMount } from 'svelte';
+  import { getProductById } from '../../viewmodel/viewmodels/productViewModel.js';
+  import { getStoreById } from '../../viewmodel/viewmodels/storeViewModel.js';
 
   let product = null;
+  let store = null;
   let loading = true;
   let error = '';
-
-  // Simulación: cambia a true si quieres probar como vendedor
   let isSeller = false;
 
-  async function fetchProduct(id_Store, id) {
-    return {
-      id,
-      id_Store,
-      name: 'Nombre de producto',
-      description: 'Descripción del producto',
-      image:
-        'https://images.pexels.com/photos/30028610/pexels-photo-30028610/free-photo-of-constelacion-de-orion.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-      storeName: 'Nombre de la tienda',
-      rating: 4.5,
-      interactions: 12,
-      comments: [
-        { text: 'Buen producto', rating: 5 },
-        { text: 'Regular', rating: 3 },
-      ],
-    };
+  async function fetchProductAndStore(id) {
+    const prod = await getProductById(id);
+    let storeData = null;
+    try {
+      storeData = await getStoreById(prod.storeId);
+    } catch (e) {
+      // If store fetch fails, only show the product
+    }
+    return { prod, storeData };
   }
 
   onMount(() => {
     const unsubscribe = params.subscribe(async $params => {
       try {
-        const { id_Store, id } = $params;
-        product = await fetchProduct(id_Store, id);
+        const { id } = $params;
+        const { prod, storeData } = await fetchProductAndStore(id);
+        product = prod;
+        store = storeData;
         error = '';
       } catch (e) {
-        error = 'No se pudo cargar el producto';
+        error = 'Failed to load product';
       } finally {
         loading = false;
       }
@@ -44,18 +40,22 @@
 </script>
 
 {#if loading}
-  <p>Cargando...</p>
+  <p>Loading...</p>
 {:else if error}
   <p>{error}</p>
 {:else}
   <div class="product-detail">
-    <h2 class="store-name">{product.storeName}</h2>
+    <h2 class="store-name">
+      {store ? store.name : 'Unknown store'}
+    </h2>
     <img class="product-image" src={product.image} alt={product.name} />
     <h3 class="product-name">{product.name}</h3>
     <p class="product-description">{product.description}</p>
     <div class="product-meta">
       <span class="rating">⭐ {product.rating}</span>
       <span class="interactions">{product.interactions} interactions</span>
+      <span class="price">💲 {product.price}</span>
+      <span class="stock">Stock: {product.stock}</span>
     </div>
     <div class="actions">
       {#if !isSeller}
