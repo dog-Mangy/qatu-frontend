@@ -2,7 +2,7 @@
   export let stores = [];
 
   function navigateToStore(storeId) {
-    window.location.href = `/#/stores/${storeId}`;
+    window.location.href = `/#/store/${storeId}`;
   }
 </script>
 
