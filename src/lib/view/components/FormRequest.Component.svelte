@@ -1,5 +1,7 @@
 <script>
   import { createRequest } from '../../viewmodel/viewmodels/requestViewModel.js';
+  import { authViewModel } from '../../viewmodel/viewmodels/authViewModel';
+
 
   let storeName = '';
   let storeDescription = '';
@@ -7,7 +9,7 @@
 
   async function handleSubmit() {
     try {
-      const userId = '33333333-3333-3333-3333-333333333333'; 
+      const userId = await authViewModel.getUUID();; 
       const requestData = {
         userId,
         storeName,
