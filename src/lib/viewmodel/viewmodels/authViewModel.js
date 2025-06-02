@@ -53,11 +53,21 @@ export const authViewModel = {
   },
   auth0Login: async () => {
     try {
-      await authService.loginWithRedirect();
+      await authService.loginWithPopup();
+      const user = await authService.getUser();
+      const result = await authService.saveUser(user);
+      if (!result) {
+        console.warn('No user returned from backend, logging out.');
+        await authService.logout();
+        throw new Error('Failed to save user data');
+      }
+      console.log('User logged in and saved:', result);
+      push('/');
     } catch (err) {
-      console.error('Social login failed', err);
+      console.error('Social login failed', err.message || err);
     }
   },
+
   auth0Logout: async () => {
     try {
       await authService.logout();
@@ -92,7 +102,7 @@ export const authViewModel = {
     return token;
   },
 
-   getUUID: async () => {
+  getUUID: async () => {
     let uuid = null;
     try {
       uuid = await authService.getUUID();
