@@ -28,14 +28,12 @@
     buyer: [
       { name: 'Home', href: '/#/' },
       { name: 'Stores', href: '#/stores' },
-      { name: 'Chats', href: '#' },
       { name: 'Logout', href: '#' },
     ],
     seller: [
       { name: 'Home', href: '/#/' },
       { name: 'Stores', href: '#/stores' },
       { name: 'My Store', href: '/#/mystore' },
-      { name: 'Chats', href: '#' },
       { name: 'Logout', href: '#' },
     ],
     admin: [
@@ -47,8 +45,8 @@
     ],
     guest: [
       { name: 'Home', href: '/#/' },
+      { name: 'Stores', href: '#/stores' },
       { name: 'Login', href: '/#/login' },
-      { name: 'Register', href: '/#/register' },
     ],
   };
 
