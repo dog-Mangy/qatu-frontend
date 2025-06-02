@@ -2,12 +2,12 @@
   import ProductCard from './ProductCard.Component.svelte';
   import { onMount } from 'svelte';
   import { authService } from '../../viewmodel/services/authService.js';
-  
+
   export let products = [];
   export let isStoreView = false;
-  
+
   let isVendor = false;
-  
+
   onMount(async () => {
     isVendor = await authService.isVendor();
   });
@@ -17,7 +17,9 @@
   <div class="title-container">
     <h2 class="section-title">Products</h2>
     {#if isVendor && isStoreView}
-      <a href="/#/mystore/create-product" class="add-product-btn">Add a product</a>
+      <a href="/#/mystore/create-product" class="add-product-btn"
+        >Add a product</a
+      >
     {/if}
   </div>
   <div class="products-grid">

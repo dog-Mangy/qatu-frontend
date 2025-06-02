@@ -1,5 +1,6 @@
 import { userStore } from '../store/userStore.js';
 import { createAuth0Client } from '@auth0/auth0-spa-js';
+import { fetchAuth } from '../utils/fetchAuth.js';
 
 let minSize = 6;
 let auth0 = null;
@@ -53,7 +54,6 @@ export const authService = {
       return null;
     }
   },
-
 
   logout: () => {
     auth0.logout({
@@ -131,4 +131,27 @@ export const authService = {
     const roles = claims?.['https://qatu.api/roles'];
     return Array.isArray(roles) && roles.includes('Admin');
   },
+  
+  saveUser: async function (userData) {
+    if (!userData || !userData.email || !userData.name) {
+      throw new Error('User data is required');
+    }
+    const response = await fetchAuth('http://localhost:5028/api/user', {
+      method: 'POST',
+      body: JSON.stringify({
+        name: await userData.name,
+        email: await userData.email,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (
+      response.status === 200 ||
+      (response.status === 500 && data.error === 'User already exists')
+    ) {
+      return true;
+    } 
+    return false;
+  }
 };
