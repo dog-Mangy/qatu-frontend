@@ -17,10 +17,6 @@
   const pageSize = 9;
   let currentStore = null;
 
-  const images = [
-    'https://images.pexels.com/photos/30028610/pexels-photo-30028610/free-photo-of-constelacion-de-orion.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-  ];
-
   const storeRating = {
     average: 4.23,
     totalRatings: 60,
@@ -73,7 +69,7 @@
       
       products = productsResponse.items.map(product => ({
         ...product,
-        image: product.imageUrl || images[0],
+        image: product.image,
         id_Store: id
       }));
 
