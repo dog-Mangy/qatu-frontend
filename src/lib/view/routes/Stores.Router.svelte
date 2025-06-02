@@ -2,7 +2,7 @@
   import { onMount } from 'svelte';
   import StoresComponent from '../components/Stores.Component.svelte';
   import PaginationComponent from '../components/Pagination.Component.svelte';
-  import { fetchStoresPaged } from '../../viewmodel/viewmodels/storesViewModel';
+  import { getAllStoresPaged } from '../../viewmodel/viewmodels/storeViewModel';
 
   let stores = [];
   let currentPage = 1;
@@ -15,7 +15,7 @@
     isLoading = true;
     error = null;
     try {
-      const response = await fetchStoresPaged({
+      const response = await getAllStoresPaged({
         page,
         pageSize,
       });
