@@ -3,6 +3,7 @@
   import { onMount } from 'svelte';
   import { getProductById } from '../../viewmodel/viewmodels/productViewModel.js';
   import { getStoreById } from '../../viewmodel/viewmodels/storeViewModel.js';
+  import { chatStore } from '../../viewmodel/store/chatStore.js';
 
   let product = null;
   let store = null;
@@ -37,6 +38,13 @@
     });
     return unsubscribe;
   });
+
+  function openChat() {
+    chatStore.set({
+      isChatOpen: true,
+      selectedProductId: product.id,
+    });
+  }
 </script>
 
 {#if loading}
@@ -61,7 +69,7 @@
       {#if !isSeller}
         <button class="qualify-btn">Qualify</button>
       {/if}
-      <button class="chat-btn">Chat with the seller</button>
+      <button class="chat-btn" on:click={openChat}>Chat with the seller</button>
     </div>
     <div class="comments">
       {#each product.comments as comment}
