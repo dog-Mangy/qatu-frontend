@@ -4,12 +4,14 @@ const persistedFilters = writable(
   JSON.parse(localStorage.getItem('filters')) || {
     searchQuery: '',
     category: '',
-    minPrice: '',
-    maxPrice: '10000',
+    minPrice: '0',
+    maxPrice: '1000',
     minRating: 0,
-    maxRating: 0,
-    sortBy: 'Name',
+    maxRating: 1000,
+    sortBy: 'CreatedAt',
     ascending: true,
+    page: 1,
+    pageSize: 8,
   }
 );
 
