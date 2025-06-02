@@ -1,11 +1,14 @@
 <script>
   import { filters } from '../../viewmodel/store/filterStore';
+  import { fetchProducts } from '../../viewmodel/services/productService';
 
   function handleInput(event) {
-    filters.update(current => ({
-      ...current,
-      searchQuery: event.target.value,
-    }));
+    const newValue = event.target.value;
+    filters.update(current => {
+      const updated = { ...current, searchQuery: newValue };
+      fetchProducts(updated);
+      return updated;
+    });
   }
 
   function handleKeydown(event) {
