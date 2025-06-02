@@ -4,10 +4,13 @@
   import StoreRatingInfo from '../components/StoreRatingInfo.svelte';
   import PaginationComponent from '../components/Pagination.Component.svelte';
   import { getProductsByStoreId } from '../../viewmodel/viewmodels/productViewModel';
-  import { getAllStoresPaged, getStoresByUserId } from '../../viewmodel/viewmodels/storeViewModel';
+  import {
+    getAllStoresPaged,
+    getStoresByUserId,
+  } from '../../viewmodel/viewmodels/storeViewModel';
   import { authViewModel } from '../../viewmodel/viewmodels/authViewModel';
   import { authService } from '../../viewmodel/services/authService';
-  
+
   let products = [];
   let currentPage = 1;
   let totalPages = 1;
@@ -20,7 +23,7 @@
   let userId = null;
 
   const images = [
-    'https://images.pexels.com/photos/30028610/pexels-photo-30028610/free-photo-of-constelacion-de-orion.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+    'https://images.pexels.com/photos/30028610/pexels-photo-30028610/free-photo-of-constelacion-de-orion.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
   ];
 
   const storeRating = {
@@ -32,30 +35,32 @@
         user: 'Juan Pérez',
         rating: 5,
         comment: 'Excelente calidad en todos los productos. Muy recomendado!',
-        date: '2023-10-15'
+        date: '2023-10-15',
       },
       {
         id: 2,
         user: 'María García',
         rating: 4,
         comment: 'Buen servicio, los productos llegaron a tiempo.',
-        date: '2023-09-28'
+        date: '2023-09-28',
       },
       {
         id: 3,
         user: 'Carlos López',
         rating: 3,
-        comment: 'Algunos productos no coincidían exactamente con las fotos, pero en general bien.',
-        date: '2023-09-10'
+        comment:
+          'Algunos productos no coincidían exactamente con las fotos, pero en general bien.',
+        date: '2023-09-10',
       },
       {
         id: 4,
         user: 'Ana Martínez',
         rating: 5,
-        comment: 'Increíble atención al cliente y productos de primera calidad.',
-        date: '2023-08-22'
-      }
-    ]
+        comment:
+          'Increíble atención al cliente y productos de primera calidad.',
+        date: '2023-08-22',
+      },
+    ],
   };
 
   async function loadProducts(page = 1) {
@@ -69,25 +74,25 @@
       const storesResponse = await getAllStoresPaged({
         userId: userId,
         page: 1,
-        pageSize: 1
+        pageSize: 1,
       });
-            
+
       if (!storesResponse.items || storesResponse.items.length === 0) {
         throw new Error('User has no associated stores');
       }
-      
+
       currentStore = storesResponse.items[0];
       storeId = currentStore.id;
-      
+
       const productsResponse = await getProductsByStoreId(storeId, {
         page,
         pageSize,
       });
-      console.log(productsResponse)
+      console.log(productsResponse);
       products = productsResponse.items.map(product => ({
         ...product,
         image: product.imageUrl || images[0],
-        id_Store: storeId
+        id_Store: storeId,
       }));
 
       currentPage = productsResponse.page;
@@ -122,9 +127,9 @@
         <p class="store-description">{currentStore.description}</p>
       </div>
     {/if}
-    
+
     <ProductsList {products} isStoreView={true} />
-    
+
     {#if totalPages > 1}
       <PaginationComponent
         {currentPage}
@@ -132,7 +137,7 @@
         onPageChange={handlePageChange}
       />
     {/if}
-    
+
     <StoreRatingInfo {storeRating} />
   {/if}
 </main>

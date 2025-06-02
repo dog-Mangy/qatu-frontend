@@ -17,9 +17,9 @@
   >
     Previous
   </button>
-  
+
   <span>Page {currentPage} of {totalPages}</span>
-  
+
   <button
     on:click={() => handlePageChange(currentPage + 1)}
     disabled={currentPage === totalPages}
@@ -36,7 +36,7 @@
     gap: 1rem;
     margin: 2rem 0;
   }
-  
+
   button {
     padding: 0.5rem 1rem;
     border: none;
@@ -45,7 +45,7 @@
     color: white;
     cursor: pointer;
   }
-  
+
   button:disabled {
     background-color: #ccc;
     cursor: not-allowed;

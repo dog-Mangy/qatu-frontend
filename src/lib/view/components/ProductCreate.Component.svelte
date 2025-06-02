@@ -48,7 +48,7 @@
         stock: parseInt(stock),
         categoryId,
         storeId,
-        image: imageUrl
+        image: imageUrl,
       });
       success = 'Producto creado correctamente';
       setTimeout(() => push('/mystore'), 1200);
@@ -71,7 +71,7 @@
 
     const res = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
       method: 'POST',
-      body: formData
+      body: formData,
     });
 
     const json = await res.json();
@@ -88,7 +88,13 @@
 
     <div class="form-group">
       <label for="image">Image</label>
-      <input id="image" type="file" accept="image/*" on:change={handleImageChange} required />
+      <input
+        id="image"
+        type="file"
+        accept="image/*"
+        on:change={handleImageChange}
+        required
+      />
     </div>
 
     <div class="form-group">
@@ -98,17 +104,37 @@
 
     <div class="form-group">
       <label for="description">Description</label>
-      <textarea id="description" bind:value={description} rows="3" placeholder="Describe your product"></textarea>
+      <textarea
+        id="description"
+        bind:value={description}
+        rows="3"
+        placeholder="Describe your product"
+      ></textarea>
     </div>
 
     <div class="form-row">
       <div class="form-group">
         <label for="price">Price</label>
-        <input id="price" type="number" min="0" step="0.01" bind:value={price} required placeholder="0.00" />
+        <input
+          id="price"
+          type="number"
+          min="0"
+          step="0.01"
+          bind:value={price}
+          required
+          placeholder="0.00"
+        />
       </div>
       <div class="form-group">
         <label for="stock">Stock</label>
-        <input id="stock" type="number" min="0" bind:value={stock} required placeholder="Amount" />
+        <input
+          id="stock"
+          type="number"
+          min="0"
+          bind:value={stock}
+          required
+          placeholder="Amount"
+        />
       </div>
     </div>
 
@@ -139,7 +165,9 @@
     background: #fff;
     padding: 2.5rem 2rem;
     border-radius: 12px;
-    box-shadow: 0 6px 32px rgba(63,2,143,0.10), 0 1.5px 6px rgba(63,2,143,0.08);
+    box-shadow:
+      0 6px 32px rgba(63, 2, 143, 0.1),
+      0 1.5px 6px rgba(63, 2, 143, 0.08);
     width: 100%;
     max-width: 420px;
     display: flex;
@@ -181,7 +209,9 @@
     font-weight: 500;
   }
 
-  input, textarea, select {
+  input,
+  textarea,
+  select {
     padding: 0.6rem 0.8rem;
     border: 1.5px solid #cfc6e6;
     border-radius: 6px;
@@ -191,7 +221,9 @@
     transition: border-color 0.2s;
   }
 
-  input:focus, textarea:focus, select:focus {
+  input:focus,
+  textarea:focus,
+  select:focus {
     border-color: #3f028f;
     outline: none;
   }

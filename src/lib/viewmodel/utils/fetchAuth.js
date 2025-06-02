@@ -1,4 +1,4 @@
-import { authService } from '../services/authService.js'; 
+import { authService } from '../services/authService.js';
 
 export async function fetchAuth(url, options = {}) {
   const token = await authService.getToken();
