@@ -21,6 +21,7 @@ const routes = {
   '/store/:id_Store/product/:id': ProductDetail,
   '/mystore': MyStore,
   '/stores': Stores,
+  '/storesAdmin': StoreView,
   '/requests' : AdminRequest,
   '/mystore/create-product': ProductCreate
 };

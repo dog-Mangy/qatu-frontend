@@ -43,7 +43,7 @@
     admin: [
       { name: 'Home', href: '/#/' },
       { name: 'Requests', href: '/#/requests' },
-      { name: 'stores', href: '/#/stores' },
+      { name: 'stores', href: '/#/storesAdmin' },
       { name: 'categories', href: '/#/categories' },
       { name: 'Logout', href: '#' },
     ],
