@@ -1,7 +1,7 @@
 import { fetchAuth } from '../utils/fetchAuth.js';
 
 export async function fetchCategories() {
-  const response = await fetchAuth('http://localhost:5028/api/categories');
+  const response = await fetch('http://localhost:5028/api/categories');
 
   if (!response.ok) {
     throw new Error('Error al cargar las categorías');

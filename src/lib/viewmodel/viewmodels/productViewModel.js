@@ -25,7 +25,7 @@ export async function getProducts({
   params.set('pageSize', pageSize.toString());
 
   try {
-    const response = await fetchAuth(
+    const response = await fetch(
       `http://localhost:5028/api/Products?${params.toString()}`
     );
 
