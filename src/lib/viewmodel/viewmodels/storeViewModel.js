@@ -1,4 +1,4 @@
-import { fetchAuth } from "../utils/fetchAuth.js";
+import { fetchAuth } from '../utils/fetchAuth.js';
 
 export async function getAllStores() {
   const response = await fetchAuth('http://localhost:5028/api/stores');
@@ -16,7 +16,7 @@ export async function getAllStoresPaged({
   sortBy = 'CreatedAt',
   ascending = true,
   page = 1,
-  pageSize = 10
+  pageSize = 10,
 } = {}) {
   const params = new URLSearchParams();
   if (searchQuery) params.append('searchQuery', searchQuery);
@@ -29,28 +29,29 @@ export async function getAllStoresPaged({
   // @ts-ignore
   params.append('pageSize', pageSize);
 
-  const response = await fetchAuth(`http://localhost:5028/api/Stores/paged?${params.toString()}`);
+  const response = await fetchAuth(
+    `http://localhost:5028/api/Stores/paged?${params.toString()}`
+  );
 
   const data = await response.json();
-  
+
   return {
     items: data.items,
     page: data.page,
     totalPages: data.nPages,
-    totalElements: data.nElements
+    totalElements: data.nElements,
   };
 }
-
 
 export async function createStore({ UserId, Name, Description }) {
   const data = { UserId, Name, Description };
 
-  const response = await fetchAuth('http://localhost:5028/api/stores', { 
+  const response = await fetchAuth('http://localhost:5028/api/stores', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(data)
+    body: JSON.stringify(data),
   });
 
   if (!response.ok) {
@@ -61,9 +62,10 @@ export async function createStore({ UserId, Name, Description }) {
   return await response.json();
 }
 
-
 export async function getStoresByUserId(userId) {
-  const response = await fetchAuth(`http://localhost:5028/api/stores/user/${userId}`);
+  const response = await fetchAuth(
+    `http://localhost:5028/api/stores/user/${userId}`
+  );
   if (!response.ok) {
     throw new Error('Error obteniendo las tiendas del usuario');
   }
@@ -72,8 +74,10 @@ export async function getStoresByUserId(userId) {
 }
 
 export async function getStoreById(storeId) {
-  const response = await fetchAuth(`http://localhost:5028/api/stores/${storeId}`);
-  
+  const response = await fetchAuth(
+    `http://localhost:5028/api/stores/${storeId}`
+  );
+
   if (!response.ok) {
     throw new Error('Error obteniendo la tienda');
   }

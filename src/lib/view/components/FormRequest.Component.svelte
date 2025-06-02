@@ -2,19 +2,18 @@
   import { createRequest } from '../../viewmodel/viewmodels/requestViewModel.js';
   import { authViewModel } from '../../viewmodel/viewmodels/authViewModel';
 
-
   let storeName = '';
   let storeDescription = '';
   let description = '';
 
   async function handleSubmit() {
     try {
-      const userId = await authViewModel.getUUID();; 
+      const userId = await authViewModel.getUUID();
       const requestData = {
         userId,
         storeName,
         storeDescription,
-        description
+        description,
       };
 
       const response = await createRequest(requestData);
@@ -32,12 +31,7 @@
 <form on:submit|preventDefault={handleSubmit} class="form-container">
   <h2>Request to Become a Seller</h2>
 
-  <input
-    type="text"
-    placeholder="Store Name"
-    bind:value={storeName}
-    required
-  />
+  <input type="text" placeholder="Store Name" bind:value={storeName} required />
 
   <textarea
     rows="4"
@@ -62,11 +56,11 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
-    max-width: 800px; 
-    margin: 40px auto;        
-    width:100%;
+    max-width: 800px;
+    margin: 40px auto;
+    width: 100%;
     padding: 30px;
-    background-color: white; 
+    background-color: white;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
     border-radius: 8px;
     color: #000;
@@ -82,7 +76,7 @@
   input,
   textarea,
   button {
-    width: 100%; 
+    width: 100%;
     box-sizing: border-box;
   }
 
@@ -114,4 +108,3 @@
     background-color: #5a31b0;
   }
 </style>
-

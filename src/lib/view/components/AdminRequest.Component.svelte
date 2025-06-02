@@ -1,6 +1,10 @@
 <script>
   import { onMount } from 'svelte';
-  import { getAllRequests, deleteRequestById, updateRequestStatus } from '../../viewmodel/viewmodels/requestViewModel.js';
+  import {
+    getAllRequests,
+    deleteRequestById,
+    updateRequestStatus,
+  } from '../../viewmodel/viewmodels/requestViewModel.js';
 
   let requests = [];
   let error = '';
@@ -15,10 +19,14 @@
 
   function translateStatus(status) {
     switch (status) {
-      case 'Pending': return 'Pending';
-      case 'Accepted': return 'Accepted';
-      case 'Rejected': return 'Rejected';
-      default: return status;
+      case 'Pending':
+        return 'Pending';
+      case 'Accepted':
+        return 'Accepted';
+      case 'Rejected':
+        return 'Rejected';
+      default:
+        return status;
     }
   }
 
@@ -27,36 +35,46 @@
     return date.toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'long',
-      day: 'numeric'
+      day: 'numeric',
     });
   }
 
   async function approveRequest(id) {
-    const confirmApprove = confirm('Are you sure you want to approve this request?');
+    const confirmApprove = confirm(
+      'Are you sure you want to approve this request?'
+    );
     if (!confirmApprove) return;
 
     try {
       await updateRequestStatus(id, 1);
-      requests = requests.map(req => req.id === id ? { ...req, status: 'Accepted' } : req);
+      requests = requests.map(req =>
+        req.id === id ? { ...req, status: 'Accepted' } : req
+      );
     } catch (err) {
       error = err.message;
     }
   }
 
   async function rejectRequest(id) {
-    const confirmReject = confirm('Are you sure you want to reject this request?');
+    const confirmReject = confirm(
+      'Are you sure you want to reject this request?'
+    );
     if (!confirmReject) return;
 
     try {
       await updateRequestStatus(id, 2);
-      requests = requests.map(req => req.id === id ? { ...req, status: 'Rejected' } : req);
+      requests = requests.map(req =>
+        req.id === id ? { ...req, status: 'Rejected' } : req
+      );
     } catch (err) {
       error = err.message;
     }
   }
 
   async function deleteRequest(id) {
-    const confirmDelete = confirm('Are you sure you want to delete this request?');
+    const confirmDelete = confirm(
+      'Are you sure you want to delete this request?'
+    );
     if (!confirmDelete) return;
 
     try {
@@ -96,9 +114,15 @@
             <td>{translateStatus(req.status)}</td>
             <td>{formatDate(req.createdAt)}</td>
             <td class="actions">
-              <button title="Approve" on:click={() => approveRequest(req.id)}>✅</button>
-              <button title="Reject" on:click={() => rejectRequest(req.id)}>❌</button>
-              <button title="Delete" on:click={() => deleteRequest(req.id)}>🗑️</button>
+              <button title="Approve" on:click={() => approveRequest(req.id)}
+                >✅</button
+              >
+              <button title="Reject" on:click={() => rejectRequest(req.id)}
+                >❌</button
+              >
+              <button title="Delete" on:click={() => deleteRequest(req.id)}
+                >🗑️</button
+              >
             </td>
           </tr>
         {/each}
@@ -128,7 +152,8 @@
     border-collapse: collapse;
   }
 
-  th, td {
+  th,
+  td {
     padding: 12px;
     text-align: left;
     border-bottom: 1px solid #ccc;

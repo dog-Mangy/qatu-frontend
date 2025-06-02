@@ -16,7 +16,7 @@
     }));
   }
   async function handleAuth0Login() {
-    await authViewModel.auth0Login()
+    await authViewModel.auth0Login();
     window.location.href = '/#';
     window.location.reload();
   }
@@ -56,10 +56,11 @@
     </p>
 
     <p>
-      <button on:click={async ()=> {
-        await handleAuth0Login();
-      }
-}>
+      <button
+        on:click={async () => {
+          await handleAuth0Login();
+        }}
+      >
         Continue with Auth0</button
       >
     </p>

@@ -21,7 +21,9 @@
         <div class="store-card" on:click={() => navigateToStore(store.id)}>
           <div class="store-info">
             <h3 class="store-name">{store.name}</h3>
-            <p class="store-created">Created: {new Date(store.createdAt).toLocaleDateString()}</p>
+            <p class="store-created">
+              Created: {new Date(store.createdAt).toLocaleDateString()}
+            </p>
             <p class="store-description">{store.description}</p>
           </div>
         </div>
