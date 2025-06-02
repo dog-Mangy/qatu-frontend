@@ -54,6 +54,8 @@
     <div class="product-meta">
       <span class="rating">⭐ {product.rating}</span>
       <span class="interactions">{product.interactions} interactions</span>
+      <span class="price">💲 {product.price}</span>
+      <span class="stock">Stock: {product.stock}</span>
     </div>
     <div class="actions">
       {#if !isSeller}
