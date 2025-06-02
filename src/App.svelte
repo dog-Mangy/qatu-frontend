@@ -18,9 +18,9 @@
 </script>
 
 <div class="relative min-h-screen">
-  <div id="app" class="flex flex-col min-h-screen">
+  <div id="app">
     <Header {userRole} />
-    <main class="flex-1 flex flex-col">
+    <main>
       <Router {routes} />
     </main>
     <Footer />
@@ -34,7 +34,16 @@
 
 <style>
   #app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     position: relative;
     z-index: 1;
+  }
+
+  #app main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
   }
 </style>
