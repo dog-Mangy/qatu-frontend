@@ -40,19 +40,43 @@
   async function handleSubmit(e) {
     e.preventDefault();
     try {
+      imageUrl = await uploadImageToImgbb(imageFile);
       await createProduct({
         name,
         description,
         price: parseFloat(price),
         stock: parseInt(stock),
         categoryId,
-        storeId
+        storeId,
+        image: imageUrl
       });
       success = 'Producto creado correctamente';
       setTimeout(() => push('/mystore'), 1200);
     } catch (err) {
       error = err.message || 'Error al crear producto';
     }
+  }
+
+  let imageFile;
+  let imageUrl = '';
+
+  function handleImageChange(event) {
+    imageFile = event.target.files[0];
+  }
+
+  async function uploadImageToImgbb(file) {
+    const apiKey = 'f8245373bfd79722b1da62d8fa1eec68';
+    const formData = new FormData();
+    formData.append('image', file);
+
+    const res = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
+      method: 'POST',
+      body: formData
+    });
+
+    const json = await res.json();
+    if (!json.success) throw new Error('Error uploading image');
+    return json.data.url;
   }
 </script>
 
@@ -61,6 +85,11 @@
     <h2>Create product</h2>
     {#if error}<div class="alert error">{error}</div>{/if}
     {#if success}<div class="alert success">{success}</div>{/if}
+
+    <div class="form-group">
+      <label for="image">Image</label>
+      <input id="image" type="file" accept="image/*" on:change={handleImageChange} required />
+    </div>
 
     <div class="form-group">
       <label for="name">Name</label>
