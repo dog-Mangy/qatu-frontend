@@ -1,7 +1,7 @@
 import { fetchAuth } from '../utils/fetchAuth.js';
 
 export async function getProducts({
-  category = null,
+  category = '',
   minPrice = null,
   maxPrice = null,
   minRating = null,
@@ -10,40 +10,52 @@ export async function getProducts({
   sortBy = 'CreatedAt',
   ascending = true,
   page = 1,
-  pageSize = 10,
+  pageSize = 8,
 } = {}) {
   const params = new URLSearchParams();
-  if (category) params.append('category', category);
-  if (minPrice) params.append('minPrice', minPrice);
-  if (maxPrice) params.append('maxPrice', maxPrice);
-  if (minRating) params.append('minRating', minRating);
-  if (maxRating) params.append('maxRating', maxRating);
-  if (searchQuery) params.append('searchQuery', searchQuery);
+  if (category) params.set('category', category);
+  if (minPrice !== null) params.set('minPrice', minPrice.toString());
+  if (maxPrice !== null) params.set('maxPrice', maxPrice.toString());
+  if (minRating !== null) params.set('minRating', minRating.toString());
+  if (maxRating !== null) params.set('maxRating', maxRating.toString());
+  if (searchQuery) params.set('searchQuery', searchQuery);
+  params.set('sortBy', sortBy);
+  params.set('ascending', ascending.toString());
+  params.set('page', page.toString());
+  params.set('pageSize', pageSize.toString());
 
-  params.append('sortBy', sortBy);
-  // @ts-ignore
-  params.append('ascending', ascending);
-  // @ts-ignore
-  params.append('page', page);
-  // @ts-ignore
-  params.append('pageSize', pageSize);
+  try {
+    const response = await fetchAuth(
+      `http://localhost:5028/api/Products?${params.toString()}`
+    );
 
-  const response = await fetchAuth(
-    `http://localhost:5028/api/products?${params.toString()}`
-  );
+    if (!response.ok) {
+      const text = await response.text();
+      throw new Error(
+        `Error fetching products: ${response.status} - ${text.slice(0, 100)}...`
+      );
+    }
 
-  if (!response.ok) {
-    throw new Error('Error obteniendo los productos');
+    const contentType = response.headers.get('content-type');
+    if (!contentType || !contentType.includes('application/json')) {
+      const text = await response.text();
+      throw new Error(
+        `Expected JSON, got ${contentType || 'no content-type'}: ${text.slice(0, 100)}...`
+      );
+    }
+
+    const data = await response.json();
+
+    return {
+      products: data.items || [],
+      page: data.page || 1,
+      totalPages: data.nPages || 1,
+      totalElements: data.nElements || 0,
+    };
+  } catch (error) {
+    console.error('getProducts error:', error);
+    throw new Error(`Failed to fetch products: ${error.message}`);
   }
-
-  const data = await response.json();
-
-  return {
-    items: data.items,
-    page: data.page,
-    totalPages: data.nPages,
-    totalElements: data.nElements,
-  };
 }
 
 export async function getProductsByStoreId(
