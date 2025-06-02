@@ -1,37 +1,22 @@
 <script>
   import { params } from 'svelte-spa-router';
   import { onMount } from 'svelte';
+  import { getProductById } from '../../viewmodel/viewmodels/productViewModel.js';
 
   let product = null;
   let loading = true;
   let error = '';
-
-  // Simulación: cambia a true si quieres probar como vendedor
   let isSeller = false;
 
-  async function fetchProduct(id_Store, id) {
-    return {
-      id,
-      id_Store,
-      name: 'Nombre de producto',
-      description: 'Descripción del producto',
-      image:
-        'https://images.pexels.com/photos/30028610/pexels-photo-30028610/free-photo-of-constelacion-de-orion.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-      storeName: 'Nombre de la tienda',
-      rating: 4.5,
-      interactions: 12,
-      comments: [
-        { text: 'Buen producto', rating: 5 },
-        { text: 'Regular', rating: 3 },
-      ],
-    };
+  async function fetchProduct(id) {
+    return await getProductById(id);
   }
 
   onMount(() => {
     const unsubscribe = params.subscribe(async $params => {
       try {
-        const { id_Store, id } = $params;
-        product = await fetchProduct(id_Store, id);
+        const { id } = $params;
+        product = await fetchProduct(id);
         error = '';
       } catch (e) {
         error = 'No se pudo cargar el producto';
