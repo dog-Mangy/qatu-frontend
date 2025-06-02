@@ -1,24 +1,33 @@
 <script>
+  import { onMount } from 'svelte';
   import { filters } from '../../viewmodel/store/filterStore';
+  import { fetchProducts } from '../../viewmodel/services/productService';
+  import { fetchCategories } from '../../viewmodel/viewmodels/categoryViewModel';
 
   let showDropdown = false;
   let showMinRatingDropdown = false;
   let showMaxRatingDropdown = false;
   let showSortByDropdown = false;
   let showOrderDropdown = false;
+  let showMinPriceInput = false;
+  let showMaxPriceInput = false;
 
-  const categories = [
-    'All Categories',
-    'Books',
-    'Electronics',
-    'Clothing',
-    'Furniture',
-  ];
+  let categories = [];
+
+  onMount(async () => {
+    try {
+      const data = await fetchCategories();
+      categories = ['All Categories', ...data.map(cat => cat.name)];
+    } catch (error) {
+      console.error('Error al cargar categorías:', error);
+    }
+  });
 
   const sortByOptions = [
     { field: 'Price', label: 'Price' },
     { field: 'Name', label: 'Name' },
     { field: 'Rating', label: 'Rating' },
+    { field: 'CreatedAt', label: 'CreatedAt' },
   ];
 
   const orderOptions = [
@@ -28,7 +37,11 @@
 
   function selectCategory(category, event) {
     event.stopPropagation();
-    filters.update(current => ({ ...current, category }));
+    filters.update(current => {
+      const updated = { ...current, category };
+      fetchProducts(updated);
+      return updated;
+    });
     showDropdown = false;
   }
 
@@ -36,10 +49,16 @@
     event.stopPropagation();
     filters.update(current => {
       const newMaxRating =
-        current.maxRating > 0 && rating > current.maxRating
+        current.maxRating >= 0 && rating > current.maxRating
           ? rating
           : current.maxRating;
-      return { ...current, minRating: rating, maxRating: newMaxRating };
+      const updated = {
+        ...current,
+        minRating: rating,
+        maxRating: newMaxRating,
+      };
+      fetchProducts(updated);
+      return updated;
     });
     showMinRatingDropdown = false;
   }
@@ -48,28 +67,57 @@
     event.stopPropagation();
     filters.update(current => {
       const newMinRating =
-        current.minRating > 0 && rating < current.minRating
+        current.minRating >= 0 && rating < current.minRating
           ? rating
           : current.minRating;
-      return { ...current, maxRating: rating, minRating: newMinRating };
+      const updated = {
+        ...current,
+        maxRating: rating,
+        minRating: newMinRating,
+      };
+      fetchProducts(updated);
+      return updated;
     });
     showMaxRatingDropdown = false;
   }
 
   function selectSortBy(field, event) {
     event.stopPropagation();
-    filters.update(current => ({ ...current, sortBy: field }));
+    filters.update(current => {
+      const updated = { ...current, sortBy: field };
+      fetchProducts(updated);
+      return updated;
+    });
     showSortByDropdown = false;
   }
 
   function selectOrder(value, event) {
     event.stopPropagation();
-    filters.update(current => ({ ...current, ascending: value }));
+    filters.update(current => {
+      const updated = { ...current, ascending: value };
+      fetchProducts(updated);
+      return updated;
+    });
     showOrderDropdown = false;
   }
 
-  let showMinPriceInput = false;
-  let showMaxPriceInput = false;
+  function handleMinPriceInput(event) {
+    const value = event.target.value;
+    filters.update(current => {
+      const updated = { ...current, minPrice: value };
+      fetchProducts(updated);
+      return updated;
+    });
+  }
+
+  function handleMaxPriceInput(event) {
+    const value = event.target.value;
+    filters.update(current => {
+      const updated = { ...current, maxPrice: value };
+      fetchProducts(updated);
+      return updated;
+    });
+  }
 </script>
 
 <div class="filters-container">
@@ -116,23 +164,22 @@
         (showMinRatingDropdown = !showMinRatingDropdown)}
     >
       <div class="dropdown-label">
-        {$filters.minRating > 0 ? `Min: ${$filters.minRating}★` : 'Min Rating'}
+        {$filters.minRating >= 0 ? `Min: ${$filters.minRating}★` : 'Min Rating'}
       </div>
       {#if showMinRatingDropdown}
         <div class="dropdown-menu rating-menu">
           <div class="rating-filter">
-            <!-- eslint-disable-next-line no-unused-vars -->
-            {#each Array(5) as _, index (index)}
+            {#each Array(6) as _, index (index)}
               <span
                 role="button"
                 tabindex="0"
-                class="star {index < $filters.minRating ? 'filled' : ''}"
-                on:click={event => selectMinRating(index + 1, event)}
+                class="star {index <= $filters.minRating ? 'filled' : ''}"
+                on:click={event => selectMinRating(index, event)}
                 on:keydown={e =>
                   (e.key === 'Enter' || e.key === ' ') &&
-                  selectMinRating(index + 1, e)}
+                  selectMinRating(index, e)}
               >
-                ★
+                {index === 0 ? '0★' : '★'}
               </span>
             {/each}
           </div>
@@ -151,23 +198,22 @@
         (showMaxRatingDropdown = !showMaxRatingDropdown)}
     >
       <div class="dropdown-label">
-        {$filters.maxRating > 0 ? `Max: ${$filters.maxRating}★` : 'Max Rating'}
+        {$filters.maxRating >= 0 ? `Max: ${$filters.maxRating}★` : 'Max Rating'}
       </div>
       {#if showMaxRatingDropdown}
         <div class="dropdown-menu rating-menu">
           <div class="rating-filter">
-            <!-- eslint-disable-next-line no-unused-vars -->
-            {#each Array(5) as _, index (index)}
+            {#each Array(6) as _, index (index)}
               <span
                 role="button"
                 tabindex="0"
-                class="star {index < $filters.maxRating ? 'filled' : ''}"
-                on:click={event => selectMaxRating(index + 1, event)}
+                class="star {index <= $filters.maxRating ? 'filled' : ''}"
+                on:click={event => selectMaxRating(index, event)}
                 on:keydown={e =>
                   (e.key === 'Enter' || e.key === ' ') &&
-                  selectMaxRating(index + 1, e)}
+                  selectMaxRating(index, e)}
               >
-                ★
+                {index === 0 ? '0★' : '★'}
               </span>
             {/each}
           </div>
@@ -185,7 +231,7 @@
         (e.key === 'Enter' || e.key === ' ') && (showMinPriceInput = true)}
     >
       <div class="dropdown-label">
-        {#if $filters.minPrice && !showMinPriceInput}
+        {#if $filters.minPrice !== null && $filters.minPrice !== undefined && !showMinPriceInput}
           Min: ${$filters.minPrice}
         {:else}
           Min Price
@@ -195,6 +241,7 @@
               placeholder="Min Price"
               class="price-input"
               bind:value={$filters.minPrice}
+              on:input={handleMinPriceInput}
               on:blur={() => (showMinPriceInput = false)}
             />
           {/if}
@@ -212,7 +259,7 @@
         (e.key === 'Enter' || e.key === ' ') && (showMaxPriceInput = true)}
     >
       <div class="dropdown-label">
-        {#if $filters.maxPrice && !showMaxPriceInput}
+        {#if $filters.maxPrice !== null && $filters.maxPrice !== undefined && !showMaxPriceInput}
           Max: ${$filters.maxPrice}
         {:else}
           Max Price
@@ -222,6 +269,7 @@
               placeholder="Max Price"
               class="price-input"
               bind:value={$filters.maxPrice}
+              on:input={handleMaxPriceInput}
               on:blur={() => (showMaxPriceInput = false)}
             />
           {/if}
@@ -324,7 +372,7 @@
   }
 
   .rating {
-    min-width: 90px;
+    width: auto;
   }
 
   .price {
@@ -390,7 +438,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
+    width: auto;
   }
 
   @media screen and (max-width: 600px) {
@@ -401,6 +449,10 @@
 
     .dropdown,
     .price {
+      min-width: 100%;
+    }
+
+    .rating {
       min-width: 100%;
     }
   }
