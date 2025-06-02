@@ -141,6 +141,11 @@
     flex: 1;
   }
 
+  .form-row input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
   label {
     font-size: 1rem;
     color: #3f028f;
