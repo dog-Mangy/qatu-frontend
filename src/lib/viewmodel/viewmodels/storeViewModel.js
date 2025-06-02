@@ -1,7 +1,7 @@
 import { fetchAuth } from '../utils/fetchAuth.js';
 
 export async function getAllStores() {
-  const response = await fetchAuth('http://localhost:5028/api/stores');
+  const response = await fetch('http://localhost:5028/api/stores');
 
   if (!response.ok) {
     throw new Error('Error obteniendo las tiendas');
@@ -29,7 +29,7 @@ export async function getAllStoresPaged({
   // @ts-ignore
   params.append('pageSize', pageSize);
 
-  const response = await fetchAuth(
+  const response = await fetch(
     `http://localhost:5028/api/Stores/paged?${params.toString()}`
   );
 
@@ -74,9 +74,7 @@ export async function getStoresByUserId(userId) {
 }
 
 export async function getStoreById(storeId) {
-  const response = await fetchAuth(
-    `http://localhost:5028/api/stores/${storeId}`
-  );
+  const response = await fetch(`http://localhost:5028/api/stores/${storeId}`);
 
   if (!response.ok) {
     throw new Error('Error obteniendo la tienda');

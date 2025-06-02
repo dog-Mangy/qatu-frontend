@@ -89,7 +89,7 @@ export async function getProductsByStoreId(
   // @ts-ignore
   params.append('pageSize', pageSize);
 
-  const response = await fetchAuth(
+  const response = await fetch(
     `http://localhost:5028/api/stores/${storeId}/products?${params.toString()}`
   );
   if (!response.ok) {
@@ -107,7 +107,7 @@ export async function getProductsByStoreId(
 }
 
 export async function getProductById(id) {
-  const response = await fetchAuth(`http://localhost:5028/api/products/${id}`);
+  const response = await fetch(`http://localhost:5028/api/products/${id}`);
 
   if (!response.ok) {
     throw new Error('Error obteniendo el producto');
