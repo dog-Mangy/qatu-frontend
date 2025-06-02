@@ -64,7 +64,6 @@ export async function createStore({ UserId, Name, Description }) {
 
 export async function getStoresByUserId(userId) {
   const response = await fetchAuth(`http://localhost:5028/api/stores/user/${userId}`);
-
   if (!response.ok) {
     throw new Error('Error obteniendo las tiendas del usuario');
   }
