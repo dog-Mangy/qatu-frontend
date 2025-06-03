@@ -24,6 +24,16 @@ static_code_scan:
     - name: sonarqube:9.9-community
       alias: sonarqube
   script:
+    - echo "Esperando a que SonarQube esté listo..."
+    - |
+      for i in {1..30}; do
+        if curl -s http://sonarqube:9000/api/system/health | grep -q '"status":"UP"'; then
+          echo "SonarQube está listo."
+          break
+        fi
+        echo "Esperando a SonarQube... ($i)"
+        sleep 5
+      done
     - sonar-scanner -Dsonar.projectKey=frontend-app -Dsonar.sources=. -Dsonar.host.url=http://sonarqube:9000 -Dsonar.login=$SONAR_TOKEN
 
 
