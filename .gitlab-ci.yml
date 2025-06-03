@@ -1,7 +1,57 @@
 stages:
-  - frontend_stage
+  - test
+  - scan
+  - quality_gate
+  - build
+  - push
 
-frontend_job:
-  stage: frontend_stage
+# Ejecutar pruebas unitarias
+unit_tests:
+  stage: test
   script:
-    - echo "Hello World from Frontend"
+    - echo "Running unit tests..."
+    - npm ci
+    - npm run test -- --watch=false --browsers=ChromeHeadless
+  artifacts:
+    reports:
+      junit: junit-report.xml
+
+static_code_scan:
+  stage: scan
+  image: sonarsource/sonar-scanner-cli:latest
+  script:
+    - sonar-scanner \
+        -Dsonar.projectKey=frontend-app \
+        -Dsonar.sources=. \
+        -Dsonar.host.url=http://your-sonarqube-url \
+        -Dsonar.login=$SONAR_TOKEN
+
+quality_gate:
+  stage: quality_gate
+  image: curlimages/curl:latest
+  script:
+    - >
+      echo "Esperando resultados del Quality Gate..."
+    - >
+      curl -u $SONAR_TOKEN: http://your-sonarqube-url/api/qualitygates/project_status?projectKey=frontend-app |
+      grep '"status":"OK"' || (echo "Quality Gate failed" && exit 1)
+
+build_container:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - echo "Construyendo imagen del contenedor..."
+    - docker build -t frontend-app:$CI_COMMIT_SHORT_SHA .
+
+push_container:
+  stage: push
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - echo "Logueando en el container registry..."
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker tag frontend-app:$CI_COMMIT_SHORT_SHA $CI_REGISTRY_IMAGE/frontend-app:$CI_COMMIT_SHORT_SHA
+    - docker push $CI_REGISTRY_IMAGE/frontend-app:$CI_COMMIT_SHORT_SHA
