@@ -5,7 +5,6 @@ stages:
   - build
   - push
 
-# Ejecutar pruebas unitarias
 unit_tests:
   stage: test
   image: node:20  
@@ -22,11 +21,8 @@ static_code_scan:
   stage: scan
   image: sonarsource/sonar-scanner-cli:latest
   script:
-    - sonar-scanner \
-        -Dsonar.projectKey=frontend-app \
-        -Dsonar.sources=. \
-        -Dsonar.host.url=http://your-sonarqube-url \
-        -Dsonar.login=$SONAR_TOKEN
+  - sonar-scanner -Dsonar.projectKey=frontend-app -Dsonar.sources=. -Dsonar.host.url=http://localhost:9000 -Dsonar.login=$SONAR_TOKEN
+
 
 quality_gate:
   stage: quality_gate
