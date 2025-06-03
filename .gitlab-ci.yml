@@ -8,13 +8,15 @@ stages:
 # Ejecutar pruebas unitarias
 unit_tests:
   stage: test
+  image: node:20  
   script:
     - echo "Running unit tests..."
     - npm ci
-    - npm run test -- --watch=false --browsers=ChromeHeadless
+    - npm run test -- --watch=false --reporter=junit --outputFile=junit-report.xml
   artifacts:
     reports:
       junit: junit-report.xml
+
 
 static_code_scan:
   stage: scan
