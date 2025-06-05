@@ -20,32 +20,24 @@ unit_tests:
 static_code_scan:
   stage: scan
   image: sonarsource/sonar-scanner-cli:latest
-  services:
-    - name: sonarqube:9.9-community
-      alias: sonarqube
   script:
-    - echo "Esperando a que SonarQube esté listo..."
-    - |
-      for i in {1..30}; do
-        if curl -s http://sonarqube:9000/api/system/health | grep -q '"status":"UP"'; then
-          echo "SonarQube está listo."
-          break
-        fi
-        echo "Esperando a SonarQube... ($i)"
-        sleep 5
-      done
-    - sonar-scanner -Dsonar.projectKey=frontend-app -Dsonar.sources=. -Dsonar.host.url=https://verde-sonarqube.devops.jala.university -Dsonar.login=$SONAR_TOKEN
+    - echo "Ejecutando análisis estático con SonarQube externo..."
+    - sonar-scanner \
+        -Dsonar.projectKey=frontend-app \
+        -Dsonar.sources=. \
+        -Dsonar.host.url=https://verde-sonarqube.devops.jala.university \
+        -Dsonar.login=$SONAR_TOKEN
 
 
 quality_gate:
   stage: quality_gate
   image: curlimages/curl:latest
   script:
+    - echo "Esperando resultados del Quality Gate..."
     - >
-      echo "Esperando resultados del Quality Gate..."
-    - >
-      curl -u $SONAR_TOKEN: http://your-sonarqube-url/api/qualitygates/project_status?projectKey=frontend-app |
+      curl -u $SONAR_TOKEN: https://verde-sonarqube.devops.jala.university/api/qualitygates/project_status?projectKey=frontend-app |
       grep '"status":"OK"' || (echo "Quality Gate failed" && exit 1)
+
 
 build_container:
   stage: build
