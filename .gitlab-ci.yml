@@ -22,11 +22,8 @@ static_code_scan:
   image: sonarsource/sonar-scanner-cli:latest
   script:
     - echo "Ejecutando análisis estático con SonarQube externo..."
-    - sonar-scanner \
-        -Dsonar.projectKey=frontend-app \
-        -Dsonar.sources=. \
-        -Dsonar.host.url=https://verde-sonarqube.devops.jala.university \
-        -Dsonar.login=$SONAR_TOKEN
+    - sonar-scanner -Dsonar.projectKey=frontend-app -Dsonar.sources=. -Dsonar.host.url=https://verde-sonarqube.devops.jala.university -Dsonar.login=$SONAR_TOKEN
+
 
 
 quality_gate:
