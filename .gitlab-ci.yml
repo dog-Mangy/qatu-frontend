@@ -34,7 +34,7 @@ static_code_scan:
         echo "Esperando a SonarQube... ($i)"
         sleep 5
       done
-    - sonar-scanner -Dsonar.projectKey=frontend-app -Dsonar.sources=. -Dsonar.host.url=http://sonarqube:9000 -Dsonar.login=$SONAR_TOKEN
+    - sonar-scanner -Dsonar.projectKey=frontend-app -Dsonar.sources=. -Dsonar.host.url=https://verde-sonarqube.devops.jala.university -Dsonar.login=$SONAR_TOKEN
 
 
 quality_gate:
