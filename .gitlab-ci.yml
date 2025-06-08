@@ -3,7 +3,6 @@ stages:
   - scan
   - quality_gate
   - build
-  - push
 
 unit_tests:
   stage: test
@@ -36,22 +35,15 @@ quality_gate:
       grep '"status":"OK"' || (echo "Quality Gate failed" && exit 1)
 
 
-build_container:
+build_and_push:
   stage: build
-  image: docker:latest
-  services:
-    - docker:dind
-  script:
-    - echo "Construyendo imagen del contenedor..."
-    - docker build -t frontend-app:$CI_COMMIT_SHORT_SHA .
-
-push_container:
-  stage: push
   image: docker:latest
   services:
     - docker:dind
   script:
     - echo "Logueando en el container registry..."
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - echo "Construyendo imagen del contenedor..."
+    - docker build -t frontend-app:$CI_COMMIT_SHORT_SHA .
     - docker tag frontend-app:$CI_COMMIT_SHORT_SHA $CI_REGISTRY_IMAGE/frontend-app:$CI_COMMIT_SHORT_SHA
     - docker push $CI_REGISTRY_IMAGE/frontend-app:$CI_COMMIT_SHORT_SHA
