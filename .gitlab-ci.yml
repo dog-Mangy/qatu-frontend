@@ -1,4 +1,6 @@
 stages:
+  - compile
+  - build
   - test
   - scan
   - quality_gate
@@ -8,12 +10,37 @@ stages:
 variables:
   VERSION_TAG: $CI_COMMIT_SHORT_SHA
 
+compile:
+  stage: compile
+  image: node:20
+  script:
+    - echo "Instalando dependencias (compilación)..."
+    - npm ci
+  artifacts:
+    paths:
+      - node_modules/
+    expire_in: 1 hour
+
+build:
+  stage: build
+  image: node:20
+  dependencies:
+    - compile
+  script:
+    - echo "Construyendo aplicación frontend..."
+    - npm run build
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 1 hour
+
 unit_tests:
   stage: test
-  image: node:20  
+  image: node:20
+  dependencies:
+    - compile
   script:
     - echo "Running unit tests..."
-    - npm ci
     - npm run test -- --watch=false --reporter=junit --outputFile=junit-report.xml
   artifacts:
     reports:
