@@ -75,7 +75,7 @@ build_container:
     - docker build -t $CI_REGISTRY_IMAGE:$VERSION_TAG .
     - docker push $CI_REGISTRY_IMAGE:$VERSION_TAG
   dependencies:
-    - quality_gate
+    - build
 
 push_container:
   stage: push_container
