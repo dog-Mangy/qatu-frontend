@@ -5,6 +5,8 @@ stages:
   - build_container
   - push_container
 
+variables:
+  VERSION_TAG: $CI_COMMIT_SHORT_SHA
 
 unit_tests:
   stage: test
@@ -17,15 +19,12 @@ unit_tests:
     reports:
       junit: junit-report.xml
 
-
 static_code_scan:
   stage: scan
   image: sonarsource/sonar-scanner-cli:latest
   script:
     - echo "Ejecutando análisis estático con SonarQube externo..."
     - sonar-scanner -Dsonar.projectKey=frontend-app -Dsonar.sources=. -Dsonar.host.url=https://verde-sonarqube.devops.jala.university -Dsonar.login=$SONAR_TOKEN
-
-
 
 quality_gate:
   stage: quality_gate
@@ -35,7 +34,6 @@ quality_gate:
     - >
       curl -u $SONAR_TOKEN: https://verde-sonarqube.devops.jala.university/api/qualitygates/project_status?projectKey=frontend-app |
       grep '"status":"OK"' || (echo "Quality Gate failed" && exit 1)
-
 
 build_container:
   stage: build_container
@@ -50,7 +48,7 @@ build_container:
     - docker build -t $CI_REGISTRY_IMAGE:$VERSION_TAG .
     - docker push $CI_REGISTRY_IMAGE:$VERSION_TAG
   dependencies:
-    - build
+    - quality_gate
 
 push_container:
   stage: push_container
