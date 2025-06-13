@@ -1,20 +1,65 @@
 stages:
+  - compile
+  - build
   - test
+  - coverage
   - scan
   - quality_gate
-  - build
-  - push
+  - build_container
+  - push_container
+
+variables:
+  VERSION_TAG: $CI_COMMIT_SHORT_SHA
+
+compile:
+  stage: compile
+  image: node:20
+  script:
+    - echo "Instalando dependencias (compilación)..."
+    - npm ci
+  artifacts:
+    paths:
+      - node_modules/
+    expire_in: 1 hour
+
+build:
+  stage: build
+  image: node:20
+  dependencies:
+    - compile
+  script:
+    - echo "Construyendo aplicación frontend..."
+    - npm run build
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 1 hour
 
 unit_tests:
   stage: test
-  image: node:20  
+  image: node:20
+  dependencies:
+    - compile
   script:
     - echo "Running unit tests..."
-    - npm ci
     - npm run test -- --watch=false --reporter=junit --outputFile=junit-report.xml
   artifacts:
     reports:
       junit: junit-report.xml
+
+
+coverage:
+  stage: test
+  image: node:20
+  dependencies:
+    - compile
+  script:
+    - echo "Ejecutando cobertura con Vitest..."
+    - npm run coverage
+  artifacts:
+    paths:
+      - coverage/
+    expire_in: 1 week
 
 
 static_code_scan:
@@ -22,8 +67,12 @@ static_code_scan:
   image: sonarsource/sonar-scanner-cli:latest
   script:
     - echo "Ejecutando análisis estático con SonarQube externo..."
-    - sonar-scanner -Dsonar.projectKey=frontend-app -Dsonar.sources=. -Dsonar.host.url=https://verde-sonarqube.devops.jala.university -Dsonar.login=$SONAR_TOKEN
-
+    - sonar-scanner
+      -Dsonar.projectKey=frontend-app
+      -Dsonar.sources=.
+      -Dsonar.host.url=https://verde-sonarqube.devops.jala.university
+      -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+      -Dsonar.login=$SONAR_TOKEN
 
 
 quality_gate:
@@ -35,23 +84,33 @@ quality_gate:
       curl -u $SONAR_TOKEN: https://verde-sonarqube.devops.jala.university/api/qualitygates/project_status?projectKey=frontend-app |
       grep '"status":"OK"' || (echo "Quality Gate failed" && exit 1)
 
-
 build_container:
-  stage: build
-  image: docker:latest
+  stage: build_container
+  image: docker:24.0.7
   services:
-    - docker:dind
+    - docker:24.0.7-dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
   script:
-    - echo "Construyendo imagen del contenedor..."
-    - docker build -t frontend-app:$CI_COMMIT_SHORT_SHA .
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
+    - docker build -t $CI_REGISTRY_IMAGE:$VERSION_TAG .
+    - docker push $CI_REGISTRY_IMAGE:$VERSION_TAG
+  dependencies:
+    - build
 
 push_container:
-  stage: push
-  image: docker:latest
+  stage: push_container
+  image: docker:24.0.7
   services:
-    - docker:dind
+    - docker:24.0.7-dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
   script:
-    - echo "Logueando en el container registry..."
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - docker tag frontend-app:$CI_COMMIT_SHORT_SHA $CI_REGISTRY_IMAGE/frontend-app:$CI_COMMIT_SHORT_SHA
-    - docker push $CI_REGISTRY_IMAGE/frontend-app:$CI_COMMIT_SHORT_SHA
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
+    - docker pull $CI_REGISTRY_IMAGE:$VERSION_TAG
+    - docker tag $CI_REGISTRY_IMAGE:$VERSION_TAG $CI_REGISTRY_IMAGE:latest
+    - docker push $CI_REGISTRY_IMAGE:latest
+  dependencies:
+    - build_container
