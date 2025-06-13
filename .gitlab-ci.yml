@@ -2,6 +2,7 @@ stages:
   - compile
   - build
   - test
+  - coverage
   - scan
   - quality_gate
   - build_container
@@ -46,12 +47,33 @@ unit_tests:
     reports:
       junit: junit-report.xml
 
+
+coverage:
+  stage: test
+  image: node:20
+  dependencies:
+    - compile
+  script:
+    - echo "Ejecutando cobertura con Vitest..."
+    - npm run coverage
+  artifacts:
+    paths:
+      - coverage/
+    expire_in: 1 week
+
+
 static_code_scan:
   stage: scan
   image: sonarsource/sonar-scanner-cli:latest
   script:
     - echo "Ejecutando análisis estático con SonarQube externo..."
-    - sonar-scanner -Dsonar.projectKey=frontend-app -Dsonar.sources=. -Dsonar.host.url=https://verde-sonarqube.devops.jala.university -Dsonar.login=$SONAR_TOKEN
+    - sonar-scanner
+      -Dsonar.projectKey=frontend-app
+      -Dsonar.sources=.
+      -Dsonar.host.url=https://verde-sonarqube.devops.jala.university
+      -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+      -Dsonar.login=$SONAR_TOKEN
+
 
 quality_gate:
   stage: quality_gate
