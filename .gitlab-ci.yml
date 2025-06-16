@@ -114,3 +114,4 @@ push_container:
     - docker push $CI_REGISTRY_IMAGE:latest
   dependencies:
     - build_container
+    
