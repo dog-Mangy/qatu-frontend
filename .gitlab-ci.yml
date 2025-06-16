@@ -9,7 +9,10 @@ stages:
   - push_container
 
 variables:
-  VERSION_TAG: $CI_COMMIT_SHORT_SHA
+  MAJOR_VERSION: "2"
+  MINOR_VERSION: "3"
+  PATCH_VERSION: "1"
+  VERSION_TAG: "DEV-$MAJOR_VERSION.$MINOR_VERSION.$PATCH_VERSION"
 
 compile:
   stage: compile
