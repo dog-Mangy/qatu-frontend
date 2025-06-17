@@ -4,13 +4,13 @@ import { svelte } from '@sveltejs/vite-plugin-svelte';
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [svelte()],
-  server: {
+  /*server: {
     allowedHosts: [
       'verde-dev.devops.jala.university',
       'localhost',
       'verde.devops.jala.university',
     ]
-  },
+  },*/
   test: {
     environment: 'jsdom',
     globals: true,
