@@ -1,20 +1,9 @@
 <script>
-  import FormInput from './FormInput.Component.svelte';
   import { authViewModel } from '../../viewmodel/viewmodels/authViewModel';
-
-  let email = '';
-  let password = '';
 
   let error = '';
   let success = '';
 
-  async function handleLogin(event) {
-    event.preventDefault();
-    ({ error, success } = await authViewModel.login({
-      email,
-      password,
-    }));
-  }
   async function handleAuth0Login() {
     await authViewModel.auth0Login();
     window.location.href = '/#';
@@ -33,36 +22,14 @@
       <p class="success-message">{success}</p>
     {/if}
 
-    <form on:submit={handleLogin} aria-label="Login form">
-      <FormInput
-        id="email"
-        type="email"
-        placeholder="Email"
-        bind:value={email}
-        required
-      />
-      <FormInput
-        id="password"
-        type="password"
-        placeholder="Password"
-        bind:value={password}
-        required
-      />
-      <button type="submit">Log In</button>
-    </form>
-
-    <p>
-      <a href="/forgotPassword">Forgot Password?</a>
-    </p>
-
     <p>
       <button
         on:click={async () => {
           await handleAuth0Login();
         }}
       >
-        Continue with Auth0</button
-      >
+        Continue with Auth0
+      </button>
     </p>
 
     <p>
@@ -124,13 +91,6 @@
     margin-bottom: 1rem;
     padding: 0.5rem;
     text-align: center;
-  }
-
-  form {
-    justify-items: center;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
   }
 
   @media screen and (max-width: 720px) {
