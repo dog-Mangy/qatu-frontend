@@ -1,108 +1,175 @@
 <script>
-  import { authViewModel } from '../../viewmodel/viewmodels/authViewModel';
+  import { onMount } from 'svelte';
+  import {
+    getAllRequests,
+    deleteRequestById,
+    updateRequestStatus,
+  } from '../../viewmodel/viewmodels/requestViewModel.js';
 
+  let requests = [];
   let error = '';
-  let success = '';
 
-  async function handleAuth0Login() {
-    await authViewModel.auth0Login();
-    window.location.href = '/#';
-    window.location.reload();
+  onMount(async () => {
+    try {
+      requests = await getAllRequests();
+    } catch (err) {
+      error = err.message;
+    }
+  });
+
+  function translateStatus(status) {
+    switch (status) {
+      case 'Pending':
+        return 'Pending';
+      case 'Accepted':
+        return 'Accepted';
+      case 'Rejected':
+        return 'Rejected';
+      default:
+        return status;
+    }
+  }
+
+  function formatDate(dateStr) {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+  }
+
+  async function approveRequest(id) {
+    const confirmApprove = confirm(
+      'Are you sure you want to approve this request?'
+    );
+    if (!confirmApprove) return;
+
+    try {
+      await updateRequestStatus(id, 1);
+      requests = requests.map(req =>
+        req.id === id ? { ...req, status: 'Accepted' } : req
+      );
+    } catch (err) {
+      error = err.message;
+    }
+  }
+
+  async function rejectRequest(id) {
+    const confirmReject = confirm(
+      'Are you sure you want to reject this request?'
+    );
+    if (!confirmReject) return;
+
+    try {
+      await updateRequestStatus(id, 2);
+      requests = requests.map(req =>
+        req.id === id ? { ...req, status: 'Rejected' } : req
+      );
+    } catch (err) {
+      error = err.message;
+    }
+  }
+
+  async function deleteRequest(id) {
+    const confirmDelete = confirm(
+      'Are you sure you want to delete this request?'
+    );
+    if (!confirmDelete) return;
+
+    try {
+      await deleteRequestById(id);
+      requests = requests.filter(req => req.id !== id);
+    } catch (err) {
+      error = err.message;
+    }
   }
 </script>
 
-<div class="center-container">
-  <div class="form-box">
-    <h2>Log In</h2>
+{#if error}
+  <p class="error">Error: {error}</p>
+{:else}
+  <div class="table-container">
+    <h2>Request List</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>User</th>
+          <th>Store Name</th>
+          <th>Store Description</th>
+          <th>Description</th>
+          <th>Status</th>
+          <th>Created On</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
 
-    {#if error}
-      <p class="error-message">{error}</p>
-    {/if}
-    {#if success}
-      <p class="success-message">{success}</p>
-    {/if}
-
-    <p>
-      <button
-        on:click={async () => {
-          await handleAuth0Login();
-        }}
-      >
-        Continue with Auth0
-      </button>
-    </p>
-
-    <p>
-      Still don't have an account?
-      <a href="/#/register">Register</a>
-    </p>
+      <tbody>
+        {#each requests as req}
+          <tr>
+            <td>{req.userId}</td>
+            <td>{req.storeName}</td>
+            <td>{req.storeDescription}</td>
+            <td>{req.description}</td>
+            <td>{translateStatus(req.status)}</td>
+            <td>{formatDate(req.createdAt)}</td>
+            <td class="actions">
+              <button title="Approve" on:click={() => approveRequest(req.id)}
+                >✅</button
+              >
+              <button title="Reject" on:click={() => rejectRequest(req.id)}
+                >❌</button
+              >
+              <button title="Delete" on:click={() => deleteRequest(req.id)}
+                >🗑️</button
+              >
+            </td>
+          </tr>
+        {/each}
+      </tbody>
+    </table>
   </div>
-</div>
+{/if}
 
 <style>
-  a {
-    color: aqua;
+  .table-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    color: black;
   }
 
   h2 {
-    color: white;
     text-align: center;
+    margin-bottom: 20px;
   }
 
-  p {
-    color: white;
-    text-align: center;
-  }
-
-  .center-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex: 1;
-    height: 100%;
-  }
-
-  .form-box {
-    background: #1a0c46;
-    border-radius: 50px;
-    justify-items: center;
-    margin: 1rem;
-    max-width: 300px;
-    padding: 0.5rem;
+  table {
     width: 100%;
+    border-collapse: collapse;
   }
 
-  .success-message {
-    background-color: #e8f5e9;
-    border-radius: 8px;
-    border: 1px solid #4caf50;
-    color: #4caf50;
-    margin-bottom: 1rem;
-    padding: 0.5rem;
+  th,
+  td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+  }
+
+  th {
+    background-color: #3f028f;
+    color: white;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+
+  .error {
+    color: red;
     text-align: center;
-  }
-
-  .error-message {
-    background-color: #ffebee;
-    border-radius: 8px;
-    border: 1px solid #f44336;
-    color: #f44336;
-    margin-bottom: 1rem;
-    padding: 0.5rem;
-    text-align: center;
-  }
-
-  @media screen and (max-width: 720px) {
-    .form-box {
-      max-width: 270px;
-    }
-  }
-
-  @media screen and (max-width: 360px) {
-    .form-box {
-      max-width: 250px;
-      min-width: 180px;
-    }
   }
 </style>
